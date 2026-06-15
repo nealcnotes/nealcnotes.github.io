@@ -1,0 +1,8 @@
+_site/
+.jekyll-cache/
+*.xmp
+Gemfile.lock
+_drafts/
+
+# machine-local Claude context — never publish
+CLAUDE.md
