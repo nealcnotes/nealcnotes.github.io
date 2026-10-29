@@ -1,0 +1,11 @@
+# Drafts are their own local repo (never pushed), like essentialine's _drafts
+_drafts/
+
+# Quarto build output and cache
+_site/
+.quarto/
+*_files/
+
+# Syncthing-local Claude context — never publish
+CLAUDE.md
+.claude/
