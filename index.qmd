@@ -1,0 +1,6 @@
+---
+title: "nealcnotes"
+---
+
+Notes and lessons on math, programming,
+and checking what the machine hands you.

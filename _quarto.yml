@@ -1,0 +1,17 @@
+project:
+  type: website
+  # _drafts/ is its own local repo; Quarto skips _-prefixed dirs anyway.
+  # Preview one draft with: quarto preview _drafts/<file>.qmd
+
+website:
+  title: "nealcnotes"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+
+format:
+  html:
+    theme: cosmo
+    code-copy: true
+    toc: true
