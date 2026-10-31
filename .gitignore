@@ -9,3 +9,6 @@ _site/
 # Syncthing-local Claude context — never publish
 CLAUDE.md
 .claude/
+
+# photo-editor sidecars (from the old Jekyll site)
+*.xmp

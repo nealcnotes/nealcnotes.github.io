@@ -1,0 +1,33 @@
+/* Make all images responsive and centered */
+img {
+  max-width: 50%; /* Limit image size to 80% of the container width */
+  height: auto;   /* Maintain aspect ratio */
+  display: block; /* Ensure images don't align inline with text */
+  margin: 1.5rem auto; /* Add space and center-align images */
+  box-sizing: border-box; /* Ensure padding and margins don't break layout */
+}
+
+/* Add specific rules for PNG files */
+img[src$=".png"] {
+  border-radius: 8px; /* Add rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  max-width: 50%;   /* Limit PNG size to 80% of container */
+  margin-bottom: 2rem; /* Add space after images */
+}
+
+
+/* Fix container issues */
+.container {
+  width: 100%;           /* Ensure container spans the full width */
+  max-width: 100%;       /* Prevent it from expanding too wide */
+  overflow: hidden;      /* Hide any content that exceeds the container */
+  padding: 0 15px;       /* Add a small padding to avoid image touching the sides */
+}
+
+/* Optional: Add padding or limit content width */
+.post {
+  max-width: 800px;      /* Limit content width for readability */
+  margin: 0 auto;        /* Center content */
+  padding: 0 15px;       /* Optional: padding to avoid text touching edges */
+}
+
