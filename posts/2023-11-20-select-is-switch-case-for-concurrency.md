@@ -1,10 +1,9 @@
 ---
-title: "Select is switch/case for concurrency!"
-date: "2023-11-20"
-categories: 
-  - "old-comics"
-tags: 
-  - "concurrency"
+title: Select is switch/case for concurrency!
+date: 2023-11-20
+categories:
+- old-comics
+- concurrency
 ---
 
 

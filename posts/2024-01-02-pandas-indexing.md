@@ -1,9 +1,9 @@
 ---
-title: "Pandas Indexing Primer"
-categories: 
-  - "old-comics"
-tags: 
-  - "pandas"
+title: Pandas Indexing Primer
+date: 2024-01-02
+categories:
+- old-comics
+- pandas
 ---
 
 
