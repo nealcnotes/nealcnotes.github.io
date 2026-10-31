@@ -1,0 +1,730 @@
+---
+title: "Lesson 1: Talking to the computer in words"
+subtitle: "Set up, add up, prove it"
+date: 2026-10-31
+categories: [lessons, python, lean]
+---
+
+<!--
+DRAFT, simplified 2026-10-31 (before: 5ba7f87; Neal's edits: 0e38cf6).
+Lean blocks checked with Lean 4.35.0 (tests/test_lesson1_lean.py).
+Windows-side steps untested (wsl --install, Alt+Shift+D, Claude in Chrome).
+Plan: two or three sittings (Part 1 alone is about an hour).
+-->
+
+## Why are we doing this?
+
+An AI can install software, add up numbers
+and write proofs faster than either of us ever will.
+So why learn any of it?
+
+For the same reason people learned pure math
+long before anyone needed it.
+Almost nobody uses calculus at work.
+What it built was the ability to understand:
+to follow an argument, see why it holds,
+and notice when it doesn't.
+
+That's the point of this course:
+not to get the computer to do things,
+but to **understand what it did, and why**,
+well enough to catch it when it's wrong.
+
+Every step comes with three habits:
+
+- **Predict.** Before you press Enter, say what will happen.
+- **Check.** Did it? If not, that's the interesting part.
+- **Explain.** Say *why*, in your own words.
+
+Today, in four parts:
+
+1. **Set up** Linux inside Windows, with an AI tutor beside it.
+2. **Python basics:** boxes, questions and repeats.
+3. **Add up** 1 to 100, and ask when checking becomes proving.
+4. **Lean:** the same program in a language that checks proofs.
+
+::: {.callout-tip}
+## How to use this page
+Each grey box has a copy button in its top right corner.
+Paste into the terminal with Ctrl+Shift+V and press Enter.
+Read the sentence above each box *before* you run it.
+:::
+
+# Part 1: Set up
+
+## Turn on Linux (WSL)
+
+Underneath the windows and buttons,
+a computer works with text.
+A **terminal** is a window where you talk to it in words.
+We'll use **Linux**, running inside Windows
+(that's **WSL**, Windows Subsystem for Linux).
+
+1. Click Start and type **PowerShell**.
+2. Right-click **Windows PowerShell**,
+   choose **Run as administrator**, and click Yes.
+3. Paste this and press Enter:
+
+```powershell
+wsl --install
+```
+
+When it says so, **restart the computer**.
+A window called **Ubuntu** (our kind of Linux) then opens
+and asks you to make up a **username**
+(short, lowercase, no spaces) and a **password**.
+
+::: {.callout-warning}
+## The password is invisible
+When you type it, *nothing appears*, not even dots.
+That's normal. Type it anyway and press Enter.
+:::
+
+From now on, open **Terminal** from the Start menu
+and pick **Ubuntu** from the ▾ menu next to the tabs.
+
+## Look around
+
+The line ending in `$` is the **prompt**:
+the computer waiting for you.
+
+```bash
+pwd
+```
+
+`pwd` prints where you are, something like `/home/anna`:
+your **home folder**, written as a **path**
+(folders inside folders, separated by `/`).
+
+```bash
+mkdir course
+cd course
+pwd
+```
+
+**Predict** before the last line: what will `pwd` print now?
+(`mkdir` makes a folder, `cd` goes into one,
+`cd ..` goes up a level.)
+
+## Stop the password questions
+
+Commands starting with `sudo` run as the administrator,
+and Linux asks for your password each time.
+The Windows login already protects this computer,
+so we tell Linux to stop asking:
+
+```bash
+echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/$USER
+sudo chmod 0440 /etc/sudoers.d/$USER
+```
+
+## Your tutor: Claude Code
+
+**Claude** is an AI, a **language model**:
+it learned from a huge amount of text
+to predict what words come next.
+That turns out to be enough to explain things and write code.
+It also makes Claude *very good at sounding right*.
+Usually it is right. Sometimes it isn't,
+and it can't always tell. That's why you check.
+
+**Claude Code** lets you talk to Claude in the terminal.
+You'll need a Claude account.
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+`curl` downloads the installer, and `| bash` runs it
+(the `|`, a *pipe*, sends one command's output into the next).
+
+Claude could do this whole lesson by itself.
+That's why we tell it not to.
+This box writes a file called `CLAUDE.md`:
+standing instructions Claude reads every time it starts in this folder.
+
+```bash
+cat > ~/course/CLAUDE.md <<'EOF'
+# Tutor mode
+
+I'm a beginner learning to program, and above all to reason.
+The point is that I work things out myself.
+You're my tutor, not the one doing the work.
+
+- Never write the code for my exercises,
+  and don't run commands or edit files for me.
+  If you solve it, the lesson is lost.
+- If I paste an error message, explain in plain words
+  what it means and where to look. One hint, not the fix.
+- If I ask what a command does, explain it simply,
+  then ask me to predict what will happen before I run it.
+- Ask me "why?" often, and look for the hole
+  in my explanations.
+- If I ask how you work, or why AI gets things wrong,
+  explain honestly and simply. That's part of the course.
+- Allowed: if I ask for code *to referee*
+  (with a hidden bug for me to find), write it.
+- Keep answers short. Use everyday words.
+EOF
+```
+
+Press **Alt+Shift+D** to split the window into two panes.
+In the **right** pane, start Claude:
+
+```bash
+cd ~/course
+claude
+```
+
+The first time, it opens a browser to log in.
+Claude asks before it does anything on your computer:
+say no unless you understand what it's asking.
+
+Try two questions:
+*"What did the `cat > CLAUDE.md` command I just ran do?"*
+and *"When are you most likely to be wrong?"*
+
+From now on:
+**left pane, you work. Right pane, you ask.**
+
+::: {.callout-tip}
+## Asking well
+Claude only knows what you tell it.
+A good question says **what you did**, **what happened**,
+and **what you think**:
+*"I ran `python3 gauss.py` and got this error: (paste).
+I think line 3 is wrong. Am I right?"*
+Errors are normal. Read each one yourself first and guess,
+then paste it with your guess. Fixing it is your job.
+:::
+
+## A friendlier shell: fish
+
+The program that reads what you type is the **shell**.
+Ubuntu's is `bash`. We'll use **fish**, which helps you type less.
+Ask Claude what `chsh` does, and **predict**
+what will change, and when:
+
+```bash
+sudo apt update && sudo apt install -y fish
+sudo chsh -s /usr/bin/fish $USER
+```
+
+(`apt` installs software.)
+Close the left pane (`exit`) and open a new one with Alt+Shift+D.
+Was your prediction right?
+
+Fish suggests the rest of a command in grey
+from what you typed before (→ accepts it),
+and Tab finishes names. ↑ brings back earlier commands.
+
+Fish doesn't know yet where Claude was installed. Tell it once:
+
+```fish
+fish_add_path ~/.local/bin
+```
+
+**Explain** (ask Claude if you're stuck):
+what is a "path", and why did bash find Claude but fish didn't?
+
+## An editor: nvim
+
+To write programs we need a text **editor**.
+**nvim** runs inside the terminal.
+
+```fish
+sudo apt install -y neovim
+cd ~/course
+nvim hello.txt
+```
+
+nvim starts in *normal mode*, where keys are commands, not letters.
+Four things are enough:
+
+| Press | What it does |
+|-------|--------------|
+| `i` | start typing (*insert mode*) |
+| `Esc` | stop typing |
+| `:wq` Enter | save and quit |
+| `:q!` Enter | quit *without* saving |
+
+Press `i`, type `hello`, press `Esc`, type `:wq`, press Enter.
+**Predict:** what will this print?
+
+```fish
+cat hello.txt
+```
+
+Stuck in nvim? Press `Esc` a few times, then `:q!`.
+(More nvim: type `:Tutor` inside it.)
+
+## Python
+
+```fish
+python3
+```
+
+The prompt changes to `>>>`: you're talking to Python now.
+**Predict** each answer, then check:
+
+```python
+2 + 2
+7 / 2
+7 // 2
+2 ** 10
+```
+
+Ask Claude why `7 / 2` and `7 // 2` differ,
+then explain it back. Leave Python with **Ctrl+D**.
+
+A good place to stop for the day.
+
+# Part 2: Python basics
+
+## Boxes and questions
+
+Start Python again and **predict** each line before pressing Enter:
+
+```fish
+python3
+```
+
+```python
+x = 5
+x + 1
+x
+x = x + 1
+x
+x == 6
+x == 7
+```
+
+`x = 5` makes a box called `x` and puts 5 in it.
+`x + 1` works out an answer but leaves the box alone.
+
+In maths, `x = x + 1` is nonsense.
+In Python, `=` means
+**"work out the right side, then put it in the box on the left"**.
+
+`==` *asks* whether two things are equal,
+and the answer is `True` or `False`.
+One `=` stores, two `==` ask.
+Mixing them up is one of the most common mistakes in programming.
+
+Leave Python with Ctrl+D.
+
+## Decisions: if
+
+```fish
+cd ~/course
+nvim decide.py
+```
+
+Type this in (`i` first, `Esc` and `:wq` at the end):
+
+```python
+n = 7
+if n % 2 == 0:
+    print(n, "is even")
+else:
+    print(n, "is odd")
+```
+
+`%` is the remainder: `7 % 2` is 1.
+`if` runs the indented lines under it when its question is `True`,
+otherwise the lines under `else:`.
+**Predict**, then run:
+
+```fish
+python3 decide.py
+```
+
+## Indentation: what's inside what
+
+A line ending in `:` starts a **block**:
+the lines under it, indented 4 spaces further.
+The block ends at the first line that steps back out.
+nvim indents for you after a `:`,
+but it can't know **when a block ends**.
+That's you, pressing Backspace,
+and it's a reasoning question: does this line belong inside?
+
+## Repeats: for
+
+```fish
+nvim loop.py
+```
+
+```python
+for k in range(1, 6):
+    print(k, k * k)
+```
+
+`for` runs the indented line once for each `k` in
+`range(1, 6)`: 1, 2, 3, 4, 5. It stops *before* 6.
+**Predict** all five lines, then run:
+
+```fish
+python3 loop.py
+```
+
+**Predict** *exactly* what this prints:
+
+```python
+for k in range(3):
+    if k % 2 == 0:
+        print(k, "even")
+    else:
+        print(k, "odd")
+    print("done")
+```
+
+How many times does `done` appear?
+What changes if `print("done")` moves one step left,
+under `for`? Try both and check.
+
+::: {.callout-note}
+## Try it yourself
+Change `loop.py` to print only the **even** numbers from 1 to 20.
+You'll need an `if` inside the `for`.
+:::
+
+# Part 3: Adding up
+
+## The story
+
+Around 1785, the story goes,
+a teacher told his class to add up every number from 1 to 100.
+A ten-year-old, Carl Friedrich Gauss,
+wrote the answer almost at once: **5050**.
+
+**How might he have done it?**
+Spend two minutes with a pencil before reading on.
+
+## The slow way: a loop
+
+```fish
+cd ~/course
+nvim gauss.py
+```
+
+Type it in yourself (typing teaches more than pasting):
+
+```python
+total = 0
+for k in range(1, 101):
+    total = total + k
+    print(k, total)
+```
+
+**Predict** the first three lines, then run it:
+
+```fish
+python3 gauss.py
+```
+
+The last line says `100 5050`.
+
+Now make an error on purpose:
+delete the spaces in front of `total = total + k` and run it.
+Read the error, guess what it means,
+then paste it to Claude with your guess.
+
+::: {.callout-important}
+## Why 101?
+Change `range(1, 101)` to `range(1, 100)`.
+**Predict** the last line, then run it.
+An AI makes exactly this kind of mistake,
+and you just learned to catch it.
+:::
+
+## Gauss's trick
+
+Write the sum forwards and backwards:
+
+```
+  1 +  2 +  3 + ... +  99 + 100
+100 + 99 + 98 + ... +   2 +   1
+```
+
+Each column adds up to **101**, and there are **100** columns.
+Two copies of the sum make 100 × 101 = 10100,
+so one copy is **5050**. For any $n$:
+
+$$1 + 2 + \cdots + n = \frac{n(n+1)}{2}$$
+
+**Explain it to Claude** in your own words, without the picture,
+and let it look for the hole.
+(Does your explanation work when $n$ is odd?)
+
+## A check inside the loop
+
+```fish
+nvim invariant.py
+```
+
+```python
+total = 0
+for k in range(1, 101):
+    total = total + k
+    assert 2 * total == k * (k + 1)
+print(total)
+```
+
+`assert` means "this must be true here":
+if it's false, Python stops with an `AssertionError`.
+So this loop checks Gauss's formula after every step.
+**Predict**, then run it:
+
+```fish
+python3 invariant.py
+```
+
+It prints `5050`: no step failed.
+
+Now break the loop on purpose:
+change `total + k` to `total + k + 1`.
+**Predict:** at which `k` does the `assert` stop it?
+Then change it back.
+
+## Check lots of cases
+
+`invariant.py` only checks up to 100.
+To check other `n`, we turn the adding-up into a **function**,
+made with `def`: a recipe with a name.
+[claude: give more defintion of funcitons and def, its an
+import basic, and then also introduce what assert does
+with perhaps a simpler example to try like assert 4 % 2 == 0
+verssu assert 4 % 2 == 1, then after the check, perhaps another one
+to do the n^3 example below]
+
+`n` is its input, and `return` hands back the answer,
+so `sum_to(100)` is 5050.
+
+```fish
+nvim check.py
+```
+
+```python
+def sum_to(n):
+    total = 0
+    for k in range(1, n + 1):
+        total = total + k
+    return total
+
+for n in range(1000):
+    assert sum_to(n) == n * (n + 1) // 2
+print("all 1000 agree")
+```
+
+The first part is the loop from `gauss.py`,
+indented under `def`, with `n + 1` where 101 was.
+The second part asks, for every `n` from 0 to 999,
+whether the loop and the formula agree.
+**Predict**, then run it:
+
+```fish
+python3 check.py
+```
+
+It prints `all 1000 agree`.
+Is the formula now true for *every* number?
+**Decide before reading on.**
+
+No. A thousand examples is still just examples.
+Mathematicians have found patterns that held
+for millions of cases and then broke.
+
+## Why it can never fail
+
+A claim that stays true after every round
+is a **loop invariant**, like the `assert` in `invariant.py`.
+Now the big question:
+if the `assert` passed in one round,
+why *must* it pass in the next?
+(What does one round add to `total`?)
+**Decide before reading on.**
+
+Say it passed in the round for $k - 1$:
+
+$$2 \cdot \text{total} = (k-1)k$$
+
+The next round, for $k$, adds $k$, so $2 \cdot \text{total}$ grows by $2k$:
+
+$$(k-1)k + 2k = k(k+1)$$
+
+which is exactly what the `assert` checks.
+It passes in the first round,
+and each passing round makes the next one pass,
+so it can never fail, however far the loop runs.
+
+That's no longer a check. It's a proof for every $n$,
+and it's the method from maths class: **induction**.
+The first round is the first domino,
+and each round knocks over the next.
+
+**Write this proof on paper, in your own words.**
+You'll need it in Part 4.
+
+::: {.callout-note}
+## Try it yourself
+1. Add up the odd numbers 1 + 3 + 5 + … and print the running total
+   for the first 10. What pattern do you see? *Why* would it hold?
+   (Try drawing it with dots.)
+2. Ask Claude: *"Write a short Python function that adds up 1 to n,
+   with one hidden bug. Don't tell me where."*
+   Find the bug by reasoning first, then prove it with a check.
+:::
+
+# Part 4: Lean
+
+## Why AI and Lean belong together
+
+A proof that *sounds* right can still be wrong,
+and Claude is very good at sounding right.
+Lean doesn't care how convincing a proof sounds:
+it checks every step, or it refuses.
+So the AI suggests, and Lean checks.
+
+That leaves you the most important job:
+**does the claim say what you meant?**
+Lean checks that the proof proves the claim,
+not that it's the claim you wanted.
+
+## What Lean is
+
+Lean is another programming language.
+It has boxes and loops, like Python,
+and it can also check proofs.
+Seeing the same program in a second language
+shows which parts are the *ideas* (a box, a repeat)
+and which are just *spelling*.
+
+We'll use Lean in the browser, with Claude beside it.
+**Claude in Chrome** is Claude in a side panel of Chrome
+that can read the page you're on and type into it.
+Install the **Claude** extension from the Chrome Web Store,
+sign in, and pin it (the puzzle-piece icon, then the pin).
+
+Open [live.lean-lang.org](https://live.lean-lang.org),
+delete what's there, and paste:
+
+```lean
+def sumLoop (n : Nat) : Nat := Id.run do
+  let mut total := 0
+  for k in [1:n+1] do
+    total := total + k
+  return total
+
+#eval sumLoop 100
+```
+
+The panel on the right shows `5050`.
+Here it is next to `sum_to` from `check.py`:
+
+| Python | Lean |
+|--------|------|
+| `def sum_to(n):` | `def sumLoop (n : Nat) : Nat :=` |
+| `total = 0` | `let mut total := 0` |
+| `for k in range(1, n + 1):` | `for k in [1:n+1] do` |
+| `total = total + k` | `total := total + k` |
+| `return total` | `return total` |
+
+- `Nat` is a **natural number** (0, 1, 2, …).
+  `(n : Nat) : Nat` says `n` is one, and so is the answer.
+- `let mut` makes a box you can change (*mutable*).
+- `:=` puts something into a box, like Python's `=`.
+- `Id.run do` says "steps, done in order". Just copy it.
+- `#eval` runs a line and shows the answer.
+
+**Explain:** what does Lean make you say that Python doesn't?
+
+## Two programs, one answer
+
+Gauss's formula is a program too, a much faster one.
+Add it below:
+
+```lean
+def sumFormula (n : Nat) : Nat := n * (n + 1) / 2
+
+#eval sumFormula 100
+```
+
+`/` on natural numbers rounds down, like Python's `//`.
+(Why doesn't that rounding ever change the answer here?)
+
+## Checking isn't proving
+
+Do the two programs agree? Add one check, for $n = 1000$:
+
+```lean
+#eval sumLoop 1000 == sumFormula 1000
+```
+
+It shows `true`. Now add the claim for *every* $n$:
+
+```lean
+theorem agree (n : Nat) : sumLoop n = sumFormula n := by
+  sorry
+```
+
+Read it out loud:
+"a claim called `agree`: for any natural number $n$,
+the loop and the formula give the same answer. Proof: `sorry`."
+This is `check.py` again,
+for every $n$ instead of a thousand.
+
+`sorry` means "I'll prove this later".
+Lean understands the claim but warns:
+`` declaration uses `sorry` ``. You still owe a proof,
+and checks like `true` don't count.
+What Lean wants is an argument like your loop invariant.
+
+## AI translates, Lean checks
+
+Writing Lean proofs yourself comes later in the course.
+Today Claude only *translates* your proof,
+and you watch what Lean says.
+
+Open Claude in Chrome on the Lean page,
+type in your paper proof from Part 3, and ask:
+
+> Please prove `agree` in Lean by translating my proof,
+> and see whether Lean accepts it.
+> Don't fix any mistakes in my proof,
+> and don't fix anything Lean complains about.
+> Only translate my proof into Lean,
+> and translate Lean's answer back into English.
+
+It may take a few minutes, and then Lean should accept it.
+Claude may add a smaller claim along the way
+(something like "one more round adds $n + 1$").
+**Where is that step in your paper proof?
+
+Next, a claim of my own. Before you send it,
+**predict**: is it true? Try $n = 0$, 1 and 2 on paper.
+Then ask:
+
+> Now I want to check whether this also means that
+> sum(n)^2 = n^3.
+> Please convert that to Lean, have Lean check it,
+> and translate only Lean's answer back into English.
+> Don't fix the proof.
+
+What did Lean say?
+And did Claude do only what you asked,
+or did it quietly change the claim to one that works?
+
+## What we did today
+
+- Set up Linux with Claude as a tutor, plus fish, nvim and Python.
+- Added 1 to 100 with a loop and with Gauss's trick.
+- Checked a thousand cases, and saw why that isn't a proof.
+- Put a check inside the loop, and saw why it can never fail:
+  induction.
+- Wrote the same loop in Lean, next to Gauss's formula,
+  and claimed the two programs always agree.
+- Had Claude translate your proof for Lean to check.
+
+The computer did the adding.
+You did the reasoning.

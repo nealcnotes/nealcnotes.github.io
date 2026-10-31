@@ -1,10 +1,9 @@
 ---
-title: "Go versus C declarations"
-date: "2023-11-14"
-categories: 
-  - "old-comics"
-tags: 
-  - "syntax"
+title: Go versus C declarations
+date: 2023-11-14
+categories:
+- old-comics
+- syntax
 ---
 
 

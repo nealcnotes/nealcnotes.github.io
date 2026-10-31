@@ -1,10 +1,10 @@
 ---
-title: "SQLite and Pandas quick intro"
-categories: 
-  - "old-comics"
-tags: 
-  - "pandas"
-  - "sql"
+title: SQLite and Pandas quick intro
+date: 2023-12-13
+categories:
+- old-comics
+- pandas
+- sql
 ---
 
 

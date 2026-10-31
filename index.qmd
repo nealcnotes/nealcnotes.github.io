@@ -1,6 +1,16 @@
 ---
 title: "nealcnotes"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+  feed: true
+page-layout: full
+title-block-banner: false
 ---
 
 Notes and lessons on math, programming,
 and checking what the machine hands you.
+
+<script async data-uid="af9941ff97" src="https://unique-creator-5551.ck.page/af9941ff97/index.js"></script>

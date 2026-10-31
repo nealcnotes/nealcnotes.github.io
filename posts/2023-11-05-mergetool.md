@@ -1,9 +1,9 @@
 ---
-title: "wwhhhaattt vim 4 panel git merge???"
-categories: 
-  - "old-comics"
-tags: 
-  - "vim"
+title: wwhhhaattt vim 4 panel git merge???
+date: 2023-11-05
+categories:
+- old-comics
+- vim
 ---
 
 

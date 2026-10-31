@@ -12,3 +12,15 @@ CLAUDE.md
 
 # photo-editor sidecars (from the old Jekyll site)
 *.xmp
+
+/.quarto/
+**/*.quarto_ipynb
+
+# RCS history of the private CLAUDE.md (public repo: never commit)
+*,v
+
+# test leftovers
+__pycache__/
+.pytest_cache/
+.hypothesis/
+tests/*.log

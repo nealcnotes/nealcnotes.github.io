@@ -1,0 +1,1 @@
+cd tests && uv run -q --with pytest --with loguru --with pyyaml pytest -q

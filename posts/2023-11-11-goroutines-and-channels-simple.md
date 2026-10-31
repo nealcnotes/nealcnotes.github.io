@@ -1,11 +1,10 @@
 ---
-title: "Goroutines and channels - simple!"
-date: "2023-11-11"
-categories: 
-  - "old-comics"
-tags: 
-  - "concurrency"
-  - "syntax"
+title: Goroutines and channels - simple!
+date: 2023-11-11
+categories:
+- old-comics
+- concurrency
+- syntax
 ---
 
 

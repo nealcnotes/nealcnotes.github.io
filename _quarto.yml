@@ -1,14 +1,26 @@
 project:
   type: website
-  # _drafts/ is its own local repo; Quarto skips _-prefixed dirs anyway.
+  # CNAME: `quarto publish gh-pages` replaces the branch each time, and
+  # without this file GitHub drops the custom domain (tests/test_site.py).
+  resources:
+    - CNAME
+  # _drafts/ is its own local repo; Quarto skips _-prefixed dirs, so
+  # _drafts/ and the old unpublished _archive/ never reach the site.
   # Preview one draft with: quarto preview _drafts/<file>.qmd
 
 website:
   title: "nealcnotes"
+  site-url: https://nealcnotes.com
+  favicon: favicon-32x32.png
   navbar:
     left:
       - href: index.qmd
-        text: Home
+        text: Posts
+      - href: https://nealch.gumroad.com
+        text: Buy Zines
+    right:
+      - icon: rss
+        href: index.xml
 
 format:
   html:
