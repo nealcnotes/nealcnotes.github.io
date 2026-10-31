@@ -67,3 +67,12 @@ def test_why_the_build_carries_cname():
 def test_no_jekyll_left():
     for name in ("_config.yml", "Gemfile", "_posts", "_includes", "_sass", "index.md"):
         assert not (SITE / name).exists(), name
+
+
+def test_why_posts_carry_no_html_comments():
+    """Promotion strips the draft's `<!-- ... -->` notes (state, Q&A,
+    Claude's comments): they are invisible on the page but readable in
+    its source, and the working copy with them stays in _drafts/ (the
+    essentialine pattern)."""
+    for p in POSTS:
+        assert "<!--" not in p.read_text(), f"{p.name} still has a comment"

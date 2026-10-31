@@ -5,12 +5,6 @@ date: 2026-10-31
 categories: [lessons, python, lean]
 ---
 
-<!--
-DRAFT, simplified 2026-10-31 (before: 5ba7f87; Neal's edits: 0e38cf6).
-Lean blocks checked with Lean 4.35.0 (tests/test_lesson1_lean.py).
-Windows-side steps untested (wsl --install, Alt+Shift+D, Claude in Chrome).
-Plan: two or three sittings (Part 1 alone is about an hour).
--->
 
 ## Why are we doing this?
 
