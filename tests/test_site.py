@@ -76,3 +76,19 @@ def test_why_posts_carry_no_html_comments():
     essentialine pattern)."""
     for p in POSTS:
         assert "<!--" not in p.read_text(), f"{p.name} still has a comment"
+
+
+def test_why_notebooks_ship_as_downloads_not_pages():
+    """The pandas posts link /assets/notebooks/*.ipynb for readers to
+    download. Left to its defaults Quarto renders every .ipynb into a
+    page (and did, during the first publish, 2026-10-31); the render
+    list keeps Quarto to the home page and posts/. Asks Quarto itself
+    (`quarto inspect`, ~1 s) which files it would render."""
+    import json
+    import subprocess
+    out = subprocess.run(["quarto", "inspect"], cwd=SITE, capture_output=True,
+                         text=True, check=True, timeout=60).stdout
+    inputs = {str(Path(f).relative_to(SITE)) for f in json.loads(out)["files"]["input"]}
+    assert not any(f.endswith(".ipynb") for f in inputs), inputs
+    assert {"index.qmd", "posts/lesson1-setup-gauss.qmd"} <= inputs
+    assert len(inputs) == 1 + len(POSTS)
