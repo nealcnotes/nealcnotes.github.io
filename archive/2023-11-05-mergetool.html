@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-11-11">
+<meta name="dcterms.date" content="2023-11-05">
 
-<title>Goroutines and channels - simple! – nealcnotes</title>
+<title>wwhhhaattt vim 4 panel git merge??? – nealcnotes</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -130,11 +130,10 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Goroutines and channels - simple!</h1>
+<h1 class="title">wwhhhaattt vim 4 panel git merge???</h1>
   <div class="quarto-categories">
     <div class="quarto-category">old-comics</div>
-    <div class="quarto-category">concurrency</div>
-    <div class="quarto-category">syntax</div>
+    <div class="quarto-category">vim</div>
   </div>
   </div>
 
@@ -146,7 +145,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 11, 2023</p>
+      <p class="date">November 5, 2023</p>
     </div>
   </div>
   
@@ -160,17 +159,16 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../assets/images/goroutine.channel.png" class="img-fluid figure-img"></p>
-<figcaption>Animals explaining goroutines and channels</figcaption>
+<p><img src="../assets/images/vim-mergetool.png" class="img-fluid figure-img"></p>
+<figcaption>Animals on vim’s 4 panel merge screen</figcaption>
 </figure>
 </div>
 <p><em>An early try at programming-with-cartoons, in the spirit of <a href="https://poignant.guide/">_why’s Poignant Guide</a>. Current work is at <a href="..">home</a>.</em></p>
-<p>A few animals marked up an introduction to goroutines and channels from <a href="https://go.dev/talks/2012/concurrency.slide#20">https://go.dev/talks/2012/concurrency.slide#20</a> ! You can copy paste the below into a file, say simple.go, and run it with go run simple.go</p>
-<p>{% highlight golang linenos %} package main</p>
-<p>import (“fmt” “math/rand” “time”)</p>
-<p>func main() { c := make(chan string) go boring(“boring!”, c) for i := 0; i &lt; 5; i++ { fmt.Printf(“You say: %q\n”, &lt;-c) // Receive expression is just a value. } fmt.Println(“You’re boring; I’m leaving.”) }</p>
-<p>func boring(msg string, c chan string) { for i := 0; ; i++ { c &lt;- fmt.Sprintf(“%s %d”, msg, i) // Expression to be sent can be any suitable value. time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond) } } {% endhighlight %}</p>
-<p>Portions of this page are modifications based on work created and <a href="https://developers.google.com/readme/policies">shared by Google</a> and used according to terms described in the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons 4.0 Attribution License</a>.</p>
+<p>You don’t understand 4 panel vim merge - and git merge itself is complex - someone else’s changes, and git in a strange state. (None of which the boss is interested in.)</p>
+<p>Luckily you can delay gratification: for example, you profit by learning basic vim editing commands, so you actually have the most powerful tool at your fingertips. Don’t take the cookie, invest about 5 more minutes - yes it looks complicated at first, but hold on, it’s actually simple and fast, and you’ll get 2 more cookies.</p>
+<p>The bash commands you need:</p>
+<p>git config merge.tool vimdiff git config merge.conflictstyle diff3 git config mergetool.prompt false git mergetool</p>
+<p>You can work through this excellent example if you want to learn more details: <a href="https://www.rosipov.com/blog/use-vimdiff-as-git-mergetool/">https://www.rosipov.com/blog/use-vimdiff-as-git-mergetool/</a></p>
 
 
 
@@ -576,6 +574,19 @@ ul.task-list li input[type="checkbox"] {
   });
   </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p><a href="../archive/">Archive</a></p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
 
 
 
