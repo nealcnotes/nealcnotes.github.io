@@ -1,5 +1,11 @@
 [
   {
+    "listing": "/index.html",
+    "items": [
+      "/posts/lesson1-setup-gauss.html"
+    ]
+  },
+  {
     "listing": "/archive/index.html",
     "items": [
       "/archive/2024-01-02-pandas-indexing.html",
@@ -7,14 +13,8 @@
       "/archive/2023-11-20-select-is-switch-case-for-concurrency.html",
       "/archive/2023-11-14-go-versus-c-declarations.html",
       "/archive/2023-11-11-goroutines-and-channels-simple.html",
-      "/archive/2023-11-05-mergetool.html"
-    ]
-  },
-  {
-    "listing": "/index.html",
-    "items": [
-      "/posts/lesson1-setup-gauss.html",
-      "/posts/2023-06-30-hamilton-86.html"
+      "/archive/2023-11-05-mergetool.html",
+      "/archive/2023-06-30-hamilton-86.html"
     ]
   }
 ]
