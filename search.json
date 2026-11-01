@@ -21,25 +21,11 @@
     "text": "Animals explaining goroutines and channels\n\n\nAn early try at programming-with-cartoons, in the spirit of _why’s Poignant Guide. Current work is at home.\nA few animals marked up an introduction to goroutines and channels from https://go.dev/talks/2012/concurrency.slide#20 ! You can copy paste the below into a file, say simple.go, and run it with go run simple.go\n{% highlight golang linenos %} package main\nimport (“fmt” “math/rand” “time”)\nfunc main() { c := make(chan string) go boring(“boring!”, c) for i := 0; i &lt; 5; i++ { fmt.Printf(“You say: %q\\n”, &lt;-c) // Receive expression is just a value. } fmt.Println(“You’re boring; I’m leaving.”) }\nfunc boring(msg string, c chan string) { for i := 0; ; i++ { c &lt;- fmt.Sprintf(“%s %d”, msg, i) // Expression to be sent can be any suitable value. time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond) } } {% endhighlight %}\nPortions of this page are modifications based on work created and shared by Google and used according to terms described in the Creative Commons 4.0 Attribution License."
   },
   {
-    "objectID": "archive/index.html",
-    "href": "archive/index.html",
-    "title": "Archive",
-    "section": "",
-    "text": "Comics and notes from 2023–24.\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n      \n        Title\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nDate\n\n\n\nTitle\n\n\n\n\n\n\n\n\nJan 2, 2024\n\n\nPandas Indexing Primer\n\n\n\n\n\n\nDec 13, 2023\n\n\nSQLite and Pandas quick intro\n\n\n\n\n\n\nNov 20, 2023\n\n\nSelect is switch/case for concurrency!\n\n\n\n\n\n\nNov 14, 2023\n\n\nGo versus C declarations\n\n\n\n\n\n\nNov 11, 2023\n\n\nGoroutines and channels - simple!\n\n\n\n\n\n\nNov 5, 2023\n\n\nwwhhhaattt vim 4 panel git merge???\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "posts/2023-06-30-hamilton-86.html",
-    "href": "posts/2023-06-30-hamilton-86.html",
+    "objectID": "archive/2023-06-30-hamilton-86.html",
+    "href": "archive/2023-06-30-hamilton-86.html",
     "title": "Need a decently priced rum?",
     "section": "",
     "text": "Hamilton 86 is Guyanese rum without added sugar. Sipping, it opens a clean, straight slight burn, smooth, then we find the caramel, tobacco, smoke, really a nice rum and well priced."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "nealcnotes",
-    "section": "",
-    "text": "Notes and lessons on math, programming, and checking what the machine hands you.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLesson 1: Talking to the computer in words\n\n\nSet up, add up, prove it\n\n\n\nlessons\n\npython\n\nlean\n\n\n\n\n\n\n\n\n\nOct 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nNeed a decently priced rum?\n\n\n\n\n\n\ncocktails\n\nrum\n\nalcohol\n\n\n\n\n\n\n\n\n\nJun 30, 2023\n\n\nNeal C\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/lesson1-setup-gauss.html",
@@ -215,6 +201,20 @@
     "title": "Lesson 1: Talking to the computer in words",
     "section": "What we did today",
     "text": "What we did today\n\nSet up Linux with Claude as a tutor, plus fish, nvim and Python.\nAdded 1 to 100 with a loop and with Gauss’s trick.\nChecked a thousand cases, and saw why that isn’t a proof.\nPut a check inside the loop, and saw why it can never fail: induction.\nWrote the same loop in Lean, next to Gauss’s formula, and claimed the two programs always agree.\nHad Claude translate your proof for Lean to check.\n\nThe computer did the adding. You did the reasoning."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "nealcnotes",
+    "section": "",
+    "text": "Notes and lessons on math, programming, and checking what the machine hands you.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLesson 1: Talking to the computer in words\n\n\nSet up, add up, prove it\n\n\n\nlessons\n\npython\n\nlean\n\n\n\n\n\n\n\n\n\nOct 31, 2026\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "archive/index.html",
+    "href": "archive/index.html",
+    "title": "Archive",
+    "section": "",
+    "text": "Comics and notes from 2023–24.\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n      \n        Title\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nDate\n\n\n\nTitle\n\n\n\n\n\n\n\n\nJan 2, 2024\n\n\nPandas Indexing Primer\n\n\n\n\n\n\nDec 13, 2023\n\n\nSQLite and Pandas quick intro\n\n\n\n\n\n\nNov 20, 2023\n\n\nSelect is switch/case for concurrency!\n\n\n\n\n\n\nNov 14, 2023\n\n\nGo versus C declarations\n\n\n\n\n\n\nNov 11, 2023\n\n\nGoroutines and channels - simple!\n\n\n\n\n\n\nNov 5, 2023\n\n\nwwhhhaattt vim 4 panel git merge???\n\n\n\n\n\n\nJun 30, 2023\n\n\nNeed a decently priced rum?\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "archive/2023-11-05-mergetool.html",
