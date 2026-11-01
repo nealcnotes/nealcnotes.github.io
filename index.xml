@@ -1,0 +1,4477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>nealcnotes</title>
+<link>https://nealcnotes.com/</link>
+<atom:link href="https://nealcnotes.com/index.xml" rel="self" type="application/rss+xml"/>
+<description></description>
+<generator>quarto-1.10.19</generator>
+<lastBuildDate>Sat, 31 Oct 2026 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Lesson 1: Talking to the computer in words</title>
+  <link>https://nealcnotes.com/posts/lesson1-setup-gauss.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="why-are-we-doing-this" class="level2">
+<h2 class="anchored" data-anchor-id="why-are-we-doing-this">Why are we doing this?</h2>
+<p>An AI can install software, add up numbers and write proofs faster than either of us ever will. So why learn any of it?</p>
+<p>For the same reason people learned pure math long before anyone needed it. Almost nobody uses calculus at work. What it built was the ability to understand: to follow an argument, see why it holds, and notice when it doesn’t.</p>
+<p>That’s the point of this course: not to get the computer to do things, but to <strong>understand what it did, and why</strong>, well enough to catch it when it’s wrong.</p>
+<p>Every step comes with three habits:</p>
+<ul>
+<li><strong>Predict.</strong> Before you press Enter, say what will happen.</li>
+<li><strong>Check.</strong> Did it? If not, that’s the interesting part.</li>
+<li><strong>Explain.</strong> Say <em>why</em>, in your own words.</li>
+</ul>
+<p>Today, in four parts:</p>
+<ol type="1">
+<li><strong>Set up</strong> Linux inside Windows, with an AI tutor beside it.</li>
+<li><strong>Python basics:</strong> boxes, questions and repeats.</li>
+<li><strong>Add up</strong> 1 to 100, and ask when checking becomes proving.</li>
+<li><strong>Lean:</strong> the same program in a language that checks proofs.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>How to use this page
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Each grey box has a copy button in its top right corner. Paste into the terminal with Ctrl+Shift+V and press Enter. Read the sentence above each box <em>before</em> you run it.</p>
+</div>
+</div>
+</section>
+<section id="part-1-set-up" class="level1">
+<h1>Part 1: Set up</h1>
+<section id="turn-on-linux-wsl" class="level2">
+<h2 class="anchored" data-anchor-id="turn-on-linux-wsl">Turn on Linux (WSL)</h2>
+<p>Underneath the windows and buttons, a computer works with text. A <strong>terminal</strong> is a window where you talk to it in words. We’ll use <strong>Linux</strong>, running inside Windows (that’s <strong>WSL</strong>, Windows Subsystem for Linux).</p>
+<ol type="1">
+<li>Click Start and type <strong>PowerShell</strong>.</li>
+<li>Right-click <strong>Windows PowerShell</strong>, choose <strong>Run as administrator</strong>, and click Yes.</li>
+<li>Paste this and press Enter:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb1-1">wsl <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">--</span>install</span></code></pre></div></div>
+<p>When it says so, <strong>restart the computer</strong>. A window called <strong>Ubuntu</strong> (our kind of Linux) then opens and asks you to make up a <strong>username</strong> (short, lowercase, no spaces) and a <strong>password</strong>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>The password is invisible
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When you type it, <em>nothing appears</em>, not even dots. That’s normal. Type it anyway and press Enter.</p>
+</div>
+</div>
+<p>From now on, open <strong>Terminal</strong> from the Start menu and pick <strong>Ubuntu</strong> from the ▾ menu next to the tabs.</p>
+</section>
+<section id="look-around" class="level2">
+<h2 class="anchored" data-anchor-id="look-around">Look around</h2>
+<p>The line ending in <code>$</code> is the <strong>prompt</strong>: the computer waiting for you.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">pwd</span></span></code></pre></div></div>
+<p><code>pwd</code> prints where you are, something like <code>/home/anna</code>: your <strong>home folder</strong>, written as a <strong>path</strong> (folders inside folders, separated by <code>/</code>).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mkdir</span> course</span>
+<span id="cb3-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> course</span>
+<span id="cb3-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">pwd</span></span></code></pre></div></div>
+<p><strong>Predict</strong> before the last line: what will <code>pwd</code> print now? (<code>mkdir</code> makes a folder, <code>cd</code> goes into one, <code>cd ..</code> goes up a level.)</p>
+</section>
+<section id="stop-the-password-questions" class="level2">
+<h2 class="anchored" data-anchor-id="stop-the-password-questions">Stop the password questions</h2>
+<p>Commands starting with <code>sudo</code> run as the administrator, and Linux asks for your password each time. The Windows login already protects this computer, so we tell Linux to stop asking:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$USER</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> ALL=(ALL) NOPASSWD:ALL"</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> tee /etc/sudoers.d/<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$USER</span></span>
+<span id="cb4-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> chmod 0440 /etc/sudoers.d/<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$USER</span></span></code></pre></div></div>
+</section>
+<section id="your-tutor-claude-code" class="level2">
+<h2 class="anchored" data-anchor-id="your-tutor-claude-code">Your tutor: Claude Code</h2>
+<p><strong>Claude</strong> is an AI, a <strong>language model</strong>: it learned from a huge amount of text to predict what words come next. That turns out to be enough to explain things and write code. It also makes Claude <em>very good at sounding right</em>. Usually it is right. Sometimes it isn’t, and it can’t always tell. That’s why you check.</p>
+<p><strong>Claude Code</strong> lets you talk to Claude in the terminal. You’ll need a Claude account.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">curl</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-fsSL</span> https://claude.ai/install.sh <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">bash</span></span></code></pre></div></div>
+<p><code>curl</code> downloads the installer, and <code>| bash</code> runs it (the <code>|</code>, a <em>pipe</em>, sends one command’s output into the next).</p>
+<p>Claude could do this whole lesson by itself. That’s why we tell it not to. This box writes a file called <code>CLAUDE.md</code>: standing instructions Claude reads every time it starts in this folder.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> ~/course/CLAUDE.md <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;&lt;'EOF'</span></span>
+<span id="cb6-2"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"># Tutor mode</span></span>
+<span id="cb6-3"></span>
+<span id="cb6-4"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">I'm a beginner learning to program, and above all to reason.</span></span>
+<span id="cb6-5"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">The point is that I work things out myself.</span></span>
+<span id="cb6-6"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">You're my tutor, not the one doing the work.</span></span>
+<span id="cb6-7"></span>
+<span id="cb6-8"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">- Never write the code for my exercises,</span></span>
+<span id="cb6-9"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  and don't run commands or edit files for me.</span></span>
+<span id="cb6-10"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  If you solve it, the lesson is lost.</span></span>
+<span id="cb6-11"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">- If I paste an error message, explain in plain words</span></span>
+<span id="cb6-12"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  what it means and where to look. One hint, not the fix.</span></span>
+<span id="cb6-13"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">- If I ask what a command does, explain it simply,</span></span>
+<span id="cb6-14"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  then ask me to predict what will happen before I run it.</span></span>
+<span id="cb6-15"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">- Ask me "why?" often, and look for the hole</span></span>
+<span id="cb6-16"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  in my explanations.</span></span>
+<span id="cb6-17"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">- If I ask how you work, or why AI gets things wrong,</span></span>
+<span id="cb6-18"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  explain honestly and simply. That's part of the course.</span></span>
+<span id="cb6-19"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">- Allowed: if I ask for code *to referee*</span></span>
+<span id="cb6-20"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  (with a hidden bug for me to find), write it.</span></span>
+<span id="cb6-21"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">- Keep answers short. Use everyday words.</span></span>
+<span id="cb6-22"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">EOF</span></span></code></pre></div></div>
+<p>Press <strong>Alt+Shift+D</strong> to split the window into two panes. In the <strong>right</strong> pane, start Claude:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> ~/course</span>
+<span id="cb7-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">claude</span></span></code></pre></div></div>
+<p>The first time, it opens a browser to log in. Claude asks before it does anything on your computer: say no unless you understand what it’s asking.</p>
+<p>Try two questions: <em>“What did the <code>cat &gt; CLAUDE.md</code> command I just ran do?”</em> and <em>“When are you most likely to be wrong?”</em></p>
+<p>From now on: <strong>left pane, you work. Right pane, you ask.</strong></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Asking well
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Claude only knows what you tell it. A good question says <strong>what you did</strong>, <strong>what happened</strong>, and <strong>what you think</strong>: <em>“I ran <code>python3 gauss.py</code> and got this error: (paste). I think line 3 is wrong. Am I right?”</em> Errors are normal. Read each one yourself first and guess, then paste it with your guess. Fixing it is your job.</p>
+</div>
+</div>
+</section>
+<section id="a-friendlier-shell-fish" class="level2">
+<h2 class="anchored" data-anchor-id="a-friendlier-shell-fish">A friendlier shell: fish</h2>
+<p>The program that reads what you type is the <strong>shell</strong>. Ubuntu’s is <code>bash</code>. We’ll use <strong>fish</strong>, which helps you type less. Ask Claude what <code>chsh</code> does, and <strong>predict</strong> what will change, and when:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> apt update <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">&amp;&amp;</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> apt install <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-y</span> fish</span>
+<span id="cb8-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> chsh <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-s</span> /usr/bin/fish <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$USER</span></span></code></pre></div></div>
+<p>(<code>apt</code> installs software.) Close the left pane (<code>exit</code>) and open a new one with Alt+Shift+D. Was your prediction right?</p>
+<p>Fish suggests the rest of a command in grey from what you typed before (→ accepts it), and Tab finishes names. ↑ brings back earlier commands.</p>
+<p>Fish doesn’t know yet where Claude was installed. Tell it once:</p>
+<pre class="fish"><code>fish_add_path ~/.local/bin</code></pre>
+<p><strong>Explain</strong> (ask Claude if you’re stuck): what is a “path”, and why did bash find Claude but fish didn’t?</p>
+</section>
+<section id="an-editor-nvim" class="level2">
+<h2 class="anchored" data-anchor-id="an-editor-nvim">An editor: nvim</h2>
+<p>To write programs we need a text <strong>editor</strong>. <strong>nvim</strong> runs inside the terminal.</p>
+<pre class="fish"><code>sudo apt install -y neovim
+cd ~/course
+nvim hello.txt</code></pre>
+<p>nvim starts in <em>normal mode</em>, where keys are commands, not letters. Four things are enough:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Press</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>i</code></td>
+<td>start typing (<em>insert mode</em>)</td>
+</tr>
+<tr class="even">
+<td><code>Esc</code></td>
+<td>stop typing</td>
+</tr>
+<tr class="odd">
+<td><code>:wq</code> Enter</td>
+<td>save and quit</td>
+</tr>
+<tr class="even">
+<td><code>:q!</code> Enter</td>
+<td>quit <em>without</em> saving</td>
+</tr>
+</tbody>
+</table>
+<p>Press <code>i</code>, type <code>hello</code>, press <code>Esc</code>, type <code>:wq</code>, press Enter. <strong>Predict:</strong> what will this print?</p>
+<pre class="fish"><code>cat hello.txt</code></pre>
+<p>Stuck in nvim? Press <code>Esc</code> a few times, then <code>:q!</code>. (More nvim: type <code>:Tutor</code> inside it.)</p>
+</section>
+<section id="python" class="level2">
+<h2 class="anchored" data-anchor-id="python">Python</h2>
+<pre class="fish"><code>python3</code></pre>
+<p>The prompt changes to <code>&gt;&gt;&gt;</code>: you’re talking to Python now. <strong>Predict</strong> each answer, then check:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb13-2"><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb13-3"><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">//</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb13-4"><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span></span></code></pre></div></div>
+<p>Ask Claude why <code>7 / 2</code> and <code>7 // 2</code> differ, then explain it back. Leave Python with <strong>Ctrl+D</strong>.</p>
+<p>A good place to stop for the day.</p>
+</section>
+</section>
+<section id="part-2-python-basics" class="level1">
+<h1>Part 2: Python basics</h1>
+<section id="boxes-and-questions" class="level2">
+<h2 class="anchored" data-anchor-id="boxes-and-questions">Boxes and questions</h2>
+<p>Start Python again and <strong>predict</strong> each line before pressing Enter:</p>
+<pre class="fish"><code>python3</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span></span>
+<span id="cb15-2">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb15-3">x</span>
+<span id="cb15-4">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb15-5">x</span>
+<span id="cb15-6">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span></span>
+<span id="cb15-7">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span></span></code></pre></div></div>
+<p><code>x = 5</code> makes a box called <code>x</code> and puts 5 in it. <code>x + 1</code> works out an answer but leaves the box alone.</p>
+<p>In maths, <code>x = x + 1</code> is nonsense. In Python, <code>=</code> means <strong>“work out the right side, then put it in the box on the left”</strong>.</p>
+<p><code>==</code> <em>asks</em> whether two things are equal, and the answer is <code>True</code> or <code>False</code>. One <code>=</code> stores, two <code>==</code> ask. Mixing them up is one of the most common mistakes in programming.</p>
+<p>Leave Python with Ctrl+D.</p>
+</section>
+<section id="decisions-if" class="level2">
+<h2 class="anchored" data-anchor-id="decisions-if">Decisions: if</h2>
+<pre class="fish"><code>cd ~/course
+nvim decide.py</code></pre>
+<p>Type this in (<code>i</code> first, <code>Esc</code> and <code>:wq</code> at the end):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1">n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span></span>
+<span id="cb17-2"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb17-3">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(n, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"is even"</span>)</span>
+<span id="cb17-4"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span>:</span>
+<span id="cb17-5">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(n, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"is odd"</span>)</span></code></pre></div></div>
+<p><code>%</code> is the remainder: <code>7 % 2</code> is 1. <code>if</code> runs the indented lines under it when its question is <code>True</code>, otherwise the lines under <code>else:</code>. <strong>Predict</strong>, then run:</p>
+<pre class="fish"><code>python3 decide.py</code></pre>
+</section>
+<section id="indentation-whats-inside-what" class="level2">
+<h2 class="anchored" data-anchor-id="indentation-whats-inside-what">Indentation: what’s inside what</h2>
+<p>A line ending in <code>:</code> starts a <strong>block</strong>: the lines under it, indented 4 spaces further. The block ends at the first line that steps back out. nvim indents for you after a <code>:</code>, but it can’t know <strong>when a block ends</strong>. That’s you, pressing Backspace, and it’s a reasoning question: does this line belong inside?</p>
+</section>
+<section id="repeats-for" class="level2">
+<h2 class="anchored" data-anchor-id="repeats-for">Repeats: for</h2>
+<pre class="fish"><code>nvim loop.py</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> k <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>):</span>
+<span id="cb20-2">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(k, k <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> k)</span></code></pre></div></div>
+<p><code>for</code> runs the indented line once for each <code>k</code> in <code>range(1, 6)</code>: 1, 2, 3, 4, 5. It stops <em>before</em> 6. <strong>Predict</strong> all five lines, then run:</p>
+<pre class="fish"><code>python3 loop.py</code></pre>
+<p><strong>Predict</strong> <em>exactly</em> what this prints:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> k <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>):</span>
+<span id="cb22-2">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> k <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb22-3">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(k, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"even"</span>)</span>
+<span id="cb22-4">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span>:</span>
+<span id="cb22-5">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(k, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"odd"</span>)</span>
+<span id="cb22-6">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"done"</span>)</span></code></pre></div></div>
+<p>How many times does <code>done</code> appear? What changes if <code>print("done")</code> moves one step left, under <code>for</code>? Try both and check.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Try it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Change <code>loop.py</code> to print only the <strong>even</strong> numbers from 1 to 20. You’ll need an <code>if</code> inside the <code>for</code>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="part-3-adding-up" class="level1">
+<h1>Part 3: Adding up</h1>
+<section id="the-story" class="level2">
+<h2 class="anchored" data-anchor-id="the-story">The story</h2>
+<p>Around 1785, the story goes, a teacher told his class to add up every number from 1 to 100. A ten-year-old, Carl Friedrich Gauss, wrote the answer almost at once: <strong>5050</strong>.</p>
+<p><strong>How might he have done it?</strong> Spend two minutes with a pencil before reading on.</p>
+</section>
+<section id="the-slow-way-a-loop" class="level2">
+<h2 class="anchored" data-anchor-id="the-slow-way-a-loop">The slow way: a loop</h2>
+<pre class="fish"><code>cd ~/course
+nvim gauss.py</code></pre>
+<p>Type it in yourself (typing teaches more than pasting):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1">total <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb24-2"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> k <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">101</span>):</span>
+<span id="cb24-3">    total <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> total <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> k</span>
+<span id="cb24-4">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(k, total)</span></code></pre></div></div>
+<p><strong>Predict</strong> the first three lines, then run it:</p>
+<pre class="fish"><code>python3 gauss.py</code></pre>
+<p>The last line says <code>100 5050</code>.</p>
+<p>Now make an error on purpose: delete the spaces in front of <code>total = total + k</code> and run it. Read the error, guess what it means, then paste it to Claude with your guess.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Why 101?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Change <code>range(1, 101)</code> to <code>range(1, 100)</code>. <strong>Predict</strong> the last line, then run it. An AI makes exactly this kind of mistake, and you just learned to catch it.</p>
+</div>
+</div>
+</section>
+<section id="gausss-trick" class="level2">
+<h2 class="anchored" data-anchor-id="gausss-trick">Gauss’s trick</h2>
+<p>Write the sum forwards and backwards:</p>
+<pre><code>  1 +  2 +  3 + ... +  99 + 100
+100 + 99 + 98 + ... +   2 +   1</code></pre>
+<p>Each column adds up to <strong>101</strong>, and there are <strong>100</strong> columns. Two copies of the sum make 100 × 101 = 10100, so one copy is <strong>5050</strong>. For any <img src="https://latex.codecogs.com/png.latex?n">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?1%20+%202%20+%20%5Ccdots%20+%20n%20=%20%5Cfrac%7Bn(n+1)%7D%7B2%7D"></p>
+<p><strong>Explain it to Claude</strong> in your own words, without the picture, and let it look for the hole. (Does your explanation work when <img src="https://latex.codecogs.com/png.latex?n"> is odd?)</p>
+</section>
+<section id="a-check-inside-the-loop" class="level2">
+<h2 class="anchored" data-anchor-id="a-check-inside-the-loop">A check inside the loop</h2>
+<pre class="fish"><code>nvim invariant.py</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1">total <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb28-2"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> k <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">101</span>):</span>
+<span id="cb28-3">    total <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> total <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> k</span>
+<span id="cb28-4">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">assert</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> total <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> k <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> (k <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb28-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(total)</span></code></pre></div></div>
+<p><code>assert</code> means “this must be true here”: if it’s false, Python stops with an <code>AssertionError</code>. So this loop checks Gauss’s formula after every step. <strong>Predict</strong>, then run it:</p>
+<pre class="fish"><code>python3 invariant.py</code></pre>
+<p>It prints <code>5050</code>: no step failed.</p>
+<p>Now break the loop on purpose: change <code>total + k</code> to <code>total + k + 1</code>. <strong>Predict:</strong> at which <code>k</code> does the <code>assert</code> stop it? Then change it back.</p>
+</section>
+<section id="check-lots-of-cases" class="level2">
+<h2 class="anchored" data-anchor-id="check-lots-of-cases">Check lots of cases</h2>
+<p><code>invariant.py</code> only checks up to 100. To check other <code>n</code>, we turn the adding-up into a <strong>function</strong>, made with <code>def</code>: a recipe with a name. [claude: give more defintion of funcitons and def, its an import basic, and then also introduce what assert does with perhaps a simpler example to try like assert 4 % 2 == 0 verssu assert 4 % 2 == 1, then after the check, perhaps another one to do the n^3 example below]</p>
+<p><code>n</code> is its input, and <code>return</code> hands back the answer, so <code>sum_to(100)</code> is 5050.</p>
+<pre class="fish"><code>nvim check.py</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> sum_to(n):</span>
+<span id="cb31-2">    total <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb31-3">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> k <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>):</span>
+<span id="cb31-4">        total <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> total <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> k</span>
+<span id="cb31-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> total</span>
+<span id="cb31-6"></span>
+<span id="cb31-7"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> n <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>):</span>
+<span id="cb31-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">assert</span> sum_to(n) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> (n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">//</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb31-9"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"all 1000 agree"</span>)</span></code></pre></div></div>
+<p>The first part is the loop from <code>gauss.py</code>, indented under <code>def</code>, with <code>n + 1</code> where 101 was. The second part asks, for every <code>n</code> from 0 to 999, whether the loop and the formula agree. <strong>Predict</strong>, then run it:</p>
+<pre class="fish"><code>python3 check.py</code></pre>
+<p>It prints <code>all 1000 agree</code>. Is the formula now true for <em>every</em> number? <strong>Decide before reading on.</strong></p>
+<p>No.&nbsp;A thousand examples is still just examples. Mathematicians have found patterns that held for millions of cases and then broke.</p>
+</section>
+<section id="why-it-can-never-fail" class="level2">
+<h2 class="anchored" data-anchor-id="why-it-can-never-fail">Why it can never fail</h2>
+<p>A claim that stays true after every round is a <strong>loop invariant</strong>, like the <code>assert</code> in <code>invariant.py</code>. Now the big question: if the <code>assert</code> passed in one round, why <em>must</em> it pass in the next? (What does one round add to <code>total</code>?) <strong>Decide before reading on.</strong></p>
+<p>Say it passed in the round for <img src="https://latex.codecogs.com/png.latex?k%20-%201">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?2%20%5Ccdot%20%5Ctext%7Btotal%7D%20=%20(k-1)k"></p>
+<p>The next round, for <img src="https://latex.codecogs.com/png.latex?k">, adds <img src="https://latex.codecogs.com/png.latex?k">, so <img src="https://latex.codecogs.com/png.latex?2%20%5Ccdot%20%5Ctext%7Btotal%7D"> grows by <img src="https://latex.codecogs.com/png.latex?2k">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?(k-1)k%20+%202k%20=%20k(k+1)"></p>
+<p>which is exactly what the <code>assert</code> checks. It passes in the first round, and each passing round makes the next one pass, so it can never fail, however far the loop runs.</p>
+<p>That’s no longer a check. It’s a proof for every <img src="https://latex.codecogs.com/png.latex?n">, and it’s the method from maths class: <strong>induction</strong>. The first round is the first domino, and each round knocks over the next.</p>
+<p><strong>Write this proof on paper, in your own words.</strong> You’ll need it in Part 4.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Try it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Add up the odd numbers 1 + 3 + 5 + … and print the running total for the first 10. What pattern do you see? <em>Why</em> would it hold? (Try drawing it with dots.)</li>
+<li>Ask Claude: <em>“Write a short Python function that adds up 1 to n, with one hidden bug. Don’t tell me where.”</em> Find the bug by reasoning first, then prove it with a check.</li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+<section id="part-4-lean" class="level1">
+<h1>Part 4: Lean</h1>
+<section id="why-ai-and-lean-belong-together" class="level2">
+<h2 class="anchored" data-anchor-id="why-ai-and-lean-belong-together">Why AI and Lean belong together</h2>
+<p>A proof that <em>sounds</em> right can still be wrong, and Claude is very good at sounding right. Lean doesn’t care how convincing a proof sounds: it checks every step, or it refuses. So the AI suggests, and Lean checks.</p>
+<p>That leaves you the most important job: <strong>does the claim say what you meant?</strong> Lean checks that the proof proves the claim, not that it’s the claim you wanted.</p>
+</section>
+<section id="what-lean-is" class="level2">
+<h2 class="anchored" data-anchor-id="what-lean-is">What Lean is</h2>
+<p>Lean is another programming language. It has boxes and loops, like Python, and it can also check proofs. Seeing the same program in a second language shows which parts are the <em>ideas</em> (a box, a repeat) and which are just <em>spelling</em>.</p>
+<p>We’ll use Lean in the browser, with Claude beside it. <strong>Claude in Chrome</strong> is Claude in a side panel of Chrome that can read the page you’re on and type into it. Install the <strong>Claude</strong> extension from the Chrome Web Store, sign in, and pin it (the puzzle-piece icon, then the pin).</p>
+<p>Open <a href="https://live.lean-lang.org">live.lean-lang.org</a>, delete what’s there, and paste:</p>
+<pre class="lean"><code>def sumLoop (n : Nat) : Nat := Id.run do
+  let mut total := 0
+  for k in [1:n+1] do
+    total := total + k
+  return total
+
+#eval sumLoop 100</code></pre>
+<p>The panel on the right shows <code>5050</code>. Here it is next to <code>sum_to</code> from <code>check.py</code>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Python</th>
+<th>Lean</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>def sum_to(n):</code></td>
+<td><code>def sumLoop (n : Nat) : Nat :=</code></td>
+</tr>
+<tr class="even">
+<td><code>total = 0</code></td>
+<td><code>let mut total := 0</code></td>
+</tr>
+<tr class="odd">
+<td><code>for k in range(1, n + 1):</code></td>
+<td><code>for k in [1:n+1] do</code></td>
+</tr>
+<tr class="even">
+<td><code>total = total + k</code></td>
+<td><code>total := total + k</code></td>
+</tr>
+<tr class="odd">
+<td><code>return total</code></td>
+<td><code>return total</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>Nat</code> is a <strong>natural number</strong> (0, 1, 2, …). <code>(n : Nat) : Nat</code> says <code>n</code> is one, and so is the answer.</li>
+<li><code>let mut</code> makes a box you can change (<em>mutable</em>).</li>
+<li><code>:=</code> puts something into a box, like Python’s <code>=</code>.</li>
+<li><code>Id.run do</code> says “steps, done in order”. Just copy it.</li>
+<li><code>#eval</code> runs a line and shows the answer.</li>
+</ul>
+<p><strong>Explain:</strong> what does Lean make you say that Python doesn’t?</p>
+</section>
+<section id="two-programs-one-answer" class="level2">
+<h2 class="anchored" data-anchor-id="two-programs-one-answer">Two programs, one answer</h2>
+<p>Gauss’s formula is a program too, a much faster one. Add it below:</p>
+<pre class="lean"><code>def sumFormula (n : Nat) : Nat := n * (n + 1) / 2
+
+#eval sumFormula 100</code></pre>
+<p><code>/</code> on natural numbers rounds down, like Python’s <code>//</code>. (Why doesn’t that rounding ever change the answer here?)</p>
+</section>
+<section id="checking-isnt-proving" class="level2">
+<h2 class="anchored" data-anchor-id="checking-isnt-proving">Checking isn’t proving</h2>
+<p>Do the two programs agree? Add one check, for <img src="https://latex.codecogs.com/png.latex?n%20=%201000">:</p>
+<pre class="lean"><code>#eval sumLoop 1000 == sumFormula 1000</code></pre>
+<p>It shows <code>true</code>. Now add the claim for <em>every</em> <img src="https://latex.codecogs.com/png.latex?n">:</p>
+<pre class="lean"><code>theorem agree (n : Nat) : sumLoop n = sumFormula n := by
+  sorry</code></pre>
+<p>Read it out loud: “a claim called <code>agree</code>: for any natural number <img src="https://latex.codecogs.com/png.latex?n">, the loop and the formula give the same answer. Proof: <code>sorry</code>.” This is <code>check.py</code> again, for every <img src="https://latex.codecogs.com/png.latex?n"> instead of a thousand.</p>
+<p><code>sorry</code> means “I’ll prove this later”. Lean understands the claim but warns: <code>declaration uses `sorry`</code>. You still owe a proof, and checks like <code>true</code> don’t count. What Lean wants is an argument like your loop invariant.</p>
+</section>
+<section id="ai-translates-lean-checks" class="level2">
+<h2 class="anchored" data-anchor-id="ai-translates-lean-checks">AI translates, Lean checks</h2>
+<p>Writing Lean proofs yourself comes later in the course. Today Claude only <em>translates</em> your proof, and you watch what Lean says.</p>
+<p>Open Claude in Chrome on the Lean page, type in your paper proof from Part 3, and ask:</p>
+<blockquote class="blockquote">
+<p>Please prove <code>agree</code> in Lean by translating my proof, and see whether Lean accepts it. Don’t fix any mistakes in my proof, and don’t fix anything Lean complains about. Only translate my proof into Lean, and translate Lean’s answer back into English.</p>
+</blockquote>
+<p>It may take a few minutes, and then Lean should accept it. Claude may add a smaller claim along the way (something like “one more round adds <img src="https://latex.codecogs.com/png.latex?n%20+%201">”). **Where is that step in your paper proof?</p>
+<p>Next, a claim of my own. Before you send it, <strong>predict</strong>: is it true? Try <img src="https://latex.codecogs.com/png.latex?n%20=%200">, 1 and 2 on paper. Then ask:</p>
+<blockquote class="blockquote">
+<p>Now I want to check whether this also means that sum(n)^2 = n^3. Please convert that to Lean, have Lean check it, and translate only Lean’s answer back into English. Don’t fix the proof.</p>
+</blockquote>
+<p>What did Lean say? And did Claude do only what you asked, or did it quietly change the claim to one that works?</p>
+</section>
+<section id="what-we-did-today" class="level2">
+<h2 class="anchored" data-anchor-id="what-we-did-today">What we did today</h2>
+<ul>
+<li>Set up Linux with Claude as a tutor, plus fish, nvim and Python.</li>
+<li>Added 1 to 100 with a loop and with Gauss’s trick.</li>
+<li>Checked a thousand cases, and saw why that isn’t a proof.</li>
+<li>Put a check inside the loop, and saw why it can never fail: induction.</li>
+<li>Wrote the same loop in Lean, next to Gauss’s formula, and claimed the two programs always agree.</li>
+<li>Had Claude translate your proof for Lean to check.</li>
+</ul>
+<p>The computer did the adding. You did the reasoning.</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>lessons</category>
+  <category>python</category>
+  <category>lean</category>
+  <guid>https://nealcnotes.com/posts/lesson1-setup-gauss.html</guid>
+  <pubDate>Sat, 31 Oct 2026 07:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Pandas Indexing Primer</title>
+  <link>https://nealcnotes.com/posts/2024-01-02-pandas-indexing.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://nealcnotes.com/assets/images/escape.jpg" title="Escape the Pandas Indexing Jungle" class="img-fluid" alt="a castle from which a panda escapes"> <img src="https://nealcnotes.com/assets/images/randnum.jpg" class="img-fluid" alt="first make a dataframe of random numbers with labels"></p>
+<p><em>An early try at programming-with-cartoons, in the spirit of <a href="https://poignant.guide/">_why’s Poignant Guide</a>. Current work is at <a href="..">home</a>.</em></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-3"></span>
+<span id="cb1-4">df1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(np.random.randn(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>),</span>
+<span id="cb1-5">                   index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)),</span>
+<span id="cb1-6">                   columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)))</span>
+<span id="cb1-7">df1</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+0
+</th>
+<th>
+2
+</th>
+<th>
+4
+</th>
+<th>
+6
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+2.871237
+</td>
+<td>
+-1.083014
+</td>
+<td>
+-1.475604
+</td>
+<td>
+-0.752170
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+-2.706205
+</td>
+<td>
+0.329963
+</td>
+<td>
+0.392216
+</td>
+<td>
+-2.409230
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+-0.468933
+</td>
+<td>
+-0.869137
+</td>
+<td>
+-0.228810
+</td>
+<td>
+0.244244
+</td>
+</tr>
+<tr>
+<th>
+6
+</th>
+<td>
+-0.594944
+</td>
+<td>
+0.586175
+</td>
+<td>
+0.777512
+</td>
+<td>
+0.302765
+</td>
+</tr>
+<tr>
+<th>
+8
+</th>
+<td>
+1.919059
+</td>
+<td>
+-0.033826
+</td>
+<td>
+-0.517170
+</td>
+<td>
+0.952174
+</td>
+</tr>
+<tr>
+<th>
+10
+</th>
+<td>
+0.516535
+</td>
+<td>
+-0.311024
+</td>
+<td>
+-0.237281
+</td>
+<td>
+0.986209
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nealcnotes.com/assets/images/randnum_01.jpg" class="img-fluid figure-img"></p>
+<figcaption>the basic indexing goes by labeled columns, like a python dictionary</figcaption>
+</figure>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">df1[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>]  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># column labelled 2, like a python dictionary</span></span></code></pre></div></div>
+<pre><code>0    -1.083014
+2     0.329963
+4    -0.869137
+6     0.586175
+8    -0.033826
+10   -0.311024
+Name: 2, dtype: float64</code></pre>
+<p><img src="https://nealcnotes.com/assets/images/randnum_02.jpg" alt="use .iloc for position based indexing" style="height: 200px;"></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">df1.iloc[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>]  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># row in second position of dataframe</span></span></code></pre></div></div>
+<pre><code>0   -0.468933
+2   -0.869137
+4   -0.228810
+6    0.244244
+Name: 4, dtype: float64</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">df1.iloc[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>] <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># third entry of the above row</span></span></code></pre></div></div>
+<pre><code>0.24424384065382918</code></pre>
+<p><img src="https://nealcnotes.com/assets/images/randnum_03.jpg" alt="use .loc for label based indexing" style="height: 200px;"></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">df1.loc[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>]  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># row labelled 2</span></span></code></pre></div></div>
+<pre><code>0   -2.706205
+2    0.329963
+4    0.392216
+6   -2.409230
+Name: 2, dtype: float64</code></pre>
+<p><img src="https://nealcnotes.com/assets/images/randnum_04.jpg" alt="which also slices" style="height: 200px;"></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">df1.iloc[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>]</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+4
+</th>
+<th>
+6
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+4
+</th>
+<td>
+-0.228810
+</td>
+<td>
+0.244244
+</td>
+</tr>
+<tr>
+<th>
+6
+</th>
+<td>
+0.777512
+</td>
+<td>
+0.302765
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">df1.loc[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>]</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+2
+</th>
+<th>
+4
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+2
+</th>
+<td>
+0.329963
+</td>
+<td>
+0.392216
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+-0.869137
+</td>
+<td>
+-0.228810
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="https://nealcnotes.com/assets/images/randnum_06.jpg" alt="can send a callable function" style="height: 200px;"> The function takes in the dataframe and returns something that .loc can index on</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">df1.loc[<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> df_parameter: df_parameter[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+0
+</th>
+<th>
+2
+</th>
+<th>
+4
+</th>
+<th>
+6
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+2
+</th>
+<td>
+-2.706205
+</td>
+<td>
+0.329963
+</td>
+<td>
+0.392216
+</td>
+<td>
+-2.409230
+</td>
+</tr>
+<tr>
+<th>
+6
+</th>
+<td>
+-0.594944
+</td>
+<td>
+0.586175
+</td>
+<td>
+0.777512
+</td>
+<td>
+0.302765
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="https://nealcnotes.com/assets/images/randnum_05.jpg" alt="filter with a Boolean" style="height: 200px;"></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">df1.loc[df1[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+0
+</th>
+<th>
+2
+</th>
+<th>
+4
+</th>
+<th>
+6
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+2
+</th>
+<td>
+-2.706205
+</td>
+<td>
+0.329963
+</td>
+<td>
+0.392216
+</td>
+<td>
+-2.409230
+</td>
+</tr>
+<tr>
+<th>
+6
+</th>
+<td>
+-0.594944
+</td>
+<td>
+0.586175
+</td>
+<td>
+0.777512
+</td>
+<td>
+0.302765
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="https://nealcnotes.com/assets/images/randnum_07.jpg" alt="dig a little deeper with Booleans" style="height: 200px;"></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(</span>
+<span id="cb14-2">    {<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"AAA"</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>], <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BBB"</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>], <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"CCC"</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>]}</span>
+<span id="cb14-3">)</span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1">df</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+<th>
+CCC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+4
+</td>
+<td>
+10
+</td>
+<td>
+100
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+5
+</td>
+<td>
+20
+</td>
+<td>
+50
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+6
+</td>
+<td>
+30
+</td>
+<td>
+-30
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+7
+</td>
+<td>
+40
+</td>
+<td>
+-50
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1">df.AAA <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span></span></code></pre></div></div>
+<pre><code>0     True
+1     True
+2     True
+3    False
+Name: AAA, dtype: bool</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1">df[(df.AAA <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>)]</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+<th>
+CCC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+4
+</td>
+<td>
+10
+</td>
+<td>
+100
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+5
+</td>
+<td>
+20
+</td>
+<td>
+50
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+6
+</td>
+<td>
+30
+</td>
+<td>
+-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1">df[(df.AAA <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> (df.index.isin([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>]))]</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+<th>
+CCC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+4
+</td>
+<td>
+10
+</td>
+<td>
+100
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+6
+</td>
+<td>
+30
+</td>
+<td>
+-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(</span>
+<span id="cb20-2">    {<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"AAA"</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>], <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BBB"</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>], <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"CCC"</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>]},</span>
+<span id="cb20-3">    index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"foo"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bar"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"boo"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"kar"</span>],</span>
+<span id="cb20-4">)</span>
+<span id="cb20-5">df</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+<th>
+CCC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+foo
+</th>
+<td>
+4
+</td>
+<td>
+10
+</td>
+<td>
+100
+</td>
+</tr>
+<tr>
+<th>
+bar
+</th>
+<td>
+5
+</td>
+<td>
+20
+</td>
+<td>
+50
+</td>
+</tr>
+<tr>
+<th>
+boo
+</th>
+<td>
+6
+</td>
+<td>
+30
+</td>
+<td>
+-30
+</td>
+</tr>
+<tr>
+<th>
+kar
+</th>
+<td>
+7
+</td>
+<td>
+40
+</td>
+<td>
+-50
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="https://nealcnotes.com/assets/images/randnum_08.jpg" alt="Labels" style="height: 200px;"></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1">df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bar"</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"kar"</span>]</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+<th>
+CCC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+bar
+</th>
+<td>
+5
+</td>
+<td>
+20
+</td>
+<td>
+50
+</td>
+</tr>
+<tr>
+<th>
+boo
+</th>
+<td>
+6
+</td>
+<td>
+30
+</td>
+<td>
+-30
+</td>
+</tr>
+<tr>
+<th>
+kar
+</th>
+<td>
+7
+</td>
+<td>
+40
+</td>
+<td>
+-50
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1">df.loc[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bar"</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"kar"</span>]  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Label</span></span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+<th>
+CCC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+bar
+</th>
+<td>
+5
+</td>
+<td>
+20
+</td>
+<td>
+50
+</td>
+</tr>
+<tr>
+<th>
+boo
+</th>
+<td>
+6
+</td>
+<td>
+30
+</td>
+<td>
+-30
+</td>
+</tr>
+<tr>
+<th>
+kar
+</th>
+<td>
+7
+</td>
+<td>
+40
+</td>
+<td>
+-50
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Generic</span></span>
+<span id="cb23-2"></span>
+<span id="cb23-3">df[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>]</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+<th>
+CCC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+foo
+</th>
+<td>
+4
+</td>
+<td>
+10
+</td>
+<td>
+100
+</td>
+</tr>
+<tr>
+<th>
+bar
+</th>
+<td>
+5
+</td>
+<td>
+20
+</td>
+<td>
+50
+</td>
+</tr>
+<tr>
+<th>
+boo
+</th>
+<td>
+6
+</td>
+<td>
+30
+</td>
+<td>
+-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1">datadict <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"AAA"</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>], <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BBB"</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>], <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"CCC"</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>]}</span>
+<span id="cb24-2">datadict</span></code></pre></div></div>
+<pre><code>{'AAA': [4, 5, 6, 7], 'BBB': [10, 20, 30, 40], 'CCC': [100, 50, -30, -50]}</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1">df2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>datadict, index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>])  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Note index starts at 1.</span></span>
+<span id="cb26-2">df2</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+<th>
+CCC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+1
+</th>
+<td>
+4
+</td>
+<td>
+10
+</td>
+<td>
+100
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+5
+</td>
+<td>
+20
+</td>
+<td>
+50
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+6
+</td>
+<td>
+30
+</td>
+<td>
+-30
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+7
+</td>
+<td>
+40
+</td>
+<td>
+-50
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1">df2.iloc[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>]  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Position-oriented</span></span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+<th>
+CCC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+2
+</th>
+<td>
+5
+</td>
+<td>
+20
+</td>
+<td>
+50
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+6
+</td>
+<td>
+30
+</td>
+<td>
+-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1">df2.loc[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>]  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Label-oriented</span></span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+<th>
+CCC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+1
+</th>
+<td>
+4
+</td>
+<td>
+10
+</td>
+<td>
+100
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+5
+</td>
+<td>
+20
+</td>
+<td>
+50
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+6
+</td>
+<td>
+30
+</td>
+<td>
+-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1">df2[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>]</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+<th>
+CCC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+2
+</th>
+<td>
+5
+</td>
+<td>
+20
+</td>
+<td>
+50
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+6
+</td>
+<td>
+30
+</td>
+<td>
+-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="https://nealcnotes.com/assets/images/randnum_10.jpg" alt="Grouping" style="height: 300px;"></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(</span>
+<span id="cb30-2">    {<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"AAA"</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>], <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BBB"</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>]}</span>
+<span id="cb30-3">)</span>
+<span id="cb30-4">df</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+1
+</td>
+<td>
+2
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+1
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+1
+</td>
+<td>
+3
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+2
+</td>
+<td>
+4
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+2
+</td>
+<td>
+5
+</td>
+</tr>
+<tr>
+<th>
+5
+</th>
+<td>
+2
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<th>
+6
+</th>
+<td>
+3
+</td>
+<td>
+2
+</td>
+</tr>
+<tr>
+<th>
+7
+</th>
+<td>
+3
+</td>
+<td>
+3
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="https://nealcnotes.com/assets/images/randnum_11.jpg" alt="idxmin" style="height: 200px;"></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Method 1 : idxmin() to get the index of the minimums</span></span>
+<span id="cb31-2">df.loc[df.groupby(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"AAA"</span>)[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BBB"</span>].idxmin()]</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+1
+</th>
+<td>
+1
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<th>
+5
+</th>
+<td>
+2
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<th>
+6
+</th>
+<td>
+3
+</td>
+<td>
+2
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="https://nealcnotes.com/assets/images/randnum_13.jpg" alt="print groups trick" style="height: 200px;"></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1">df.groupby(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"AAA"</span>).<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">apply</span>(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> a: a[:]) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># https://stackoverflow.com/a/62803666</span></span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+</tr>
+<tr>
+<th>
+AAA
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th rowspan="3" valign="top">
+1
+</th>
+<th>
+0
+</th>
+<td>
+1
+</td>
+<td>
+2
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+1
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+1
+</td>
+<td>
+3
+</td>
+</tr>
+<tr>
+<th rowspan="3" valign="top">
+2
+</th>
+<th>
+3
+</th>
+<td>
+2
+</td>
+<td>
+4
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+2
+</td>
+<td>
+5
+</td>
+</tr>
+<tr>
+<th>
+5
+</th>
+<td>
+2
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<th rowspan="2" valign="top">
+3
+</th>
+<th>
+6
+</th>
+<td>
+3
+</td>
+<td>
+2
+</td>
+</tr>
+<tr>
+<th>
+7
+</th>
+<td>
+3
+</td>
+<td>
+3
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="https://nealcnotes.com/assets/images/randnum_12.jpg" alt="sort first" style="height: 200px;"></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Method 2 : sort then take first of each</span></span>
+<span id="cb33-2">df.sort_values(by<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BBB"</span>).groupby(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"AAA"</span>, as_index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>).first()</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+1
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+2
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+3
+</td>
+<td>
+2
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1">df.sort_values(by<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BBB"</span>)</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+1
+</th>
+<td>
+1
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<th>
+5
+</th>
+<td>
+2
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<th>
+0
+</th>
+<td>
+1
+</td>
+<td>
+2
+</td>
+</tr>
+<tr>
+<th>
+6
+</th>
+<td>
+3
+</td>
+<td>
+2
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+1
+</td>
+<td>
+3
+</td>
+</tr>
+<tr>
+<th>
+7
+</th>
+<td>
+3
+</td>
+<td>
+3
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+2
+</td>
+<td>
+4
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+2
+</td>
+<td>
+5
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1">df.sort_values(by<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BBB"</span>).groupby(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"AAA"</span>,as_index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>).<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">apply</span>(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> a: a[:])</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th rowspan="3" valign="top">
+0
+</th>
+<th>
+1
+</th>
+<td>
+1
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<th>
+0
+</th>
+<td>
+1
+</td>
+<td>
+2
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+1
+</td>
+<td>
+3
+</td>
+</tr>
+<tr>
+<th rowspan="3" valign="top">
+1
+</th>
+<th>
+5
+</th>
+<td>
+2
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+2
+</td>
+<td>
+4
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+2
+</td>
+<td>
+5
+</td>
+</tr>
+<tr>
+<th rowspan="2" valign="top">
+2
+</th>
+<th>
+6
+</th>
+<td>
+3
+</td>
+<td>
+2
+</td>
+</tr>
+<tr>
+<th>
+7
+</th>
+<td>
+3
+</td>
+<td>
+3
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(</span>
+<span id="cb36-2">    {<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"AAA"</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>], <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BBB"</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>], <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"CCC"</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>]}</span>
+<span id="cb36-3">)</span>
+<span id="cb36-4">df</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+<th>
+CCC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+4
+</td>
+<td>
+10
+</td>
+<td>
+100
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+5
+</td>
+<td>
+20
+</td>
+<td>
+50
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+6
+</td>
+<td>
+30
+</td>
+<td>
+-30
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+7
+</td>
+<td>
+40
+</td>
+<td>
+-50
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1">df.loc[(df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BBB"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> (df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"CCC"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)]</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+<th>
+CCC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+4
+</td>
+<td>
+10
+</td>
+<td>
+100
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1">df.loc[(df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BBB"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|</span> (df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"CCC"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)]</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+AAA
+</th>
+<th>
+BBB
+</th>
+<th>
+CCC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+4
+</td>
+<td>
+10
+</td>
+<td>
+100
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+5
+</td>
+<td>
+20
+</td>
+<td>
+50
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>These examples are taken from the main Pandas website and cookbook: - <a href="https://pandas.pydata.org/docs/user_guide/indexing.html">https://pandas.pydata.org/docs/user_guide/indexing.html</a> - <a href="https://pandas.pydata.org/docs/user_guide/cookbook.html">https://pandas.pydata.org/docs/user_guide/cookbook.html</a></p>
+<p>Get the jupyter notebook here: <a href="../assets/notebooks/pandasindexing.ipynb">Pandas Indexing Notebook</a></p>
+
+
+
+ ]]></description>
+  <category>old-comics</category>
+  <category>pandas</category>
+  <guid>https://nealcnotes.com/posts/2024-01-02-pandas-indexing.html</guid>
+  <pubDate>Tue, 02 Jan 2024 08:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>SQLite and Pandas quick intro</title>
+  <link>https://nealcnotes.com/posts/2023-12-13-SQLite-Pandas-Cartopy-Simplified.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nealcnotes.com/assets/images/routemap.png" title="SQLite and Pandas quick intro" class="img-fluid figure-img"></p>
+<figcaption>alt text</figcaption>
+</figure>
+</div>
+<p><em>An early try at programming-with-cartoons, in the spirit of <a href="https://poignant.guide/">_why’s Poignant Guide</a>. Current work is at <a href="..">home</a>.</em></p>
+<p>Download the flights database here: <a href="../assets/notebooks/flights.db">flights.db</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nealcnotes.com/assets/images/pandas_sqlite1_01.jpg" title="Quick Intro" class="img-fluid figure-img"></p>
+<figcaption>alt text</figcaption>
+</figure>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> sqlite3</span>
+<span id="cb1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> cartopy.crs <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> ccrs</span>
+<span id="cb1-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb1-5">pd.set_option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"max_colwidth"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span>
+<span id="cb1-6">pd.set_option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"display.max_rows"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb1-7"></span>
+<span id="cb1-8"></span>
+<span id="cb1-9">con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sqlite3.<span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">connect</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"flights.db"</span>)</span>
+<span id="cb1-10">airdf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_sql_query(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"select * from airports;"</span>, con)</span>
+<span id="cb1-11">airdf</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+index
+</th>
+<th>
+id
+</th>
+<th>
+name
+</th>
+<th>
+city
+</th>
+<th>
+country
+</th>
+<th>
+code
+</th>
+<th>
+icao
+</th>
+<th>
+latitude
+</th>
+<th>
+longitude
+</th>
+<th>
+altitude
+</th>
+<th>
+offset
+</th>
+<th>
+dst
+</th>
+<th>
+timezone
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+0
+</td>
+<td>
+1
+</td>
+<td>
+Goroka
+</td>
+<td>
+Goroka
+</td>
+<td>
+Papua …
+</td>
+<td>
+GKA
+</td>
+<td>
+AYGA
+</td>
+<td>
+-6.081689
+</td>
+<td>
+145.39…
+</td>
+<td>
+5282
+</td>
+<td>
+10
+</td>
+<td>
+U
+</td>
+<td>
+Pacifi…
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+1
+</td>
+<td>
+2
+</td>
+<td>
+Madang
+</td>
+<td>
+Madang
+</td>
+<td>
+Papua …
+</td>
+<td>
+MAG
+</td>
+<td>
+AYMD
+</td>
+<td>
+-5.207083
+</td>
+<td>
+145.7887
+</td>
+<td>
+20
+</td>
+<td>
+10
+</td>
+<td>
+U
+</td>
+<td>
+Pacifi…
+</td>
+</tr>
+<tr>
+<th>
+…
+</th>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+<tr>
+<th>
+8105
+</th>
+<td>
+8105
+</td>
+<td>
+9540
+</td>
+<td>
+Deer H…
+</td>
+<td>
+Deer H…
+</td>
+<td>
+United…
+</td>
+<td>
+DHB
+</td>
+<td>
+
+</td>
+<td>
+48.618397
+</td>
+<td>
+-123.0…
+</td>
+<td>
+0
+</td>
+<td>
+-8
+</td>
+<td>
+A
+</td>
+<td>
+Americ…
+</td>
+</tr>
+<tr>
+<th>
+8106
+</th>
+<td>
+8106
+</td>
+<td>
+9541
+</td>
+<td>
+San Di…
+</td>
+<td>
+San Diego
+</td>
+<td>
+United…
+</td>
+<td>
+OLT
+</td>
+<td>
+
+</td>
+<td>
+32.7552
+</td>
+<td>
+-117.1995
+</td>
+<td>
+0
+</td>
+<td>
+-8
+</td>
+<td>
+A
+</td>
+<td>
+Americ…
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+8107 rows × 13 columns
+</p>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nealcnotes.com/assets/images/pandas_sqlite1_02.jpg" title="Filtering in SQL" class="img-fluid figure-img"></p>
+<figcaption>alt text</figcaption>
+</figure>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">candf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_sql_query(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"select * from airports where country = 'Canada';"</span>, con)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb2-2">candf</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+index
+</th>
+<th>
+id
+</th>
+<th>
+name
+</th>
+<th>
+city
+</th>
+<th>
+country
+</th>
+<th>
+code
+</th>
+<th>
+icao
+</th>
+<th>
+latitude
+</th>
+<th>
+longitude
+</th>
+<th>
+altitude
+</th>
+<th>
+offset
+</th>
+<th>
+dst
+</th>
+<th>
+timezone
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+20
+</td>
+<td>
+21
+</td>
+<td>
+Sault …
+</td>
+<td>
+Sault …
+</td>
+<td>
+Canada
+</td>
+<td>
+YAM
+</td>
+<td>
+CYAM
+</td>
+<td>
+46.485001
+</td>
+<td>
+-84.50…
+</td>
+<td>
+630
+</td>
+<td>
+-5
+</td>
+<td>
+A
+</td>
+<td>
+Americ…
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+21
+</td>
+<td>
+22
+</td>
+<td>
+Winnip…
+</td>
+<td>
+Winnipeg
+</td>
+<td>
+Canada
+</td>
+<td>
+YAV
+</td>
+<td>
+CYAV
+</td>
+<td>
+50.056389
+</td>
+<td>
+-97.0325
+</td>
+<td>
+760
+</td>
+<td>
+-6
+</td>
+<td>
+A
+</td>
+<td>
+Americ…
+</td>
+</tr>
+<tr>
+<th>
+…
+</th>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+<tr>
+<th>
+433
+</th>
+<td>
+8103
+</td>
+<td>
+9538
+</td>
+<td>
+Port M…
+</td>
+<td>
+Port M…
+</td>
+<td>
+Canada
+</td>
+<td>
+YMP
+</td>
+<td>
+
+</td>
+<td>
+50.575556
+</td>
+<td>
+-127.0…
+</td>
+<td>
+225
+</td>
+<td>
+-8
+</td>
+<td>
+A
+</td>
+<td>
+Americ…
+</td>
+</tr>
+<tr>
+<th>
+434
+</th>
+<td>
+8104
+</td>
+<td>
+9539
+</td>
+<td>
+Sulliv…
+</td>
+<td>
+Sulliv…
+</td>
+<td>
+Canada
+</td>
+<td>
+YTG
+</td>
+<td>
+
+</td>
+<td>
+50.883333
+</td>
+<td>
+-126.8…
+</td>
+<td>
+0
+</td>
+<td>
+-8
+</td>
+<td>
+A
+</td>
+<td>
+Americ…
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+435 rows × 13 columns
+</p>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nealcnotes.com/assets/images/pandas_sqlite1_03.jpg" class="img-fluid figure-img"></p>
+<figcaption>alt text</figcaption>
+</figure>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">airdf.loc[airdf.country <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Canada"</span>]</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+index
+</th>
+<th>
+id
+</th>
+<th>
+name
+</th>
+<th>
+city
+</th>
+<th>
+country
+</th>
+<th>
+code
+</th>
+<th>
+icao
+</th>
+<th>
+latitude
+</th>
+<th>
+longitude
+</th>
+<th>
+altitude
+</th>
+<th>
+offset
+</th>
+<th>
+dst
+</th>
+<th>
+timezone
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+20
+</th>
+<td>
+20
+</td>
+<td>
+21
+</td>
+<td>
+Sault …
+</td>
+<td>
+Sault …
+</td>
+<td>
+Canada
+</td>
+<td>
+YAM
+</td>
+<td>
+CYAM
+</td>
+<td>
+46.485001
+</td>
+<td>
+-84.50…
+</td>
+<td>
+630
+</td>
+<td>
+-5
+</td>
+<td>
+A
+</td>
+<td>
+Americ…
+</td>
+</tr>
+<tr>
+<th>
+21
+</th>
+<td>
+21
+</td>
+<td>
+22
+</td>
+<td>
+Winnip…
+</td>
+<td>
+Winnipeg
+</td>
+<td>
+Canada
+</td>
+<td>
+YAV
+</td>
+<td>
+CYAV
+</td>
+<td>
+50.056389
+</td>
+<td>
+-97.0325
+</td>
+<td>
+760
+</td>
+<td>
+-6
+</td>
+<td>
+A
+</td>
+<td>
+Americ…
+</td>
+</tr>
+<tr>
+<th>
+…
+</th>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+<tr>
+<th>
+8103
+</th>
+<td>
+8103
+</td>
+<td>
+9538
+</td>
+<td>
+Port M…
+</td>
+<td>
+Port M…
+</td>
+<td>
+Canada
+</td>
+<td>
+YMP
+</td>
+<td>
+
+</td>
+<td>
+50.575556
+</td>
+<td>
+-127.0…
+</td>
+<td>
+225
+</td>
+<td>
+-8
+</td>
+<td>
+A
+</td>
+<td>
+Americ…
+</td>
+</tr>
+<tr>
+<th>
+8104
+</th>
+<td>
+8104
+</td>
+<td>
+9539
+</td>
+<td>
+Sulliv…
+</td>
+<td>
+Sulliv…
+</td>
+<td>
+Canada
+</td>
+<td>
+YTG
+</td>
+<td>
+
+</td>
+<td>
+50.883333
+</td>
+<td>
+-126.8…
+</td>
+<td>
+0
+</td>
+<td>
+-8
+</td>
+<td>
+A
+</td>
+<td>
+Americ…
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+435 rows × 13 columns
+</p>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nealcnotes.com/assets/images/pandas_sqlite1_04.jpg" class="img-fluid figure-img"></p>
+<figcaption>alt text</figcaption>
+</figure>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">routes <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_sql_query(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb4-2"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">select sa.code as sacode, da.code as dacode, cast(sa.longitude as float) as source_lon,</span></span>
+<span id="cb4-3"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    cast(sa.latitude as float) as source_lat,</span></span>
+<span id="cb4-4"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    cast(da.longitude as float) as dest_lon,</span></span>
+<span id="cb4-5"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    cast(da.latitude as float) as dest_lat</span></span>
+<span id="cb4-6"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">from routes</span></span>
+<span id="cb4-7"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    inner join airports sa on sa.id = routes.source_id</span></span>
+<span id="cb4-8"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    inner join airports da on da.id = routes.dest_id;</span></span>
+<span id="cb4-9"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"""</span>,con)</span>
+<span id="cb4-10">routes</span></code></pre></div></div>
+<div>
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+sacode
+</th>
+<th>
+dacode
+</th>
+<th>
+source_lon
+</th>
+<th>
+source_lat
+</th>
+<th>
+dest_lon
+</th>
+<th>
+dest_lat
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+AER
+</td>
+<td>
+KZN
+</td>
+<td>
+39.956589
+</td>
+<td>
+43.449928
+</td>
+<td>
+49.278728
+</td>
+<td>
+55.606186
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+ASF
+</td>
+<td>
+KZN
+</td>
+<td>
+48.006278
+</td>
+<td>
+46.283333
+</td>
+<td>
+49.278728
+</td>
+<td>
+55.606186
+</td>
+</tr>
+<tr>
+<th>
+…
+</th>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+<tr>
+<th>
+67200
+</th>
+<td>
+FRU
+</td>
+<td>
+OSS
+</td>
+<td>
+74.477556
+</td>
+<td>
+43.061306
+</td>
+<td>
+72.793269
+</td>
+<td>
+40.608989
+</td>
+</tr>
+<tr>
+<th>
+67201
+</th>
+<td>
+OSS
+</td>
+<td>
+FRU
+</td>
+<td>
+72.793269
+</td>
+<td>
+40.608989
+</td>
+<td>
+74.477556
+</td>
+<td>
+43.061306
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+67202 rows × 6 columns
+</p>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nealcnotes.com/assets/images/pandas_sqlite2.jpg" class="img-fluid figure-img"></p>
+<figcaption>alt text</figcaption>
+</figure>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.axes(projection<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>ccrs.PlateCarree())</span>
+<span id="cb5-2">ax.coastlines()</span>
+<span id="cb5-3"></span>
+<span id="cb5-4"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> name, row <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> routes[:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3000</span>].iterrows():</span>
+<span id="cb5-5">    distcolor <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"blue"</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">abs</span>(row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"source_lon"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dest_lon"</span>]) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>  <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red"</span></span>
+<span id="cb5-6">    plt.plot([row.source_lon, row.dest_lon], [row.source_lat, row.dest_lat],</span>
+<span id="cb5-7">             color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>distcolor, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span id="cb5-8">             transform<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>ccrs.Geodetic(),)</span>
+<span id="cb5-9">plt.show()</span></code></pre></div></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nealcnotes.com/assets/images/routemap.png" class="img-fluid figure-img"></p>
+<figcaption>Route Map</figcaption>
+</figure>
+</div>
+<details class="comic-transcript inline-block">
+<summary class="button m1-4 md:p-4 md:text-center font-bold cursor-pointer">
+read the transcript!
+</summary>
+<h3 class="anchored">
+bubble 1: Panda says sqlite3.connect is how we connect Python’s built-in SQLite3 to a standard sqlite3 file.
+</h3>
+<h3 class="anchored">
+bubble 2: Seal says And we can run SQL queries with just the read_sql_query line
+</h3>
+<h3 class="anchored">
+bubble 3: Seal says we can filter with SQL where clauses, and Panda replies Or with pandas boolean indexing
+</h3>
+<h3 class="anchored">
+bubble 4: Panda says we get a dataframe from a few joins.
+</h3>
+<h3 class="anchored">
+bubble 5: Seal says and then make a cool Cartopy map from python
+</h3>
+</details>
+<p>Read more details here: <a href="https://www.dataquest.io/blog/python-pandas-databases">https://www.dataquest.io/blog/python-pandas-databases</a></p>
+<p>Get the jupyter notebook here: <a href="../assets/notebooks/airsqlite.ipynb">SQLite and Pandas Jupyter Notebook</a></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div></div>
+
+
+
+ ]]></description>
+  <category>old-comics</category>
+  <category>pandas</category>
+  <category>sql</category>
+  <guid>https://nealcnotes.com/posts/2023-12-13-SQLite-Pandas-Cartopy-Simplified.html</guid>
+  <pubDate>Wed, 13 Dec 2023 08:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Select is switch/case for concurrency!</title>
+  <link>https://nealcnotes.com/posts/2023-11-20-select-is-switch-case-for-concurrency.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nealcnotes.com/assets/images/select.anim.png" class="img-fluid figure-img"></p>
+<figcaption>Animals explain the select concurrency statement</figcaption>
+</figure>
+</div>
+<p><em>An early try at programming-with-cartoons, in the spirit of <a href="https://poignant.guide/">_why’s Poignant Guide</a>. Current work is at <a href="..">home</a>.</em></p>
+<details class="comic-transcript inline-block">
+<summary class="button m1-4 md:p-4 md:text-center font-bold cursor-pointer">
+read the transcript!
+</summary>
+<h3 class="anchored">
+bubble 1: guy asks bird
+</h3>
+<p>What is select?</p>
+<h3 class="anchored">
+bubble 2: bird explains
+</h3>
+<p>It’s a control structure for concurrency. And Rob Pike, one of Golang’s developers, says it’s the reason channels and goroutines are built-in to the language.</p>
+<h3 class="anchored">
+bubble 3: guy asks “how does it work?”
+</h3>
+<p>Bird answers “It waits until 1 channel is ready. Kind of like case, and then runs the code in the corresponding branch.”</p>
+<h3 class="anchored">
+bubble 4: bird explains lines in Rob Pike’s example
+</h3>
+<p>{% highlight golang linenos %} select { case v1 := &lt;-c1: fmt.Printf(“received %v from c1”, v1) case v2 := &lt;-c2: // bird says here it is fanning in from c1 and c2 to stdout fmt.Printf(“received %v from c2”, v1) case c3 &lt;- 23: fmt.Printf(“sent %v to c3”, 23) default: // giraffe says you can give a default if no channel is ready fmt.Printf(“no one was ready to communicate”) } {% endhighlight %}</p>
+Finally a cow explains if more than 1 channel is ready, then select picks on branch pseudorandomly.
+</details>
+
+
+
+ ]]></description>
+  <category>old-comics</category>
+  <category>concurrency</category>
+  <guid>https://nealcnotes.com/posts/2023-11-20-select-is-switch-case-for-concurrency.html</guid>
+  <pubDate>Mon, 20 Nov 2023 08:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Go versus C declarations</title>
+  <link>https://nealcnotes.com/posts/2023-11-14-go-versus-c-declarations.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><a href="https://nealcnotes.files.wordpress.com/2023/11/godecl.animals.jpg"><img src="https://nealcnotes.files.wordpress.com/2023/11/godecl.animals.jpg?w=1024" class="img-fluid"></a></p>
+<p><em>An early try at programming-with-cartoons, in the spirit of <a href="https://poignant.guide/">_why’s Poignant Guide</a>. Current work is at <a href="..">home</a>.</em></p>
+<p>In C we declare variables by writing examples of how we’d use the variable, whereas in Go write the variable name and then the type. This keeps simple types readable while making complex types more readable, read more on Rob Pikes excellent article <a href="https://go.dev/blog/declaration-syntax">https://go.dev/blog/declaration-syntax</a></p>
+
+
+
+ ]]></description>
+  <category>old-comics</category>
+  <category>syntax</category>
+  <guid>https://nealcnotes.com/posts/2023-11-14-go-versus-c-declarations.html</guid>
+  <pubDate>Tue, 14 Nov 2023 08:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Goroutines and channels - simple!</title>
+  <link>https://nealcnotes.com/posts/2023-11-11-goroutines-and-channels-simple.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nealcnotes.com/assets/images/goroutine.channel.png" class="img-fluid figure-img"></p>
+<figcaption>Animals explaining goroutines and channels</figcaption>
+</figure>
+</div>
+<p><em>An early try at programming-with-cartoons, in the spirit of <a href="https://poignant.guide/">_why’s Poignant Guide</a>. Current work is at <a href="..">home</a>.</em></p>
+<p>A few animals marked up an introduction to goroutines and channels from <a href="https://go.dev/talks/2012/concurrency.slide#20">https://go.dev/talks/2012/concurrency.slide#20</a> ! You can copy paste the below into a file, say simple.go, and run it with go run simple.go</p>
+<p>{% highlight golang linenos %} package main</p>
+<p>import (“fmt” “math/rand” “time”)</p>
+<p>func main() { c := make(chan string) go boring(“boring!”, c) for i := 0; i &lt; 5; i++ { fmt.Printf(“You say: %q\n”, &lt;-c) // Receive expression is just a value. } fmt.Println(“You’re boring; I’m leaving.”) }</p>
+<p>func boring(msg string, c chan string) { for i := 0; ; i++ { c &lt;- fmt.Sprintf(“%s %d”, msg, i) // Expression to be sent can be any suitable value. time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond) } } {% endhighlight %}</p>
+<p>Portions of this page are modifications based on work created and <a href="https://developers.google.com/readme/policies">shared by Google</a> and used according to terms described in the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons 4.0 Attribution License</a>.</p>
+
+
+
+ ]]></description>
+  <category>old-comics</category>
+  <category>concurrency</category>
+  <category>syntax</category>
+  <guid>https://nealcnotes.com/posts/2023-11-11-goroutines-and-channels-simple.html</guid>
+  <pubDate>Sat, 11 Nov 2023 08:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>wwhhhaattt vim 4 panel git merge???</title>
+  <link>https://nealcnotes.com/posts/2023-11-05-mergetool.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nealcnotes.com/assets/images/vim-mergetool.png" class="img-fluid figure-img"></p>
+<figcaption>Animals on vim’s 4 panel merge screen</figcaption>
+</figure>
+</div>
+<p><em>An early try at programming-with-cartoons, in the spirit of <a href="https://poignant.guide/">_why’s Poignant Guide</a>. Current work is at <a href="..">home</a>.</em></p>
+<p>You don’t understand 4 panel vim merge - and git merge itself is complex - someone else’s changes, and git in a strange state. (None of which the boss is interested in.)</p>
+<p>Luckily you can delay gratification: for example, you profit by learning basic vim editing commands, so you actually have the most powerful tool at your fingertips. Don’t take the cookie, invest about 5 more minutes - yes it looks complicated at first, but hold on, it’s actually simple and fast, and you’ll get 2 more cookies.</p>
+<p>The bash commands you need:</p>
+<p>git config merge.tool vimdiff git config merge.conflictstyle diff3 git config mergetool.prompt false git mergetool</p>
+<p>You can work through this excellent example if you want to learn more details: <a href="https://www.rosipov.com/blog/use-vimdiff-as-git-mergetool/">https://www.rosipov.com/blog/use-vimdiff-as-git-mergetool/</a></p>
+
+
+
+ ]]></description>
+  <category>old-comics</category>
+  <category>vim</category>
+  <guid>https://nealcnotes.com/posts/2023-11-05-mergetool.html</guid>
+  <pubDate>Sun, 05 Nov 2023 07:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Need a decently priced rum?</title>
+  <dc:creator>Neal C</dc:creator>
+  <link>https://nealcnotes.com/posts/2023-06-30-hamilton-86.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Hamilton 86 is Guyanese rum without added sugar. Sipping, it opens a clean, straight slight burn, smooth, then we find the caramel, tobacco, smoke, really a nice rum and well priced.</p>
+
+
+
+ ]]></description>
+  <category>cocktails</category>
+  <category>rum</category>
+  <category>alcohol</category>
+  <guid>https://nealcnotes.com/posts/2023-06-30-hamilton-86.html</guid>
+  <pubDate>Fri, 30 Jun 2023 07:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

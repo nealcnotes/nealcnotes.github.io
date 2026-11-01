@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-10-31">
+
+<title>Lesson 1: Talking to the computer in words – nealcnotes</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../favicon-32x32.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-574f58f4068bb8f43535e6e9c10c5508.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">nealcnotes</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Posts</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://nealch.gumroad.com"> 
+<span class="menu-text">Buy Zines</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#why-are-we-doing-this" id="toc-why-are-we-doing-this" class="nav-link active" data-scroll-target="#why-are-we-doing-this">Why are we doing this?</a></li>
+  <li><a href="#part-1-set-up" id="toc-part-1-set-up" class="nav-link" data-scroll-target="#part-1-set-up">Part 1: Set up</a>
+  <ul class="collapse">
+  <li><a href="#turn-on-linux-wsl" id="toc-turn-on-linux-wsl" class="nav-link" data-scroll-target="#turn-on-linux-wsl">Turn on Linux (WSL)</a></li>
+  <li><a href="#look-around" id="toc-look-around" class="nav-link" data-scroll-target="#look-around">Look around</a></li>
+  <li><a href="#stop-the-password-questions" id="toc-stop-the-password-questions" class="nav-link" data-scroll-target="#stop-the-password-questions">Stop the password questions</a></li>
+  <li><a href="#your-tutor-claude-code" id="toc-your-tutor-claude-code" class="nav-link" data-scroll-target="#your-tutor-claude-code">Your tutor: Claude Code</a></li>
+  <li><a href="#a-friendlier-shell-fish" id="toc-a-friendlier-shell-fish" class="nav-link" data-scroll-target="#a-friendlier-shell-fish">A friendlier shell: fish</a></li>
+  <li><a href="#an-editor-nvim" id="toc-an-editor-nvim" class="nav-link" data-scroll-target="#an-editor-nvim">An editor: nvim</a></li>
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python">Python</a></li>
+  </ul></li>
+  <li><a href="#part-2-python-basics" id="toc-part-2-python-basics" class="nav-link" data-scroll-target="#part-2-python-basics">Part 2: Python basics</a>
+  <ul class="collapse">
+  <li><a href="#boxes-and-questions" id="toc-boxes-and-questions" class="nav-link" data-scroll-target="#boxes-and-questions">Boxes and questions</a></li>
+  <li><a href="#decisions-if" id="toc-decisions-if" class="nav-link" data-scroll-target="#decisions-if">Decisions: if</a></li>
+  <li><a href="#indentation-whats-inside-what" id="toc-indentation-whats-inside-what" class="nav-link" data-scroll-target="#indentation-whats-inside-what">Indentation: what’s inside what</a></li>
+  <li><a href="#repeats-for" id="toc-repeats-for" class="nav-link" data-scroll-target="#repeats-for">Repeats: for</a></li>
+  </ul></li>
+  <li><a href="#part-3-adding-up" id="toc-part-3-adding-up" class="nav-link" data-scroll-target="#part-3-adding-up">Part 3: Adding up</a>
+  <ul class="collapse">
+  <li><a href="#the-story" id="toc-the-story" class="nav-link" data-scroll-target="#the-story">The story</a></li>
+  <li><a href="#the-slow-way-a-loop" id="toc-the-slow-way-a-loop" class="nav-link" data-scroll-target="#the-slow-way-a-loop">The slow way: a loop</a></li>
+  <li><a href="#gausss-trick" id="toc-gausss-trick" class="nav-link" data-scroll-target="#gausss-trick">Gauss’s trick</a></li>
+  <li><a href="#a-check-inside-the-loop" id="toc-a-check-inside-the-loop" class="nav-link" data-scroll-target="#a-check-inside-the-loop">A check inside the loop</a></li>
+  <li><a href="#check-lots-of-cases" id="toc-check-lots-of-cases" class="nav-link" data-scroll-target="#check-lots-of-cases">Check lots of cases</a></li>
+  <li><a href="#why-it-can-never-fail" id="toc-why-it-can-never-fail" class="nav-link" data-scroll-target="#why-it-can-never-fail">Why it can never fail</a></li>
+  </ul></li>
+  <li><a href="#part-4-lean" id="toc-part-4-lean" class="nav-link" data-scroll-target="#part-4-lean">Part 4: Lean</a>
+  <ul class="collapse">
+  <li><a href="#why-ai-and-lean-belong-together" id="toc-why-ai-and-lean-belong-together" class="nav-link" data-scroll-target="#why-ai-and-lean-belong-together">Why AI and Lean belong together</a></li>
+  <li><a href="#what-lean-is" id="toc-what-lean-is" class="nav-link" data-scroll-target="#what-lean-is">What Lean is</a></li>
+  <li><a href="#two-programs-one-answer" id="toc-two-programs-one-answer" class="nav-link" data-scroll-target="#two-programs-one-answer">Two programs, one answer</a></li>
+  <li><a href="#checking-isnt-proving" id="toc-checking-isnt-proving" class="nav-link" data-scroll-target="#checking-isnt-proving">Checking isn’t proving</a></li>
+  <li><a href="#ai-translates-lean-checks" id="toc-ai-translates-lean-checks" class="nav-link" data-scroll-target="#ai-translates-lean-checks">AI translates, Lean checks</a></li>
+  <li><a href="#what-we-did-today" id="toc-what-we-did-today" class="nav-link" data-scroll-target="#what-we-did-today">What we did today</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lesson 1: Talking to the computer in words</h1>
+<p class="subtitle lead">Set up, add up, prove it</p>
+  <div class="quarto-categories">
+    <div class="quarto-category">lessons</div>
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">lean</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 31, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="why-are-we-doing-this" class="level2">
+<h2 class="anchored" data-anchor-id="why-are-we-doing-this">Why are we doing this?</h2>
+<p>An AI can install software, add up numbers and write proofs faster than either of us ever will. So why learn any of it?</p>
+<p>For the same reason people learned pure math long before anyone needed it. Almost nobody uses calculus at work. What it built was the ability to understand: to follow an argument, see why it holds, and notice when it doesn’t.</p>
+<p>That’s the point of this course: not to get the computer to do things, but to <strong>understand what it did, and why</strong>, well enough to catch it when it’s wrong.</p>
+<p>Every step comes with three habits:</p>
+<ul>
+<li><strong>Predict.</strong> Before you press Enter, say what will happen.</li>
+<li><strong>Check.</strong> Did it? If not, that’s the interesting part.</li>
+<li><strong>Explain.</strong> Say <em>why</em>, in your own words.</li>
+</ul>
+<p>Today, in four parts:</p>
+<ol type="1">
+<li><strong>Set up</strong> Linux inside Windows, with an AI tutor beside it.</li>
+<li><strong>Python basics:</strong> boxes, questions and repeats.</li>
+<li><strong>Add up</strong> 1 to 100, and ask when checking becomes proving.</li>
+<li><strong>Lean:</strong> the same program in a language that checks proofs.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>How to use this page
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Each grey box has a copy button in its top right corner. Paste into the terminal with Ctrl+Shift+V and press Enter. Read the sentence above each box <em>before</em> you run it.</p>
+</div>
+</div>
+</section>
+<section id="part-1-set-up" class="level1">
+<h1>Part 1: Set up</h1>
+<section id="turn-on-linux-wsl" class="level2">
+<h2 class="anchored" data-anchor-id="turn-on-linux-wsl">Turn on Linux (WSL)</h2>
+<p>Underneath the windows and buttons, a computer works with text. A <strong>terminal</strong> is a window where you talk to it in words. We’ll use <strong>Linux</strong>, running inside Windows (that’s <strong>WSL</strong>, Windows Subsystem for Linux).</p>
+<ol type="1">
+<li>Click Start and type <strong>PowerShell</strong>.</li>
+<li>Right-click <strong>Windows PowerShell</strong>, choose <strong>Run as administrator</strong>, and click Yes.</li>
+<li>Paste this and press Enter:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>install</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When it says so, <strong>restart the computer</strong>. A window called <strong>Ubuntu</strong> (our kind of Linux) then opens and asks you to make up a <strong>username</strong> (short, lowercase, no spaces) and a <strong>password</strong>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>The password is invisible
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When you type it, <em>nothing appears</em>, not even dots. That’s normal. Type it anyway and press Enter.</p>
+</div>
+</div>
+<p>From now on, open <strong>Terminal</strong> from the Start menu and pick <strong>Ubuntu</strong> from the ▾ menu next to the tabs.</p>
+</section>
+<section id="look-around" class="level2">
+<h2 class="anchored" data-anchor-id="look-around">Look around</h2>
+<p>The line ending in <code>$</code> is the <strong>prompt</strong>: the computer waiting for you.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>pwd</code> prints where you are, something like <code>/home/anna</code>: your <strong>home folder</strong>, written as a <strong>path</strong> (folders inside folders, separated by <code>/</code>).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> course</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> course</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Predict</strong> before the last line: what will <code>pwd</code> print now? (<code>mkdir</code> makes a folder, <code>cd</code> goes into one, <code>cd ..</code> goes up a level.)</p>
+</section>
+<section id="stop-the-password-questions" class="level2">
+<h2 class="anchored" data-anchor-id="stop-the-password-questions">Stop the password questions</h2>
+<p>Commands starting with <code>sudo</code> run as the administrator, and Linux asks for your password each time. The Windows login already protects this computer, so we tell Linux to stop asking:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$USER</span><span class="st"> ALL=(ALL) NOPASSWD:ALL"</span> <span class="kw">|</span> <span class="fu">sudo</span> tee /etc/sudoers.d/<span class="va">$USER</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chmod 0440 /etc/sudoers.d/<span class="va">$USER</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="your-tutor-claude-code" class="level2">
+<h2 class="anchored" data-anchor-id="your-tutor-claude-code">Your tutor: Claude Code</h2>
+<p><strong>Claude</strong> is an AI, a <strong>language model</strong>: it learned from a huge amount of text to predict what words come next. That turns out to be enough to explain things and write code. It also makes Claude <em>very good at sounding right</em>. Usually it is right. Sometimes it isn’t, and it can’t always tell. That’s why you check.</p>
+<p><strong>Claude Code</strong> lets you talk to Claude in the terminal. You’ll need a Claude account.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://claude.ai/install.sh <span class="kw">|</span> <span class="fu">bash</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>curl</code> downloads the installer, and <code>| bash</code> runs it (the <code>|</code>, a <em>pipe</em>, sends one command’s output into the next).</p>
+<p>Claude could do this whole lesson by itself. That’s why we tell it not to. This box writes a file called <code>CLAUDE.md</code>: standing instructions Claude reads every time it starts in this folder.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> ~/course/CLAUDE.md <span class="op">&lt;&lt;'EOF'</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st"># Tutor mode</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">I'm a beginner learning to program, and above all to reason.</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="st">The point is that I work things out myself.</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="st">You're my tutor, not the one doing the work.</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="st">- Never write the code for my exercises,</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="st">  and don't run commands or edit files for me.</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="st">  If you solve it, the lesson is lost.</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="st">- If I paste an error message, explain in plain words</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="st">  what it means and where to look. One hint, not the fix.</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="st">- If I ask what a command does, explain it simply,</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="st">  then ask me to predict what will happen before I run it.</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="st">- Ask me "why?" often, and look for the hole</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="st">  in my explanations.</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="st">- If I ask how you work, or why AI gets things wrong,</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="st">  explain honestly and simply. That's part of the course.</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="st">- Allowed: if I ask for code *to referee*</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="st">  (with a hidden bug for me to find), write it.</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="st">- Keep answers short. Use everyday words.</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Press <strong>Alt+Shift+D</strong> to split the window into two panes. In the <strong>right</strong> pane, start Claude:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/course</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The first time, it opens a browser to log in. Claude asks before it does anything on your computer: say no unless you understand what it’s asking.</p>
+<p>Try two questions: <em>“What did the <code>cat &gt; CLAUDE.md</code> command I just ran do?”</em> and <em>“When are you most likely to be wrong?”</em></p>
+<p>From now on: <strong>left pane, you work. Right pane, you ask.</strong></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Asking well
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Claude only knows what you tell it. A good question says <strong>what you did</strong>, <strong>what happened</strong>, and <strong>what you think</strong>: <em>“I ran <code>python3 gauss.py</code> and got this error: (paste). I think line 3 is wrong. Am I right?”</em> Errors are normal. Read each one yourself first and guess, then paste it with your guess. Fixing it is your job.</p>
+</div>
+</div>
+</section>
+<section id="a-friendlier-shell-fish" class="level2">
+<h2 class="anchored" data-anchor-id="a-friendlier-shell-fish">A friendlier shell: fish</h2>
+<p>The program that reads what you type is the <strong>shell</strong>. Ubuntu’s is <code>bash</code>. We’ll use <strong>fish</strong>, which helps you type less. Ask Claude what <code>chsh</code> does, and <strong>predict</strong> what will change, and when:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt install <span class="at">-y</span> fish</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chsh <span class="at">-s</span> /usr/bin/fish <span class="va">$USER</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>(<code>apt</code> installs software.) Close the left pane (<code>exit</code>) and open a new one with Alt+Shift+D. Was your prediction right?</p>
+<p>Fish suggests the rest of a command in grey from what you typed before (→ accepts it), and Tab finishes names. ↑ brings back earlier commands.</p>
+<p>Fish doesn’t know yet where Claude was installed. Tell it once:</p>
+<pre class="fish"><code>fish_add_path ~/.local/bin</code></pre>
+<p><strong>Explain</strong> (ask Claude if you’re stuck): what is a “path”, and why did bash find Claude but fish didn’t?</p>
+</section>
+<section id="an-editor-nvim" class="level2">
+<h2 class="anchored" data-anchor-id="an-editor-nvim">An editor: nvim</h2>
+<p>To write programs we need a text <strong>editor</strong>. <strong>nvim</strong> runs inside the terminal.</p>
+<pre class="fish"><code>sudo apt install -y neovim
+cd ~/course
+nvim hello.txt</code></pre>
+<p>nvim starts in <em>normal mode</em>, where keys are commands, not letters. Four things are enough:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Press</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>i</code></td>
+<td>start typing (<em>insert mode</em>)</td>
+</tr>
+<tr class="even">
+<td><code>Esc</code></td>
+<td>stop typing</td>
+</tr>
+<tr class="odd">
+<td><code>:wq</code> Enter</td>
+<td>save and quit</td>
+</tr>
+<tr class="even">
+<td><code>:q!</code> Enter</td>
+<td>quit <em>without</em> saving</td>
+</tr>
+</tbody>
+</table>
+<p>Press <code>i</code>, type <code>hello</code>, press <code>Esc</code>, type <code>:wq</code>, press Enter. <strong>Predict:</strong> what will this print?</p>
+<pre class="fish"><code>cat hello.txt</code></pre>
+<p>Stuck in nvim? Press <code>Esc</code> a few times, then <code>:q!</code>. (More nvim: type <code>:Tutor</code> inside it.)</p>
+</section>
+<section id="python" class="level2">
+<h2 class="anchored" data-anchor-id="python">Python</h2>
+<pre class="fish"><code>python3</code></pre>
+<p>The prompt changes to <code>&gt;&gt;&gt;</code>: you’re talking to Python now. <strong>Predict</strong> each answer, then check:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="op">+</span> <span class="dv">2</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="dv">7</span> <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="dv">7</span> <span class="op">//</span> <span class="dv">2</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="op">**</span> <span class="dv">10</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Ask Claude why <code>7 / 2</code> and <code>7 // 2</code> differ, then explain it back. Leave Python with <strong>Ctrl+D</strong>.</p>
+<p>A good place to stop for the day.</p>
+</section>
+</section>
+<section id="part-2-python-basics" class="level1">
+<h1>Part 2: Python basics</h1>
+<section id="boxes-and-questions" class="level2">
+<h2 class="anchored" data-anchor-id="boxes-and-questions">Boxes and questions</h2>
+<p>Start Python again and <strong>predict</strong> each line before pressing Enter:</p>
+<pre class="fish"><code>python3</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> x <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">==</span> <span class="dv">6</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">==</span> <span class="dv">7</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>x = 5</code> makes a box called <code>x</code> and puts 5 in it. <code>x + 1</code> works out an answer but leaves the box alone.</p>
+<p>In maths, <code>x = x + 1</code> is nonsense. In Python, <code>=</code> means <strong>“work out the right side, then put it in the box on the left”</strong>.</p>
+<p><code>==</code> <em>asks</em> whether two things are equal, and the answer is <code>True</code> or <code>False</code>. One <code>=</code> stores, two <code>==</code> ask. Mixing them up is one of the most common mistakes in programming.</p>
+<p>Leave Python with Ctrl+D.</p>
+</section>
+<section id="decisions-if" class="level2">
+<h2 class="anchored" data-anchor-id="decisions-if">Decisions: if</h2>
+<pre class="fish"><code>cd ~/course
+nvim decide.py</code></pre>
+<p>Type this in (<code>i</code> first, <code>Esc</code> and <code>:wq</code> at the end):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">7</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> n <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(n, <span class="st">"is even"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(n, <span class="st">"is odd"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>%</code> is the remainder: <code>7 % 2</code> is 1. <code>if</code> runs the indented lines under it when its question is <code>True</code>, otherwise the lines under <code>else:</code>. <strong>Predict</strong>, then run:</p>
+<pre class="fish"><code>python3 decide.py</code></pre>
+</section>
+<section id="indentation-whats-inside-what" class="level2">
+<h2 class="anchored" data-anchor-id="indentation-whats-inside-what">Indentation: what’s inside what</h2>
+<p>A line ending in <code>:</code> starts a <strong>block</strong>: the lines under it, indented 4 spaces further. The block ends at the first line that steps back out. nvim indents for you after a <code>:</code>, but it can’t know <strong>when a block ends</strong>. That’s you, pressing Backspace, and it’s a reasoning question: does this line belong inside?</p>
+</section>
+<section id="repeats-for" class="level2">
+<h2 class="anchored" data-anchor-id="repeats-for">Repeats: for</h2>
+<pre class="fish"><code>nvim loop.py</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">6</span>):</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(k, k <span class="op">*</span> k)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>for</code> runs the indented line once for each <code>k</code> in <code>range(1, 6)</code>: 1, 2, 3, 4, 5. It stops <em>before</em> 6. <strong>Predict</strong> all five lines, then run:</p>
+<pre class="fish"><code>python3 loop.py</code></pre>
+<p><strong>Predict</strong> <em>exactly</em> what this prints:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> k <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(k, <span class="st">"even"</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(k, <span class="st">"odd"</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"done"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>How many times does <code>done</code> appear? What changes if <code>print("done")</code> moves one step left, under <code>for</code>? Try both and check.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Try it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Change <code>loop.py</code> to print only the <strong>even</strong> numbers from 1 to 20. You’ll need an <code>if</code> inside the <code>for</code>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="part-3-adding-up" class="level1">
+<h1>Part 3: Adding up</h1>
+<section id="the-story" class="level2">
+<h2 class="anchored" data-anchor-id="the-story">The story</h2>
+<p>Around 1785, the story goes, a teacher told his class to add up every number from 1 to 100. A ten-year-old, Carl Friedrich Gauss, wrote the answer almost at once: <strong>5050</strong>.</p>
+<p><strong>How might he have done it?</strong> Spend two minutes with a pencil before reading on.</p>
+</section>
+<section id="the-slow-way-a-loop" class="level2">
+<h2 class="anchored" data-anchor-id="the-slow-way-a-loop">The slow way: a loop</h2>
+<pre class="fish"><code>cd ~/course
+nvim gauss.py</code></pre>
+<p>Type it in yourself (typing teaches more than pasting):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">101</span>):</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> total <span class="op">+</span> k</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(k, total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Predict</strong> the first three lines, then run it:</p>
+<pre class="fish"><code>python3 gauss.py</code></pre>
+<p>The last line says <code>100 5050</code>.</p>
+<p>Now make an error on purpose: delete the spaces in front of <code>total = total + k</code> and run it. Read the error, guess what it means, then paste it to Claude with your guess.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Why 101?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Change <code>range(1, 101)</code> to <code>range(1, 100)</code>. <strong>Predict</strong> the last line, then run it. An AI makes exactly this kind of mistake, and you just learned to catch it.</p>
+</div>
+</div>
+</section>
+<section id="gausss-trick" class="level2">
+<h2 class="anchored" data-anchor-id="gausss-trick">Gauss’s trick</h2>
+<p>Write the sum forwards and backwards:</p>
+<pre><code>  1 +  2 +  3 + ... +  99 + 100
+100 + 99 + 98 + ... +   2 +   1</code></pre>
+<p>Each column adds up to <strong>101</strong>, and there are <strong>100</strong> columns. Two copies of the sum make 100 × 101 = 10100, so one copy is <strong>5050</strong>. For any <span class="math inline">\(n\)</span>:</p>
+<p><span class="math display">\[1 + 2 + \cdots + n = \frac{n(n+1)}{2}\]</span></p>
+<p><strong>Explain it to Claude</strong> in your own words, without the picture, and let it look for the hole. (Does your explanation work when <span class="math inline">\(n\)</span> is odd?)</p>
+</section>
+<section id="a-check-inside-the-loop" class="level2">
+<h2 class="anchored" data-anchor-id="a-check-inside-the-loop">A check inside the loop</h2>
+<pre class="fish"><code>nvim invariant.py</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">101</span>):</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> total <span class="op">+</span> k</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="dv">2</span> <span class="op">*</span> total <span class="op">==</span> k <span class="op">*</span> (k <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>assert</code> means “this must be true here”: if it’s false, Python stops with an <code>AssertionError</code>. So this loop checks Gauss’s formula after every step. <strong>Predict</strong>, then run it:</p>
+<pre class="fish"><code>python3 invariant.py</code></pre>
+<p>It prints <code>5050</code>: no step failed.</p>
+<p>Now break the loop on purpose: change <code>total + k</code> to <code>total + k + 1</code>. <strong>Predict:</strong> at which <code>k</code> does the <code>assert</code> stop it? Then change it back.</p>
+</section>
+<section id="check-lots-of-cases" class="level2">
+<h2 class="anchored" data-anchor-id="check-lots-of-cases">Check lots of cases</h2>
+<p><code>invariant.py</code> only checks up to 100. To check other <code>n</code>, we turn the adding-up into a <strong>function</strong>, made with <code>def</code>: a recipe with a name. [claude: give more defintion of funcitons and def, its an import basic, and then also introduce what assert does with perhaps a simpler example to try like assert 4 % 2 == 0 verssu assert 4 % 2 == 1, then after the check, perhaps another one to do the n^3 example below]</p>
+<p><code>n</code> is its input, and <code>return</code> hands back the answer, so <code>sum_to(100)</code> is 5050.</p>
+<pre class="fish"><code>nvim check.py</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sum_to(n):</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, n <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>        total <span class="op">=</span> total <span class="op">+</span> k</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> total</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>):</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> sum_to(n) <span class="op">==</span> n <span class="op">*</span> (n <span class="op">+</span> <span class="dv">1</span>) <span class="op">//</span> <span class="dv">2</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"all 1000 agree"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The first part is the loop from <code>gauss.py</code>, indented under <code>def</code>, with <code>n + 1</code> where 101 was. The second part asks, for every <code>n</code> from 0 to 999, whether the loop and the formula agree. <strong>Predict</strong>, then run it:</p>
+<pre class="fish"><code>python3 check.py</code></pre>
+<p>It prints <code>all 1000 agree</code>. Is the formula now true for <em>every</em> number? <strong>Decide before reading on.</strong></p>
+<p>No.&nbsp;A thousand examples is still just examples. Mathematicians have found patterns that held for millions of cases and then broke.</p>
+</section>
+<section id="why-it-can-never-fail" class="level2">
+<h2 class="anchored" data-anchor-id="why-it-can-never-fail">Why it can never fail</h2>
+<p>A claim that stays true after every round is a <strong>loop invariant</strong>, like the <code>assert</code> in <code>invariant.py</code>. Now the big question: if the <code>assert</code> passed in one round, why <em>must</em> it pass in the next? (What does one round add to <code>total</code>?) <strong>Decide before reading on.</strong></p>
+<p>Say it passed in the round for <span class="math inline">\(k - 1\)</span>:</p>
+<p><span class="math display">\[2 \cdot \text{total} = (k-1)k\]</span></p>
+<p>The next round, for <span class="math inline">\(k\)</span>, adds <span class="math inline">\(k\)</span>, so <span class="math inline">\(2 \cdot \text{total}\)</span> grows by <span class="math inline">\(2k\)</span>:</p>
+<p><span class="math display">\[(k-1)k + 2k = k(k+1)\]</span></p>
+<p>which is exactly what the <code>assert</code> checks. It passes in the first round, and each passing round makes the next one pass, so it can never fail, however far the loop runs.</p>
+<p>That’s no longer a check. It’s a proof for every <span class="math inline">\(n\)</span>, and it’s the method from maths class: <strong>induction</strong>. The first round is the first domino, and each round knocks over the next.</p>
+<p><strong>Write this proof on paper, in your own words.</strong> You’ll need it in Part 4.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Try it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Add up the odd numbers 1 + 3 + 5 + … and print the running total for the first 10. What pattern do you see? <em>Why</em> would it hold? (Try drawing it with dots.)</li>
+<li>Ask Claude: <em>“Write a short Python function that adds up 1 to n, with one hidden bug. Don’t tell me where.”</em> Find the bug by reasoning first, then prove it with a check.</li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+<section id="part-4-lean" class="level1">
+<h1>Part 4: Lean</h1>
+<section id="why-ai-and-lean-belong-together" class="level2">
+<h2 class="anchored" data-anchor-id="why-ai-and-lean-belong-together">Why AI and Lean belong together</h2>
+<p>A proof that <em>sounds</em> right can still be wrong, and Claude is very good at sounding right. Lean doesn’t care how convincing a proof sounds: it checks every step, or it refuses. So the AI suggests, and Lean checks.</p>
+<p>That leaves you the most important job: <strong>does the claim say what you meant?</strong> Lean checks that the proof proves the claim, not that it’s the claim you wanted.</p>
+</section>
+<section id="what-lean-is" class="level2">
+<h2 class="anchored" data-anchor-id="what-lean-is">What Lean is</h2>
+<p>Lean is another programming language. It has boxes and loops, like Python, and it can also check proofs. Seeing the same program in a second language shows which parts are the <em>ideas</em> (a box, a repeat) and which are just <em>spelling</em>.</p>
+<p>We’ll use Lean in the browser, with Claude beside it. <strong>Claude in Chrome</strong> is Claude in a side panel of Chrome that can read the page you’re on and type into it. Install the <strong>Claude</strong> extension from the Chrome Web Store, sign in, and pin it (the puzzle-piece icon, then the pin).</p>
+<p>Open <a href="https://live.lean-lang.org">live.lean-lang.org</a>, delete what’s there, and paste:</p>
+<pre class="lean"><code>def sumLoop (n : Nat) : Nat := Id.run do
+  let mut total := 0
+  for k in [1:n+1] do
+    total := total + k
+  return total
+
+#eval sumLoop 100</code></pre>
+<p>The panel on the right shows <code>5050</code>. Here it is next to <code>sum_to</code> from <code>check.py</code>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Python</th>
+<th>Lean</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>def sum_to(n):</code></td>
+<td><code>def sumLoop (n : Nat) : Nat :=</code></td>
+</tr>
+<tr class="even">
+<td><code>total = 0</code></td>
+<td><code>let mut total := 0</code></td>
+</tr>
+<tr class="odd">
+<td><code>for k in range(1, n + 1):</code></td>
+<td><code>for k in [1:n+1] do</code></td>
+</tr>
+<tr class="even">
+<td><code>total = total + k</code></td>
+<td><code>total := total + k</code></td>
+</tr>
+<tr class="odd">
+<td><code>return total</code></td>
+<td><code>return total</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>Nat</code> is a <strong>natural number</strong> (0, 1, 2, …). <code>(n : Nat) : Nat</code> says <code>n</code> is one, and so is the answer.</li>
+<li><code>let mut</code> makes a box you can change (<em>mutable</em>).</li>
+<li><code>:=</code> puts something into a box, like Python’s <code>=</code>.</li>
+<li><code>Id.run do</code> says “steps, done in order”. Just copy it.</li>
+<li><code>#eval</code> runs a line and shows the answer.</li>
+</ul>
+<p><strong>Explain:</strong> what does Lean make you say that Python doesn’t?</p>
+</section>
+<section id="two-programs-one-answer" class="level2">
+<h2 class="anchored" data-anchor-id="two-programs-one-answer">Two programs, one answer</h2>
+<p>Gauss’s formula is a program too, a much faster one. Add it below:</p>
+<pre class="lean"><code>def sumFormula (n : Nat) : Nat := n * (n + 1) / 2
+
+#eval sumFormula 100</code></pre>
+<p><code>/</code> on natural numbers rounds down, like Python’s <code>//</code>. (Why doesn’t that rounding ever change the answer here?)</p>
+</section>
+<section id="checking-isnt-proving" class="level2">
+<h2 class="anchored" data-anchor-id="checking-isnt-proving">Checking isn’t proving</h2>
+<p>Do the two programs agree? Add one check, for <span class="math inline">\(n = 1000\)</span>:</p>
+<pre class="lean"><code>#eval sumLoop 1000 == sumFormula 1000</code></pre>
+<p>It shows <code>true</code>. Now add the claim for <em>every</em> <span class="math inline">\(n\)</span>:</p>
+<pre class="lean"><code>theorem agree (n : Nat) : sumLoop n = sumFormula n := by
+  sorry</code></pre>
+<p>Read it out loud: “a claim called <code>agree</code>: for any natural number <span class="math inline">\(n\)</span>, the loop and the formula give the same answer. Proof: <code>sorry</code>.” This is <code>check.py</code> again, for every <span class="math inline">\(n\)</span> instead of a thousand.</p>
+<p><code>sorry</code> means “I’ll prove this later”. Lean understands the claim but warns: <code>declaration uses `sorry`</code>. You still owe a proof, and checks like <code>true</code> don’t count. What Lean wants is an argument like your loop invariant.</p>
+</section>
+<section id="ai-translates-lean-checks" class="level2">
+<h2 class="anchored" data-anchor-id="ai-translates-lean-checks">AI translates, Lean checks</h2>
+<p>Writing Lean proofs yourself comes later in the course. Today Claude only <em>translates</em> your proof, and you watch what Lean says.</p>
+<p>Open Claude in Chrome on the Lean page, type in your paper proof from Part 3, and ask:</p>
+<blockquote class="blockquote">
+<p>Please prove <code>agree</code> in Lean by translating my proof, and see whether Lean accepts it. Don’t fix any mistakes in my proof, and don’t fix anything Lean complains about. Only translate my proof into Lean, and translate Lean’s answer back into English.</p>
+</blockquote>
+<p>It may take a few minutes, and then Lean should accept it. Claude may add a smaller claim along the way (something like “one more round adds <span class="math inline">\(n + 1\)</span>”). **Where is that step in your paper proof?</p>
+<p>Next, a claim of my own. Before you send it, <strong>predict</strong>: is it true? Try <span class="math inline">\(n = 0\)</span>, 1 and 2 on paper. Then ask:</p>
+<blockquote class="blockquote">
+<p>Now I want to check whether this also means that sum(n)^2 = n^3. Please convert that to Lean, have Lean check it, and translate only Lean’s answer back into English. Don’t fix the proof.</p>
+</blockquote>
+<p>What did Lean say? And did Claude do only what you asked, or did it quietly change the claim to one that works?</p>
+</section>
+<section id="what-we-did-today" class="level2">
+<h2 class="anchored" data-anchor-id="what-we-did-today">What we did today</h2>
+<ul>
+<li>Set up Linux with Claude as a tutor, plus fish, nvim and Python.</li>
+<li>Added 1 to 100 with a loop and with Gauss’s trick.</li>
+<li>Checked a thousand cases, and saw why that isn’t a proof.</li>
+<li>Put a check inside the loop, and saw why it can never fail: induction.</li>
+<li>Wrote the same loop in Lean, next to Gauss’s formula, and claimed the two programs always agree.</li>
+<li>Had Claude translate your proof for Lean to check.</li>
+</ul>
+<p>The computer did the adding. You did the reasoning.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/nealcnotes\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
