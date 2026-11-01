@@ -3,8 +3,19 @@ title: "Lesson 1: Talking to the computer in words"
 subtitle: "Set up, add up, prove it"
 date: 2026-10-31
 categories: [lessons, python, lean]
+# depth 1: the steps are the map; sections would bury them
+toc-depth: 1
+toc-title: Steps
+toc-location: left
+image: media/261101.laura-leader.jpg
 ---
 
+::: {style="max-width: 360px; margin: 0 auto;"}
+{{< video media/261101.laura-leader.mp4 >}}
+
+*Laura, from my drawing of Munch's painting (1899),
+made to talk with Runway Act-Two. Later in the course: how.*
+:::
 
 ## Why are we doing this?
 
@@ -24,27 +35,27 @@ not to get the computer to do things,
 but to **understand what it did, and why**,
 well enough to catch it when it's wrong.
 
-Every step comes with three habits:
-
-- **Predict.** Before you press Enter, say what will happen.
-- **Check.** Did it? If not, that's the interesting part.
-- **Explain.** Say *why*, in your own words.
-
-Today, in four parts:
-
-1. **Set up** Linux inside Windows, with an AI tutor beside it.
-2. **Python basics:** boxes, questions and repeats.
-3. **Add up** 1 to 100, and ask when checking becomes proving.
-4. **Lean:** the same program in a language that checks proofs.
+To check your understanding as you go,
+guess what each command will do before you run it.
+When the computer surprises you, that's the interesting part:
+guess why, in your own words, check with Claude, and ask your teacher for help.
 
 ::: {.callout-tip}
 ## How to use this page
+This lesson is twelve short steps,
+each one sitting of 15 to 30 minutes:
+setting up (steps 1–3), Python (4–7),
+adding up 1 to 100 (8–10) and Lean (11–12).
+Do one step, stop whenever you like, and come back:
+the list of steps (on the left, or at the top on a phone)
+shows where you are and takes you back there.
+
 Each grey box has a copy button in its top right corner.
 Paste into the terminal with Ctrl+Shift+V and press Enter.
 Read the sentence above each box *before* you run it.
 :::
 
-# Part 1: Set up
+# Step 1: Turn on Linux (~20 min) {#step-1}
 
 ## Turn on Linux (WSL)
 
@@ -96,7 +107,7 @@ cd course
 pwd
 ```
 
-**Predict** before the last line: what will `pwd` print now?
+Before the last line, guess what `pwd` will print now.
 (`mkdir` makes a folder, `cd` goes into one,
 `cd ..` goes up a level.)
 
@@ -111,6 +122,8 @@ so we tell Linux to stop asking:
 echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/$USER
 sudo chmod 0440 /etc/sudoers.d/$USER
 ```
+
+# Step 2: Get a tutor (~20 min) {#step-2}
 
 ## Your tutor: Claude Code
 
@@ -192,6 +205,8 @@ Errors are normal. Read each one yourself first and guess,
 then paste it with your guess. Fixing it is your job.
 :::
 
+# Step 3: A shell and an editor (~25 min) {#step-3}
+
 ## A friendlier shell: fish
 
 The program that reads what you type is the **shell**.
@@ -218,7 +233,7 @@ Fish doesn't know yet where Claude was installed. Tell it once:
 fish_add_path ~/.local/bin
 ```
 
-**Explain** (ask Claude if you're stuck):
+To check your understanding (ask Claude if you're stuck):
 what is a "path", and why did bash find Claude but fish didn't?
 
 ## An editor: nvim
@@ -232,25 +247,64 @@ cd ~/course
 nvim hello.txt
 ```
 
-nvim starts in *normal mode*, where keys are commands, not letters.
-Four things are enough:
+nvim has two **modes**,
+and most nvim confusion is forgetting which one you're in:
 
-| Press | What it does |
+- **Normal mode**, where it starts: every key is a *command*.
+  `x` deletes a letter, `u` undoes.
+  Type a word here and each letter does something,
+  usually something strange.
+- **Insert mode**: keys type letters, like any other editor.
+  The bottom line says `-- INSERT --`.
+
+`i` goes from normal to insert; `Esc` goes back.
+Why two modes? So every key can be a command
+without holding Ctrl.
+When in doubt, press `Esc`:
+it always lands you in normal mode, and a second press does no harm.
+
+| Press (in normal mode) | What it does |
 |-------|--------------|
-| `i` | start typing (*insert mode*) |
-| `Esc` | stop typing |
+| `i` | start typing (insert mode) |
+| `Esc` | stop typing (from insert mode) |
 | `:wq` Enter | save and quit |
 | `:q!` Enter | quit *without* saving |
 
 Press `i`, type `hello`, press `Esc`, type `:wq`, press Enter.
-**Predict:** what will this print?
+What will this print?
 
 ```fish
 cat hello.txt
 ```
 
+Everyone mistypes.
+In nvim, you fix things from normal mode:
+
+| Press (in normal mode) | What it does |
+|-------|--------------|
+| arrow keys | move around |
+| `x` | delete the letter under the cursor |
+| `u` | undo (press again to undo more) |
+| `:5` Enter | jump to line 5 |
+
+To add letters, move to the spot and press `i`;
+Backspace works while you're in insert mode.
+
+Try it: `nvim hello.txt`, press `x`.
+Which letter goes? Then `u` to bring it back.
+Still in normal mode, type `ox`.
+Does `x` delete a letter again?
+Decide before you read on.
+
+`o` is a command too: open a new line below
+and switch to insert mode.
+So the `x` after it is just a letter, on a new line.
+`Esc`, then `u` until it's `hello` again, and `:wq`.
+
 Stuck in nvim? Press `Esc` a few times, then `:q!`.
 (More nvim: type `:Tutor` inside it.)
+
+# Step 4: Talk to Python (~15 min) {#step-4}
 
 ## Python
 
@@ -259,7 +313,7 @@ python3
 ```
 
 The prompt changes to `>>>`: you're talking to Python now.
-**Predict** each answer, then check:
+Guess each answer before pressing Enter:
 
 ```python
 2 + 2
@@ -270,10 +324,6 @@ The prompt changes to `>>>`: you're talking to Python now.
 
 Ask Claude why `7 / 2` and `7 // 2` differ,
 then explain it back. Leave Python with **Ctrl+D**.
-
-A good place to stop for the day.
-
-# Part 2: Python basics
 
 ## Boxes and questions
 
@@ -307,6 +357,8 @@ Mixing them up is one of the most common mistakes in programming.
 
 Leave Python with Ctrl+D.
 
+# Step 5: Decisions (~20 min) {#step-5}
+
 ## Decisions: if
 
 ```fish
@@ -327,11 +379,25 @@ else:
 `%` is the remainder: `7 % 2` is 1.
 `if` runs the indented lines under it when its question is `True`,
 otherwise the lines under `else:`.
-**Predict**, then run:
+What will it print? Run it:
 
 ```fish
 python3 decide.py
 ```
+
+## Typos Python can't see
+
+Make a typo on purpose: in `decide.py`,
+change `print` on line 3 to `pirnt`, save and run it.
+Will Python complain? Decide before you read on.
+
+It doesn't. `n` is 7, so line 3 never runs,
+and Python only notices a mistake when it gets there.
+Now make the same typo on line 5 and run it again:
+`NameError: name 'pirnt' is not defined`, with the line number.
+Fix both with the keys from Part 1: `:3`, `:5`, `x` and `i`.
+A program that ran once can still hide a mistake
+on a line it didn't reach.
 
 ## Indentation: what's inside what
 
@@ -343,33 +409,145 @@ but it can't know **when a block ends**.
 That's you, pressing Backspace,
 and it's a reasoning question: does this line belong inside?
 
+# Step 6: Copy, then write a recipe (~25 min) {#step-6}
+
+## Copy before you change: cp
+
+Your next program grows out of `decide.py`.
+Don't change `decide.py` itself; copy it:
+
+```fish
+cp decide.py parity.py
+ls
+```
+
+`cp` copies a file: first what to copy, then the new name.
+Now there are two, and `decide.py` still works
+whatever you do to `parity.py`.
+Every program from here on starts as a copy of the last one.
+
+To check your understanding:
+what would `cp parity.py decide.py` do?
+Decide before you read on.
+
+It would copy `parity.py` *over* `decide.py`.
+`cp` doesn't ask: the old `decide.py` would be gone, with no undo.
+First name: what you have. Second name: what you're making.
+
+## Recipes: def
+
+```fish
+nvim parity.py
+```
+
+Change it to this:
+
+```python
+def parity(n):
+    if n % 2 == 0:
+        return "even"
+    else:
+        return "odd"
+
+print(7, parity(7))
+print(10, parity(10))
+```
+
+That's a lot of changes to a file that already exists.
+Six more normal-mode keys do it:
+
+| Press | What it does |
+|-------|--------------|
+| `dd` | delete the whole line |
+| `O` | open a new line *above*, and start typing |
+| `o` | open a new line *below*, and start typing |
+| `>>` | indent the line 4 spaces |
+| `cc` | retype the whole line (its indent stays) |
+| `G` | jump to the last line |
+
+Press `Esc` after each bit of typing:
+
+1. On line 1, `n = 7`: `dd`.
+2. `O`, then type `def parity(n):`.
+3. Down arrow and `>>`, on each of the four lines under `def`.
+4. On `print(n, "is even")`: `cc`, then type `return "even"`.
+   The same on the other `print`, with `return "odd"`.
+5. `G`, `o`, Enter for a blank line.
+   nvim has indented the new line, guessing it is still inside the recipe.
+   It isn't: press Backspace once,
+   then type the two `print` lines.
+6. `:wq` Enter.
+
+Gone wrong? `u` undoes.
+Or `:q!` and `cp decide.py parity.py` again:
+`decide.py` never changed, so you can always start over.
+
+`def` makes a **function**: a recipe with a name, here `parity`.
+`n` is its input: a box that gets a value each time the recipe is used.
+`return` hands back the answer and ends the recipe.
+The recipe is the block indented under `def`,
+with the `if` block inside it.
+
+Writing the recipe down doesn't run it.
+`parity(7)` does: it puts 7 in the box `n`,
+runs the recipe and gives back what `return` hands it.
+What will the two lines say? Run it:
+
+```fish
+python3 parity.py
+```
+
+To check your understanding,
+delete the two `print` lines and run it again.
+Why does nothing appear? Decide before you read on.
+
+The file only *defines* the recipe, and nothing uses it.
+A recipe on paper cooks nothing.
+Put the two lines back.
+
+# Step 7: Repeats (~20 min) {#step-7}
+
 ## Repeats: for
 
 ```fish
+cp parity.py loop.py
 nvim loop.py
 ```
 
+Replace the two `print` lines at the bottom with a loop
+(`G`, `dd` twice, then `o` and type it;
+nvim indents the line after the `:` for you):
+
 ```python
+def parity(n):
+    if n % 2 == 0:
+        return "even"
+    else:
+        return "odd"
+
 for k in range(1, 6):
-    print(k, k * k)
+    print(k, k * k, parity(k))
 ```
 
 `for` runs the indented line once for each `k` in
 `range(1, 6)`: 1, 2, 3, 4, 5. It stops *before* 6.
-**Predict** all five lines, then run:
+Work out all five lines, then run it:
 
 ```fish
 python3 loop.py
 ```
 
-**Predict** *exactly* what this prints:
+What *exactly* does this print?
 
 ```python
-for k in range(3):
-    if k % 2 == 0:
-        print(k, "even")
+def parity(n):
+    if n % 2 == 0:
+        return "even"
     else:
-        print(k, "odd")
+        return "odd"
+
+for k in range(3):
+    print(k, parity(k))
     print("done")
 ```
 
@@ -379,11 +557,12 @@ under `for`? Try both and check.
 
 ::: {.callout-note}
 ## Try it yourself
-Change `loop.py` to print only the **even** numbers from 1 to 20.
-You'll need an `if` inside the `for`.
+Copy `loop.py` to `evens.py` and change it
+to print only the **even** numbers from 1 to 20.
+You'll need an `if` inside the `for`, and `parity` can answer it.
 :::
 
-# Part 3: Adding up
+# Step 8: Add 1 to 100 (~20 min) {#step-8}
 
 ## The story
 
@@ -397,27 +576,35 @@ Spend two minutes with a pencil before reading on.
 
 ## The slow way: a loop
 
+A new program, so a new file
+(type it in yourself: typing teaches more than pasting):
+
 ```fish
 cd ~/course
 nvim gauss.py
 ```
 
-Type it in yourself (typing teaches more than pasting):
-
 ```python
-total = 0
-for k in range(1, 101):
-    total = total + k
-    print(k, total)
+def sum_to(n):
+    total = 0
+    for k in range(1, n + 1):
+        total = total + k
+        print(k, total)
+    return total
+
+print(sum_to(100))
 ```
 
-**Predict** the first three lines, then run it:
+`sum_to(n)` adds up 1 to `n`:
+`total` starts at 0 and the loop adds each `k` in turn.
+Work out the first three lines, then run it:
 
 ```fish
 python3 gauss.py
 ```
 
-The last line says `100 5050`.
+The last two lines say `100 5050`, the loop's last step,
+and `5050`, the answer `return` handed back to `print`.
 
 Now make an error on purpose:
 delete the spaces in front of `total = total + k` and run it.
@@ -425,12 +612,14 @@ Read the error, guess what it means,
 then paste it to Claude with your guess.
 
 ::: {.callout-important}
-## Why 101?
-Change `range(1, 101)` to `range(1, 100)`.
-**Predict** the last line, then run it.
+## Why n + 1?
+Change `range(1, n + 1)` to `range(1, n)`.
+What will the last line be? Run it.
 An AI makes exactly this kind of mistake,
 and you just learned to catch it.
 :::
+
+# Step 9: Gauss's trick, checked (~25 min) {#step-9}
 
 ## Gauss's trick
 
@@ -447,28 +636,51 @@ so one copy is **5050**. For any $n$:
 
 $$1 + 2 + \cdots + n = \frac{n(n+1)}{2}$$
 
-**Explain it to Claude** in your own words, without the picture,
+To check your understanding, explain it to Claude in your own words, without the picture,
 and let it look for the hole.
 (Does your explanation work when $n$ is odd?)
 
 ## A check inside the loop
 
+`assert` means "this must be true here".
+Try it in `python3`, predicting each line first:
+
 ```fish
-nvim invariant.py
+python3
 ```
 
 ```python
-total = 0
-for k in range(1, 101):
-    total = total + k
-    assert 2 * total == k * (k + 1)
-print(total)
+assert 4 % 2 == 0
+assert 4 % 2 == 1
 ```
 
-`assert` means "this must be true here":
-if it's false, Python stops with an `AssertionError`.
+The first is true, so nothing happens.
+The second is false, and Python stops with an `AssertionError`.
+(Ctrl+D to leave.)
+
+Now put one inside the loop, in a copy of `gauss.py`:
+
+```fish
+cp gauss.py invariant.py
+nvim invariant.py
+```
+
+Replace `print(k, total)` with the `assert`
+(`:5` Enter jumps to it, then `cc`):
+
+```python
+def sum_to(n):
+    total = 0
+    for k in range(1, n + 1):
+        total = total + k
+        assert 2 * total == k * (k + 1)
+    return total
+
+print(sum_to(100))
+```
+
 So this loop checks Gauss's formula after every step.
-**Predict**, then run it:
+What should it print? Run it:
 
 ```fish
 python3 invariant.py
@@ -478,44 +690,44 @@ It prints `5050`: no step failed.
 
 Now break the loop on purpose:
 change `total + k` to `total + k + 1`.
-**Predict:** at which `k` does the `assert` stop it?
+At which `k` will the `assert` stop it?
 Then change it back.
+
+# Step 10: A thousand checks, then a proof (~25 min) {#step-10}
 
 ## Check lots of cases
 
 `invariant.py` only checks up to 100.
-To check other `n`, we turn the adding-up into a **function**,
-made with `def`: a recipe with a name.
-[claude: give more defintion of funcitons and def, its an
-import basic, and then also introduce what assert does
-with perhaps a simpler example to try like assert 4 % 2 == 0
-verssu assert 4 % 2 == 1, then after the check, perhaps another one
-to do the n^3 example below]
-
-`n` is its input, and `return` hands back the answer,
-so `sum_to(100)` is 5050.
+`sum_to` is a recipe, so it can run for any `n`.
+Copy `invariant.py` once more:
 
 ```fish
+cp invariant.py check.py
 nvim check.py
 ```
+
+Replace the last line, `print(sum_to(100))`, with a loop over many `n`
+(`G`, `cc`; after the `assert` line, Backspace once,
+so `print` comes after the loop, not inside it):
 
 ```python
 def sum_to(n):
     total = 0
     for k in range(1, n + 1):
         total = total + k
+        assert 2 * total == k * (k + 1)
     return total
 
 for n in range(1000):
-    assert sum_to(n) == n * (n + 1) // 2
+    assert 2 * sum_to(n) == n * (n + 1)
 print("all 1000 agree")
 ```
 
-The first part is the loop from `gauss.py`,
-indented under `def`, with `n + 1` where 101 was.
-The second part asks, for every `n` from 0 to 999,
-whether the loop and the formula agree.
-**Predict**, then run it:
+The recipe is unchanged.
+The new loop asks, for every `n` from 0 to 999,
+whether the loop and the formula agree
+(twice the sum against $n(n+1)$, so no dividing).
+Run it:
 
 ```fish
 python3 check.py
@@ -523,7 +735,7 @@ python3 check.py
 
 It prints `all 1000 agree`.
 Is the formula now true for *every* number?
-**Decide before reading on.**
+Decide before you read on.
 
 No. A thousand examples is still just examples.
 Mathematicians have found patterns that held
@@ -537,7 +749,7 @@ Now the big question:
 if the `assert` passed in one round,
 why *must* it pass in the next?
 (What does one round add to `total`?)
-**Decide before reading on.**
+Decide before you read on.
 
 Say it passed in the round for $k - 1$:
 
@@ -570,7 +782,7 @@ You'll need it in Part 4.
    Find the bug by reasoning first, then prove it with a check.
 :::
 
-# Part 4: Lean
+# Step 11: The same loop in Lean (~20 min) {#step-11}
 
 ## Why AI and Lean belong together
 
@@ -614,7 +826,7 @@ def sumLoop (n : Nat) : Nat := Id.run do
 ```
 
 The panel on the right shows `5050`.
-Here it is next to `sum_to` from `check.py`:
+Here it is next to `sum_to` from `gauss.py` (without its `print`):
 
 | Python | Lean |
 |--------|------|
@@ -631,7 +843,8 @@ Here it is next to `sum_to` from `check.py`:
 - `Id.run do` says "steps, done in order". Just copy it.
 - `#eval` runs a line and shows the answer.
 
-**Explain:** what does Lean make you say that Python doesn't?
+To check your understanding:
+what does Lean make you say that Python doesn't?
 
 ## Two programs, one answer
 
@@ -644,8 +857,10 @@ def sumFormula (n : Nat) : Nat := n * (n + 1) / 2
 #eval sumFormula 100
 ```
 
-`/` on natural numbers rounds down, like Python's `//`.
+`/` on natural numbers rounds down: `7 / 2` is `3`.
 (Why doesn't that rounding ever change the answer here?)
+
+# Step 12: Checking isn't proving (~20 min) {#step-12}
 
 ## Checking isn't proving
 

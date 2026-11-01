@@ -11,14 +11,12 @@ fails=()
 cwd=$HOME
 
 # Files she types in nvim, taken from the lesson's own python/lean blocks.
-first() { grep -l -m1 -F -- "$1" $B/*."$2" | head -1; }
 next_block() {  # next_block <blockfile> <lang> : first <lang> block after it
   ls $B/*."$2" | awk -v me="$1" '$0 > me' | head -1
 }
 seed() {  # seed <file> <current blockfile> : what she'd have typed into it
   case $1 in
     hello.txt)  echo hello ;;
-    gauss.py)   cat "$(first 'for k in range(1, 101)' python)" ;;
     *.py)       cat "$(next_block "$2" python)" ;;  # the code shown right after
     *) echo "no seed for $1" >&2; return 1 ;;
   esac
@@ -79,12 +77,14 @@ check "sudo asks no password" "sudo -n true; and echo nopw" "nopw"
 check "CLAUDE.md is in course/" "head -1 CLAUDE.md" "# Tutor mode"
 check "hello.txt says hello" "cat hello.txt" "hello"
 check "decide.py says 7 is odd" "python3 decide.py" "7 is odd"
-check "loop.py ends at 5 25" "python3 loop.py | tail -1" "5 25"
-check "gauss.py ends at 5050" "python3 gauss.py | tail -1" "100 5050"
-check "range(1, 100) stops at 99" \
-  "sed 's/101/100/' gauss.py > g99.py; python3 g99.py | tail -1" "99 4950"
+check "parity.py says 7 odd" "python3 parity.py | head -1" "7 odd"
+check "cp kept decide.py as it was" "python3 decide.py" "7 is odd"
+check "loop.py ends at 5 25 odd" "python3 loop.py | tail -1" "5 25 odd"
+check "gauss.py: last step, then the answer" "python3 gauss.py | tail -2 | string join ' '" "100 5050 5050"
+check "range(1, n) stops at 99" \
+  "sed 's/range(1, n + 1)/range(1, n)/' gauss.py > g99.py; python3 g99.py | tail -1" "4950"
 check "missing indent is an IndentationError" \
-  "sed 's/^    total = total/total = total/' gauss.py > gbad.py; python3 gbad.py" "IndentationError"
+  "sed 's/^ *total = total/total = total/' gauss.py > gbad.py; python3 gbad.py" "IndentationError"
 check "claude is on fish's PATH" "command -v claude" ".local/bin/claude"
 check "check.py: all 1000 agree" "python3 check.py" "all 1000 agree"
 check "invariant.py ends at 5050" "python3 invariant.py | tail -1" "5050"

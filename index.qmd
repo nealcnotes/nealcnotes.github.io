@@ -4,6 +4,8 @@ listing:
   contents: posts
   sort: "date desc"
   type: default
+  # portrait thumbnails (lesson 1's Laura frame) fill the column otherwise
+  image-height: 150px
   categories: true
   feed: true
 page-layout: full

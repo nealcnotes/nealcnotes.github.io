@@ -91,6 +91,20 @@ def test_why_posts_carry_no_html_comments():
         assert "<!--" not in p.read_text(), f"{p.name} still has a comment"
 
 
+NOTE_MARKS = ("[claude:", ">> Claude")
+
+
+def test_why_posts_carry_no_bracket_notes():
+    """Notes to Claude written as plain text, `[claude: ...]`, aren't
+    HTML comments, so stripping comments leaves them in and Markdown
+    shows them on the page (lesson 1 went live with one, 2026-10-31).
+    Promotion fails until each is answered and folded into a comment."""
+    for p in ALL:
+        text = p.read_text().lower()
+        for mark in NOTE_MARKS:
+            assert mark.lower() not in text, f"{p.name}: {mark} note left in"
+
+
 def test_why_notebooks_ship_as_downloads_not_pages():
     """The pandas posts link /assets/notebooks/*.ipynb for readers to
     download. Left to its defaults Quarto renders every .ipynb into a
@@ -105,3 +119,26 @@ def test_why_notebooks_ship_as_downloads_not_pages():
     assert not any(f.endswith(".ipynb") for f in inputs), inputs
     assert {"index.qmd", "posts/lesson1-setup-gauss.qmd", "archive/index.qmd"} <= inputs
     assert len(inputs) == 2 + len(ALL)
+
+
+VIDEO = re.compile(r"\{\{<\s*video\s+(\S+)")
+
+
+def test_every_local_video_a_post_embeds_exists():
+    """Posts embed video with Quarto's `{{< video path >}}` shortcode;
+    a local path (not a URL) must be a file beside the post, or the page
+    ships an empty player. Short clips live in the repo and GitHub Pages
+    serves them; long ones would go to a video host (essentialine uses
+    Cloudflare Stream: its ~200 MB files exceed GitHub's 100 MB limit)."""
+    seen = 0
+    for p in ALL:
+        for src in VIDEO.findall(p.read_text()):
+            src = src.strip("\"'")
+            if src.startswith("http"):
+                continue
+            seen += 1
+            f = p.parent / src
+            assert f.is_file(), f"{p.name}: {src} missing"
+            assert f.stat().st_size < 50_000_000, f"{src}: too big for the repo"
+    assert seen, "no post embeds a local video yet"
+
