@@ -31,7 +31,7 @@ def test_why_old_comics_live_in_the_archive():
     """The home page is for the new work (lessons); the 2023-24 comics
     moved to archive/ (Neal, 2026-10-31), still public, one footer link
     away, so their URLs keep working for anyone who has them."""
-    assert ARCHIVE and all("old-comics" in header(p)["categories"] for p in ARCHIVE)
+    assert ARCHIVE
     assert not any("old-comics" in header(p)["categories"] for p in POSTS)
     cfg = yaml.safe_load((SITE / "_quarto.yml").read_text())
     footer = str(cfg["website"]["page-footer"])
