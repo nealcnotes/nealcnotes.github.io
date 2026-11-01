@@ -1,0 +1,10 @@
+---
+title: "Archive"
+listing:
+  contents: "2*.md"
+  sort: "date desc"
+  type: table
+  fields: [date, title]
+---
+
+Comics and notes from 2023–24.
