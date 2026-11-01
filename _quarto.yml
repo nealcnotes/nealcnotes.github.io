@@ -8,6 +8,8 @@ project:
     - index.qmd
     - posts/*.md
     - posts/*.qmd
+    - archive/index.qmd
+    - archive/*.md
   resources:
     - CNAME
     - assets/notebooks/
@@ -28,6 +30,9 @@ website:
     right:
       - icon: rss
         href: index.xml
+  # The 2023-24 comics: off the home page, one link away (tests/test_site.py).
+  page-footer:
+    center: "[Archive](/archive/)"
 
 format:
   html:
