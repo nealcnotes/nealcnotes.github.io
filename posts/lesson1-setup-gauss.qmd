@@ -3,10 +3,11 @@ title: "Lesson 1: Talking to the computer in words"
 subtitle: "Set up, add up, prove it"
 date: 2026-10-31
 categories: [lessons, python, lean]
-# depth 1: the steps are the map; sections would bury them
+# depth 1: the days are the map; sections would bury them
 toc-depth: 1
-toc-title: Steps
-toc-location: left
+toc-title: Days
+# body: a left TOC folds away on phones with no button to open it (Quarto 1.10)
+toc-location: body
 image: media/261101.laura-leader.jpg
 ---
 
@@ -42,12 +43,12 @@ guess why, in your own words, check with Claude, and ask your teacher for help.
 
 ::: {.callout-tip}
 ## How to use this page
-This lesson is twelve short steps,
+This lesson is twelve short days,
 each one sitting of 15 to 30 minutes:
-setting up (steps 1–3), Python (4–7),
+setting up (days 1–3), Python (4–7),
 adding up 1 to 100 (8–10) and Lean (11–12).
-Do one step, stop whenever you like, and come back:
-the list of steps (on the left, or at the top on a phone)
+Do one day, stop whenever you like, and come back:
+the list of days at the top of the page
 shows where you are and takes you back there.
 
 Each grey box has a copy button in its top right corner.
@@ -55,7 +56,7 @@ Paste into the terminal with Ctrl+Shift+V and press Enter.
 Read the sentence above each box *before* you run it.
 :::
 
-# Step 1: Turn on Linux (~20 min) {#step-1}
+# Day 1: Turn on Linux (~20 min) {#day-1}
 
 ## Turn on Linux (WSL)
 
@@ -123,7 +124,7 @@ echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/$USER
 sudo chmod 0440 /etc/sudoers.d/$USER
 ```
 
-# Step 2: Get a tutor (~20 min) {#step-2}
+# Day 2: Get a tutor (~20 min) {#day-2}
 
 ## Your tutor: Claude Code
 
@@ -205,7 +206,7 @@ Errors are normal. Read each one yourself first and guess,
 then paste it with your guess. Fixing it is your job.
 :::
 
-# Step 3: A shell and an editor (~25 min) {#step-3}
+# Day 3: A shell and an editor (~25 min) {#day-3}
 
 ## A friendlier shell: fish
 
@@ -304,7 +305,7 @@ So the `x` after it is just a letter, on a new line.
 Stuck in nvim? Press `Esc` a few times, then `:q!`.
 (More nvim: type `:Tutor` inside it.)
 
-# Step 4: Talk to Python (~15 min) {#step-4}
+# Day 4: Talk to Python (~15 min) {#day-4}
 
 ## Python
 
@@ -357,7 +358,7 @@ Mixing them up is one of the most common mistakes in programming.
 
 Leave Python with Ctrl+D.
 
-# Step 5: Decisions (~20 min) {#step-5}
+# Day 5: Decisions (~20 min) {#day-5}
 
 ## Decisions: if
 
@@ -409,7 +410,7 @@ but it can't know **when a block ends**.
 That's you, pressing Backspace,
 and it's a reasoning question: does this line belong inside?
 
-# Step 6: Copy, then write a recipe (~25 min) {#step-6}
+# Day 6: Copy, then write a recipe (~25 min) {#day-6}
 
 ## Copy before you change: cp
 
@@ -505,7 +506,7 @@ The file only *defines* the recipe, and nothing uses it.
 A recipe on paper cooks nothing.
 Put the two lines back.
 
-# Step 7: Repeats (~20 min) {#step-7}
+# Day 7: Repeats (~20 min) {#day-7}
 
 ## Repeats: for
 
@@ -562,7 +563,7 @@ to print only the **even** numbers from 1 to 20.
 You'll need an `if` inside the `for`, and `parity` can answer it.
 :::
 
-# Step 8: Add 1 to 100 (~20 min) {#step-8}
+# Day 8: Add 1 to 100 (~20 min) {#day-8}
 
 ## The story
 
@@ -619,7 +620,7 @@ An AI makes exactly this kind of mistake,
 and you just learned to catch it.
 :::
 
-# Step 9: Gauss's trick, checked (~25 min) {#step-9}
+# Day 9: Gauss's trick, checked (~25 min) {#day-9}
 
 ## Gauss's trick
 
@@ -693,7 +694,7 @@ change `total + k` to `total + k + 1`.
 At which `k` will the `assert` stop it?
 Then change it back.
 
-# Step 10: A thousand checks, then a proof (~25 min) {#step-10}
+# Day 10: A thousand checks, then a proof (~25 min) {#day-10}
 
 ## Check lots of cases
 
@@ -782,7 +783,7 @@ You'll need it in Part 4.
    Find the bug by reasoning first, then prove it with a check.
 :::
 
-# Step 11: The same loop in Lean (~20 min) {#step-11}
+# Day 11: The same loop in Lean (~20 min) {#day-11}
 
 ## Why AI and Lean belong together
 
@@ -860,7 +861,7 @@ def sumFormula (n : Nat) : Nat := n * (n + 1) / 2
 `/` on natural numbers rounds down: `7 / 2` is `3`.
 (Why doesn't that rounding ever change the answer here?)
 
-# Step 12: Checking isn't proving (~20 min) {#step-12}
+# Day 12: Checking isn't proving (~20 min) {#day-12}
 
 ## Checking isn't proving
 
