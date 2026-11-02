@@ -12,7 +12,7 @@
 <generator>quarto-1.10.19</generator>
 <lastBuildDate>Sat, 31 Oct 2026 07:00:00 GMT</lastBuildDate>
 <item>
-  <title>Lesson 1: Talking to the computer in words</title>
+  <title>12 sessions: talking to the computer in words</title>
   <link>https://nealcnotes.com/posts/lesson1-setup-gauss.html</link>
   <description><![CDATA[ 
 
@@ -39,13 +39,13 @@
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This lesson is twelve short steps, each one sitting of 15 to 30 minutes: setting up (steps 1–3), Python (4–7), adding up 1 to 100 (8–10) and Lean (11–12). Do one step, stop whenever you like, and come back: the list of steps (on the left, or at the top on a phone) shows where you are and takes you back there.</p>
+<p>This lesson is twelve short days, each one sitting of 15 to 30 minutes: setting up (days 1–3), Python (4–7), adding up 1 to 100 (8–10) and Lean (11–12). Do one day, stop whenever you like, and come back: the list of days at the top of the page shows where you are and takes you back there.</p>
 <p>Each grey box has a copy button in its top right corner. Paste into the terminal with Ctrl+Shift+V and press Enter. Read the sentence above each box <em>before</em> you run it.</p>
 </div>
 </div>
 </section>
-<section id="step-1" class="level1">
-<h1>Step 1: Turn on Linux (~20 min)</h1>
+<section id="day-1" class="level1">
+<h1>Day 1: Turn on Linux (~20 min)</h1>
 <section id="turn-on-linux-wsl" class="level2">
 <h2 class="anchored" data-anchor-id="turn-on-linux-wsl">Turn on Linux (WSL)</h2>
 <p>Underneath the windows and buttons, a computer works with text. A <strong>terminal</strong> is a window where you talk to it in words. We’ll use <strong>Linux</strong>, running inside Windows (that’s <strong>WSL</strong>, Windows Subsystem for Linux).</p>
@@ -117,8 +117,8 @@ background-color: null;
 font-style: inherit;">$USER</span></span></code></pre></div></div>
 </section>
 </section>
-<section id="step-2" class="level1">
-<h1>Step 2: Get a tutor (~20 min)</h1>
+<section id="day-2" class="level1">
+<h1>Day 2: Get a tutor (~20 min)</h1>
 <section id="your-tutor-claude-code" class="level2">
 <h2 class="anchored" data-anchor-id="your-tutor-claude-code">Your tutor: Claude Code</h2>
 <p><strong>Claude</strong> is an AI, a <strong>language model</strong>: it learned from a huge amount of text to predict what words come next. That turns out to be enough to explain things and write code. It also makes Claude <em>very good at sounding right</em>. Usually it is right. Sometimes it isn’t, and it can’t always tell. That’s why you check.</p>
@@ -226,8 +226,8 @@ font-style: inherit;">claude</span></span></code></pre></div></div>
 </div>
 </section>
 </section>
-<section id="step-3" class="level1">
-<h1>Step 3: A shell and an editor (~25 min)</h1>
+<section id="day-3" class="level1">
+<h1>Day 3: A shell and an editor (~25 min)</h1>
 <section id="a-friendlier-shell-fish" class="level2">
 <h2 class="anchored" data-anchor-id="a-friendlier-shell-fish">A friendlier shell: fish</h2>
 <p>The program that reads what you type is the <strong>shell</strong>. Ubuntu’s is <code>bash</code>. We’ll use <strong>fish</strong>, which helps you type less. Ask Claude what <code>chsh</code> does, and <strong>predict</strong> what will change, and when:</p>
@@ -327,8 +327,8 @@ nvim hello.txt</code></pre>
 <p>Stuck in nvim? Press <code>Esc</code> a few times, then <code>:q!</code>. (More nvim: type <code>:Tutor</code> inside it.)</p>
 </section>
 </section>
-<section id="step-4" class="level1">
-<h1>Step 4: Talk to Python (~15 min)</h1>
+<section id="day-4" class="level1">
+<h1>Day 4: Talk to Python (~15 min)</h1>
 <section id="python" class="level2">
 <h2 class="anchored" data-anchor-id="python">Python</h2>
 <pre class="fish"><code>python3</code></pre>
@@ -402,8 +402,8 @@ font-style: inherit;">7</span></span></code></pre></div></div>
 <p>Leave Python with Ctrl+D.</p>
 </section>
 </section>
-<section id="step-5" class="level1">
-<h1>Step 5: Decisions (~20 min)</h1>
+<section id="day-5" class="level1">
+<h1>Day 5: Decisions (~20 min)</h1>
 <section id="decisions-if" class="level2">
 <h2 class="anchored" data-anchor-id="decisions-if">Decisions: if</h2>
 <pre class="fish"><code>cd ~/course
@@ -446,15 +446,15 @@ font-style: inherit;">"is odd"</span>)</span></code></pre></div></div>
 <section id="typos-python-cant-see" class="level2">
 <h2 class="anchored" data-anchor-id="typos-python-cant-see">Typos Python can’t see</h2>
 <p>Make a typo on purpose: in <code>decide.py</code>, change <code>print</code> on line 3 to <code>pirnt</code>, save and run it. Will Python complain? Decide before you read on.</p>
-<p>It doesn’t. <code>n</code> is 7, so line 3 never runs, and Python only notices a mistake when it gets there. Now make the same typo on line 5 and run it again: <code>NameError: name 'pirnt' is not defined</code>, with the line number. Fix both with the keys from Part 1: <code>:3</code>, <code>:5</code>, <code>x</code> and <code>i</code>. A program that ran once can still hide a mistake on a line it didn’t reach.</p>
+<p>It doesn’t. <code>n</code> is 7, so line 3 never runs, and Python only notices a mistake when it gets there. Now make the same typo on line 5 and run it again: <code>NameError: name 'pirnt' is not defined</code>, with the line number. Fix both with the keys from Day 3: <code>:3</code>, <code>:5</code>, <code>x</code> and <code>i</code>. A program that ran once can still hide a mistake on a line it didn’t reach.</p>
 </section>
 <section id="indentation-whats-inside-what" class="level2">
 <h2 class="anchored" data-anchor-id="indentation-whats-inside-what">Indentation: what’s inside what</h2>
 <p>A line ending in <code>:</code> starts a <strong>block</strong>: the lines under it, indented 4 spaces further. The block ends at the first line that steps back out. nvim indents for you after a <code>:</code>, but it can’t know <strong>when a block ends</strong>. That’s you, pressing Backspace, and it’s a reasoning question: does this line belong inside?</p>
 </section>
 </section>
-<section id="step-6" class="level1">
-<h1>Step 6: Copy, then write a recipe (~25 min)</h1>
+<section id="day-6" class="level1">
+<h1>Day 6: Copy, then write a recipe (~25 min)</h1>
 <section id="copy-before-you-change-cp" class="level2">
 <h2 class="anchored" data-anchor-id="copy-before-you-change-cp">Copy before you change: cp</h2>
 <p>Your next program grows out of <code>decide.py</code>. Don’t change <code>decide.py</code> itself; copy it:</p>
@@ -567,8 +567,8 @@ font-style: inherit;">10</span>))</span></code></pre></div></div>
 <p>The file only <em>defines</em> the recipe, and nothing uses it. A recipe on paper cooks nothing. Put the two lines back.</p>
 </section>
 </section>
-<section id="step-7" class="level1">
-<h1>Step 7: Repeats (~20 min)</h1>
+<section id="day-7" class="level1">
+<h1>Day 7: Repeats (~20 min)</h1>
 <section id="repeats-for" class="level2">
 <h2 class="anchored" data-anchor-id="repeats-for">Repeats: for</h2>
 <pre class="fish"><code>cp parity.py loop.py
@@ -696,8 +696,8 @@ font-style: inherit;">"done"</span>)</span></code></pre></div></div>
 </div>
 </section>
 </section>
-<section id="step-8" class="level1">
-<h1>Step 8: Add 1 to 100 (~20 min)</h1>
+<section id="day-8" class="level1">
+<h1>Day 8: Add 1 to 100 (~20 min)</h1>
 <section id="the-story" class="level2">
 <h2 class="anchored" data-anchor-id="the-story">The story</h2>
 <p>Around 1785, the story goes, a teacher told his class to add up every number from 1 to 100. A ten-year-old, Carl Friedrich Gauss, wrote the answer almost at once: <strong>5050</strong>.</p>
@@ -769,8 +769,8 @@ font-style: inherit;">100</span>))</span></code></pre></div></div>
 </div>
 </section>
 </section>
-<section id="step-9" class="level1">
-<h1>Step 9: Gauss’s trick, checked (~25 min)</h1>
+<section id="day-9" class="level1">
+<h1>Day 9: Gauss’s trick, checked (~25 min)</h1>
 <section id="gausss-trick" class="level2">
 <h2 class="anchored" data-anchor-id="gausss-trick">Gauss’s trick</h2>
 <p>Write the sum forwards and backwards:</p>
@@ -878,8 +878,8 @@ font-style: inherit;">100</span>))</span></code></pre></div></div>
 <p>Now break the loop on purpose: change <code>total + k</code> to <code>total + k + 1</code>. At which <code>k</code> will the <code>assert</code> stop it? Then change it back.</p>
 </section>
 </section>
-<section id="step-10" class="level1">
-<h1>Step 10: A thousand checks, then a proof (~25 min)</h1>
+<section id="day-10" class="level1">
+<h1>Day 10: A thousand checks, then a proof (~25 min)</h1>
 <section id="check-lots-of-cases" class="level2">
 <h2 class="anchored" data-anchor-id="check-lots-of-cases">Check lots of cases</h2>
 <p><code>invariant.py</code> only checks up to 100. <code>sum_to</code> is a recipe, so it can run for any <code>n</code>. Copy <code>invariant.py</code> once more:</p>
@@ -982,7 +982,7 @@ font-style: inherit;">"all 1000 agree"</span>)</span></code></pre></div></div>
 <p><img src="https://latex.codecogs.com/png.latex?(k-1)k%20+%202k%20=%20k(k+1)"></p>
 <p>which is exactly what the <code>assert</code> checks. It passes in the first round, and each passing round makes the next one pass, so it can never fail, however far the loop runs.</p>
 <p>That’s no longer a check. It’s a proof for every <img src="https://latex.codecogs.com/png.latex?n">, and it’s the method from maths class: <strong>induction</strong>. The first round is the first domino, and each round knocks over the next.</p>
-<p><strong>Write this proof on paper, in your own words.</strong> You’ll need it in Part 4.</p>
+<p><strong>Write this proof on paper, in your own words.</strong> You’ll need it on Day 12.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1001,8 +1001,8 @@ font-style: inherit;">"all 1000 agree"</span>)</span></code></pre></div></div>
 </div>
 </section>
 </section>
-<section id="step-11" class="level1">
-<h1>Step 11: The same loop in Lean (~20 min)</h1>
+<section id="day-11" class="level1">
+<h1>Day 11: The same loop in Lean (~20 min)</h1>
 <section id="why-ai-and-lean-belong-together" class="level2">
 <h2 class="anchored" data-anchor-id="why-ai-and-lean-belong-together">Why AI and Lean belong together</h2>
 <p>A proof that <em>sounds</em> right can still be wrong, and Claude is very good at sounding right. Lean doesn’t care how convincing a proof sounds: it checks every step, or it refuses. So the AI suggests, and Lean checks.</p>
@@ -1069,8 +1069,8 @@ font-style: inherit;">"all 1000 agree"</span>)</span></code></pre></div></div>
 <p><code>/</code> on natural numbers rounds down: <code>7 / 2</code> is <code>3</code>. (Why doesn’t that rounding ever change the answer here?)</p>
 </section>
 </section>
-<section id="step-12" class="level1">
-<h1>Step 12: Checking isn’t proving (~20 min)</h1>
+<section id="day-12" class="level1">
+<h1>Day 12: Checking isn’t proving (~20 min)</h1>
 <section id="checking-isnt-proving" class="level2">
 <h2 class="anchored" data-anchor-id="checking-isnt-proving">Checking isn’t proving</h2>
 <p>Do the two programs agree? Add one check, for <img src="https://latex.codecogs.com/png.latex?n%20=%201000">:</p>
@@ -1084,7 +1084,7 @@ font-style: inherit;">"all 1000 agree"</span>)</span></code></pre></div></div>
 <section id="ai-translates-lean-checks" class="level2">
 <h2 class="anchored" data-anchor-id="ai-translates-lean-checks">AI translates, Lean checks</h2>
 <p>Writing Lean proofs yourself comes later in the course. Today Claude only <em>translates</em> your proof, and you watch what Lean says.</p>
-<p>Open Claude in Chrome on the Lean page, type in your paper proof from Part 3, and ask:</p>
+<p>Open Claude in Chrome on the Lean page, type in your paper proof from Day 10, and ask:</p>
 <blockquote class="blockquote">
 <p>Please prove <code>agree</code> in Lean by translating my proof, and see whether Lean accepts it. Don’t fix any mistakes in my proof, and don’t fix anything Lean complains about. Only translate my proof into Lean, and translate Lean’s answer back into English.</p>
 </blockquote>
