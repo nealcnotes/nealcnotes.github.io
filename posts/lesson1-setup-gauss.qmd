@@ -1,6 +1,6 @@
 ---
 title: "12 sessions: talking to the computer in words"
-subtitle: "Set up, add up numbers like Gauss, prove it like Claude"
+subtitle: "Set up, add, and prove"
 date: 2026-10-31
 categories: [lessons, python, lean]
 # depth 1: the days are the map; sections would bury them
