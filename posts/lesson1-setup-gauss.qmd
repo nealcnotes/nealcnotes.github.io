@@ -1,5 +1,5 @@
 ---
-title: "Lesson 1: Talking to the computer in words"
+title: "12 short sessions: talking to the computer in words"
 subtitle: "Set up, add up, prove it"
 date: 2026-10-31
 categories: [lessons, python, lean]
