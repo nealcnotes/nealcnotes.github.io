@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-10-30">
+
+<title>Lesson 1.5 (draft): How long will the money last? – nealcnotes</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../favicon-32x32.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-574f58f4068bb8f43535e6e9c10c5508.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/videojs/video.min.js"></script>
+<link href="../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">nealcnotes</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Posts</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#guess-first" id="toc-guess-first" class="nav-link active" data-scroll-target="#guess-first">Guess first</a></li>
+  <li><a href="#meet-the-man-who-asked-first" id="toc-meet-the-man-who-asked-first" class="nav-link" data-scroll-target="#meet-the-man-who-asked-first">Meet the man who asked first</a></li>
+  <li><a href="#build-it-in-a-spreadsheet" id="toc-build-it-in-a-spreadsheet" class="nav-link" data-scroll-target="#build-it-in-a-spreadsheet">Build it in a spreadsheet</a></li>
+  <li><a href="#the-pattern" id="toc-the-pattern" class="nav-link" data-scroll-target="#the-pattern">The pattern</a></li>
+  <li><a href="#using-ai" id="toc-using-ai" class="nav-link" data-scroll-target="#using-ai">Using AI</a>
+  <ul class="collapse">
+  <li><a href="#what-the-chatbot-sees" id="toc-what-the-chatbot-sees" class="nav-link" data-scroll-target="#what-the-chatbot-sees">What the chatbot sees</a></li>
+  </ul></li>
+  <li><a href="#open-question" id="toc-open-question" class="nav-link" data-scroll-target="#open-question">Open question</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lesson 1.5 (draft): How long will the money last?</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">lessons</div>
+    <div class="quarto-category">money</div>
+    <div class="quarto-category">math</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 30, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-big-play-centered vjs-fluid" controls="" preload="auto" data-setup="{}" title="So many money questions"><source src="media/261102.moneymath.questions.mp4"></video></div>
+<p><em>So many money questions: my drawing, made to talk with Runway Act-Two.</em></p>
+<hr>
+<p><strong>Who this is for:</strong> <a href="#guess-first" class="levels-badge l1">Percentages</a> (spreadsheet) · <a href="#box-logs" class="levels-badge l2">Logarithms</a> (a little Python) · <a href="#box-diffeq" class="levels-badge l3">Differential equations</a></p>
+<section id="guess-first" class="level2">
+<h2 class="anchored" data-anchor-id="guess-first">Guess first</h2>
+<p>Let’s say we had <strong>$500,000</strong> and we want to spend <strong>$20,000</strong> a year. Well, then we know that in 25 years we’ll run out of money. It’ll all be gone.</p>
+<p>We’ve also heard of interest. If we put the $500,000 in a bank, we’ll get some more money every year. So what if we were to make <strong>2%</strong> interest every year? Will the money last longer than 25 years, if we spend $20,000 a year?</p>
+<p>Now, another thing that happens over the years, especially over, say, 25 years, is that things get more expensive. 25 years ago, a meal probably cost a lot less. You could probably get french fries and a hamburger for $5, and today that might cost $10. If you are buying hamburgers, you may have to spend more each year. That’s called <strong>inflation</strong>.</p>
+<p>But you might be getting money from interest, and the money you get from interest might be a little more than the money you have to spend from inflation. Suppose your money earns 5% interest and there’s 4% inflation. Then in a real sense you’re getting <strong>1%</strong> more value per year. So how does that affect how long the money will last?</p>
+<p>Remember, in this second part you’re not spending $20,000 a year. You’re spending $20,000 <em>worth</em> every year, based on the first year’s prices.</p>
+<p>Write your guesses down before reading on. Nobody will check them. That’s the point.</p>
+<div id="fork-start" class="fork">
+<p><strong>Where to now?</strong> Both roads end up in the same place.</p>
+<ul>
+<li><a href="#meet-the-man-who-asked-first" class="fork-go l1">Did people 800 years ago worry about this too?</a></li>
+<li><a href="#build-it-in-a-spreadsheet" class="fork-go l1">I just want to see if my guess was right.</a></li>
+</ul>
+</div>
+</section>
+<section id="meet-the-man-who-asked-first" class="level2">
+<h2 class="anchored" data-anchor-id="meet-the-man-who-asked-first">Meet the man who asked first</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/261102.moneymath.fibonacci-portrait.jpg" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>Leonardo of Pisa, known as Fibonacci. The picture is from 1850, so it’s a bit of a guess what he might have looked like. (Public domain, via Wikimedia Commons.)</figcaption>
+</figure>
+</div>
+<p>Most people know Fibonacci for coming up with a sequence where you take the two previous numbers and add them. You might start with 1, 1. Add them, you get 2. Then you add the two previous ones: 1 plus 2 is 3, 2 plus 3 is 5. So the Fibonacci sequence is 1, 1, 2, 3, 5, 8, …</p>
+<p>It has a lot of interesting history and all kinds of deep connections. It connects out to something called the golden ratio, which is what makes certain things look very aesthetic. They say the Parthenon follows the golden ratio in terms of its height versus its width. I’m not sure why, but that’s what I’ve found out.</p>
+<p>But what’s interesting here is his <em>Liber Abaci</em> (“The Book of Calculation”). He wrote it in 1202, so this is a long time ago. It was where he showed merchants, Italian merchants, how to use Hindu–Arabic numerals to find profits, convert money from one country’s currency to another’s, and work out interest. And interest is what we’re looking at here.</p>
+<p>Somewhere in there is a problem that’s basically ours: someone has money in the bank and takes a fixed amount out each year. When does it run out?</p>
+</section>
+<section id="build-it-in-a-spreadsheet" class="level2">
+<h2 class="anchored" data-anchor-id="build-it-in-a-spreadsheet">Build it in a spreadsheet</h2>
+<p><a href="media/261102.moneymath.how-long.xlsx" download="how-long.xlsx">Download the spreadsheet</a>.</p>
+<p>Click on the spreadsheet and see how your guess works out.</p>
+<p>What’s great about a spreadsheet is that it’s a table, but you can change the numbers at the top. What if you start with $100,000 instead of $500,000? What if you start with $100? What if you were getting more interest? What if you’re getting less interest? You can change all the numbers at the top, and the great thing about spreadsheets is that everything changes. It lets you see when it turns red, when the money would run out. And if you actually spend less or get more interest, you might never run out of money, which is a good thing.</p>
+<p>The yellow cells are the inputs. Each row is one year:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>year</th>
+<th>start balance</th>
+<th>+ interest</th>
+<th>− spending</th>
+<th>end balance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>500,000</td>
+<td>5,000</td>
+<td>20,000</td>
+<td>485,000</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>485,000</td>
+<td>4,850</td>
+<td>20,000</td>
+<td>469,850</td>
+</tr>
+<tr class="odd">
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Now try these:</p>
+<ul>
+<li>Change spending to $25,000. What happens?</li>
+<li>Change it to $5,000. What happens now? (Don’t skip this one.)</li>
+<li>What’s the <em>most</em> you can spend so that the money <strong>never</strong> runs out?</li>
+</ul>
+</section>
+<section id="the-pattern" class="level2">
+<h2 class="anchored" data-anchor-id="the-pattern">The pattern</h2>
+<p>At $5,000 a year the balance never moves, because you’re spending exactly the interest (1% of $500,000 = $5,000). Spend less than the interest and the pile grows forever. Spend more and it shrinks, and it shrinks <em>faster</em> each year, because a smaller pile earns less interest. That’s why the last few years of the spreadsheet drop so steeply.</p>
+<div class="lvl1 callout callout-style-default callout-note callout-titled" title="Percentages · Try it">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Percentages · Try it
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Your spreadsheet has a “Continuous formula” cell up top that says the money lasts about <strong>28.8 years</strong>. Your table ran out in <strong>year 29</strong>. Two completely different methods agree. Whenever two methods agree, you can trust both a bit more. You’ll use this trick all through the book.</p>
+</div>
+</div>
+<div id="crossroads" class="fork">
+<p><strong>The crossroads.</strong> You have the whole idea now, and stopping here is a complete chapter. If one of these questions is nagging at you, follow it. Every box ends with a way back here.</p>
+<ul>
+<li><a href="#box-logs" class="fork-go l2">Could I get the answer on a calculator in one step?</a> <span class="fork-tool">logarithms · a little Python</span></li>
+<li><a href="#box-series" class="fork-go l2">How can adding numbers up forever give an ordinary number?</a> <span class="fork-tool">geometric series</span></li>
+<li><a href="#box-sim" class="fork-go l2">What if the stock market crashes the year I start spending?</a> <span class="fork-tool">simulation · Python</span></li>
+<li><a href="#box-diffeq" class="fork-go l3">What if the money grew every second, not once a year?</a> <span class="fork-tool">differential equations</span></li>
+<li><a href="#using-ai" class="fork-go l1">Couldn’t I just ask a chatbot?</a> <span class="fork-tool">no new math</span></li>
+</ul>
+</div>
+<div id="crossroads-ai" class="fork">
+<p><strong>Or a question about the machine:</strong></p>
+<ul>
+<li><a href="#box-softmax" class="fork-go l2">How does a chatbot choose its next word?</a> <span class="fork-tool">exponentials · a little Python</span></li>
+<li><a href="#box-adds" class="fork-go l3">Can anyone see what’s going on inside when it adds?</a> <span class="fork-tool">interpretability</span></li>
+</ul>
+</div>
+<div id="box-logs" class="lvl2 callout callout-style-default callout-note callout-titled" title="Logarithms · a formula instead of a table">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Logarithms · a formula instead of a table
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The table works, but it takes 29 rows. The shortcut needs two functions from precalculus.</p>
+<p>The exponential is one of the most important functions in business because it represents continuously compounded return</p>
+<p><span class="math display">\[
+FV = PV e^{rt}
+\]</span></p>
+<p>We begin with logarithms, which are the inverse of the exponential. In this course, just like we use <span class="math inline">\(e\)</span> as the default base for an exponential function, we use the natural log <span class="math inline">\(\ln\)</span> as the default logarithm.</p>
+<p>With those two, the table collapses into one line:</p>
+<p><span class="math display">\[
+T = \frac{1}{r}\,\ln\!\frac{c}{c - rW}
+\]</span></p>
+<p>where <span class="math inline">\(W\)</span> is the nest egg, <span class="math inline">\(c\)</span> is yearly spending and <span class="math inline">\(r\)</span> is the interest rate (as a decimal). With our numbers, <span class="math inline">\(T = 100 \ln(20000/15000) \approx 28.8\)</span> years.</p>
+<p>Notice what happens when <span class="math inline">\(c = rW\)</span> (spending equals interest): the bottom of the fraction is zero, and the formula says “forever”. That’s the pattern you found in the spreadsheet.</p>
+<p>Here’s the same thing in Python, checked against the year-by-year method:</p>
+<div id="b22a036f" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> log</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>W0, c, r <span class="op">=</span> <span class="dv">500_000</span>, <span class="dv">20_000</span>, <span class="fl">0.01</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># year by year, like the spreadsheet</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>W, years <span class="op">=</span> W0, <span class="dv">0</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> W <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    W <span class="op">=</span> W <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> r) <span class="op">-</span> c</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    years <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> log(c <span class="op">/</span> (c <span class="op">-</span> r <span class="op">*</span> W0)) <span class="op">/</span> r      <span class="co"># the shortcut formula</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"year by year: runs out during year </span><span class="sc">{</span>years<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"formula:      T = </span><span class="sc">{</span>T<span class="sc">:.1f}</span><span class="ss"> years"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>year by year: runs out during year 29
+formula:      T = 28.8 years</code></pre>
+</div>
+</div>
+<div class="fork-next">
+<p>Next: <a href="#box-series" class="fork-go">How can adding up forever give an ordinary number?</a> · <a href="#box-diffeq" class="fork-go">What if the money grew every second?</a> · <a href="#crossroads" class="fork-go">↩︎ Back to the crossroads</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="box-softmax" class="lvl2 callout callout-style-default callout-note callout-titled" title="Softmax · how a chatbot turns scores into odds">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Softmax · how a chatbot turns scores into odds
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A chatbot writes one token at a time. At each step it gives every token in its dictionary a <strong>score</strong>: bigger means “more likely to come next”. Scores can be any number, even negative, so they aren’t probabilities yet.</p>
+<p>To turn scores into probabilities it uses the same <span class="math inline">\(e\)</span> as continuous compounding. Raise <span class="math inline">\(e\)</span> to each score, then divide by the total:</p>
+<p><span class="math display">\[
+p_i = \frac{e^{s_i}}{\sum_j e^{s_j}}
+\]</span></p>
+<p>This is called <strong>softmax</strong>. The exponential makes every number positive, and dividing by the total makes them add up to 1. And just as compounding turns a small difference in interest rate into a big difference in money, the exponential turns a small lead in score into a big lead in probability: a score 1 higher means <span class="math inline">\(e \approx 2.7\)</span> times as likely.</p>
+<p>Here the model has just written <em>“The money will last 28.”</em> and is choosing the next token:</p>
+<div id="7febd5d3" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> exp</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>scores <span class="op">=</span> {<span class="st">"8"</span>: <span class="fl">3.0</span>, <span class="st">"9"</span>: <span class="fl">2.0</span>, <span class="st">"7"</span>: <span class="fl">1.0</span>, <span class="st">"5"</span>: <span class="op">-</span><span class="fl">1.0</span>}   <span class="co"># made-up scores</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> <span class="bu">sum</span>(exp(s) <span class="cf">for</span> s <span class="kw">in</span> scores.values())</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> {tok: exp(s) <span class="op">/</span> total <span class="cf">for</span> tok, s <span class="kw">in</span> scores.items()}</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> tok, p <span class="kw">in</span> probs.items():</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"'</span><span class="sc">{</span>tok<span class="sc">}</span><span class="ss">': </span><span class="sc">{</span>p<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># second check: probabilities add to 1, and a score 1 higher is e times as likely</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"sum = </span><span class="sc">{</span><span class="bu">sum</span>(probs.values())<span class="sc">:.6f}</span><span class="ss">"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p('8') / p('9') = </span><span class="sc">{</span>probs[<span class="st">'8'</span>] <span class="op">/</span> probs[<span class="st">'9'</span>]<span class="sc">:.4f}</span><span class="ss">  vs  e = </span><span class="sc">{</span>exp(<span class="dv">1</span>)<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'8': 0.657
+'9': 0.242
+'7': 0.089
+'5': 0.012
+sum = 1.000000
+p('8') / p('9') = 2.7183  vs  e = 2.7183</code></pre>
+</div>
+</div>
+<p>So the model will most likely write “28.8”, but about one time in four it writes “28.9”, which is where the confident-but-wrong answers come from. Some chatbots let you set a <strong>temperature</strong>: dividing every score by a number bigger than 1 flattens the differences, so the model takes more chances.</p>
+<div class="fork-next">
+<p><a href="#crossroads" class="fork-go">↩︎ Back to the crossroads</a> · <a href="#using-ai" class="fork-go">Couldn’t I just ask a chatbot?</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="box-series" class="lvl2 callout callout-style-default callout-note callout-titled" title="Series · why the table has a formula at all">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Series · why the table has a formula at all
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Each year the money you still have grows by a factor of <span class="math inline">\(1.01\)</span>, and another $20,000 comes out. Add up all those withdrawals and their lost interest and you get a geometric series.</p>
+<p>A series is the sum of a sequence — an infinite sum. The sum of an infinite list of numbers can either be finite, so the series can <em>converge</em> to a number, or the sum can be infinite, so the series <em>diverges</em>.</p>
+<p>We start with the basic geometric series:</p>
+<p><span class="math display">\[S = 1+r+r^2+r^3+r^4+\cdots\]</span></p>
+<p>Here <span class="math inline">\(r\)</span> is a constant, the series converges when <span class="math inline">\(|r|&lt;1\)</span> and diverges when <span class="math inline">\(1\leq|r|\)</span>. In fact, we can find what number the infinite geometric series converges to. Write the series out for <span class="math inline">\(Sr\)</span>:</p>
+<p><span class="math display">\[Sr = r+r^2+r^3+r^4+r^5+\cdots\]</span></p>
+<p>Looks a lot like the series for <span class="math inline">\(S\)</span> itself. Now subtract:</p>
+<p><span class="math display">\[S-Sr=1\]</span></p>
+<p>All the terms cancel! And then solve for <span class="math inline">\(S\)</span>:</p>
+<p><span class="math display">\[S=\frac1{1-r}=1+r+r^2+r^3+r^4+\cdots\]</span></p>
+<p>Now that we know <span class="math inline">\(S\)</span>, we can easily find other finite sums like</p>
+<p><span class="math display">\[1+r+r^2+\cdots+r^{321}=S-Sr^{322}=S(1-r^{322})=\frac{1-r^{322}}{1-r}\]</span></p>
+<p>For the money, the ratio is <span class="math inline">\(1.01\)</span> instead of <span class="math inline">\(r\)</span>, and we stop after <span class="math inline">\(n\)</span> years instead of going on forever. Set the balance to zero and solve for <span class="math inline">\(n\)</span>:</p>
+<p><span class="math display">\[
+n = \frac{\ln\big(c/(c - rW)\big)}{\ln(1+r)} = \frac{\ln(4/3)}{\ln 1.01} \approx 28.9 \text{ years,}
+\]</span></p>
+<p>which matches the spreadsheet (year 29) even better than the continuous 28.8.</p>
+<div class="fork-next">
+<p>Next: <a href="#box-diffeq" class="fork-go">What if the money grew every second?</a> · <a href="#crossroads" class="fork-go">↩︎ Back to the crossroads</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="box-sim" class="lvl2 callout callout-style-default callout-note callout-titled" title="Simulation · what if returns are random?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Simulation · what if returns are random?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Real investments don’t pay a steady 1%. Some years are great, some are terrible. Let’s say returns average 3% but swing a lot, then simulate 10,000 possible futures and count how many run out within 30 years:</p>
+<div id="ae58285d" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">1</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>n, years <span class="op">=</span> <span class="dv">10_000</span>, <span class="dv">30</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> rng.normal(<span class="fl">0.03</span>, <span class="fl">0.12</span>, size<span class="op">=</span>(n, years))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>W <span class="op">=</span> np.full(n, <span class="fl">500_000.0</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>paths <span class="op">=</span> np.empty((n, years))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(years):</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    W <span class="op">=</span> np.maximum(W <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> returns[:, t]) <span class="op">-</span> <span class="dv">20_000</span>, <span class="dv">0</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    paths[:, t] <span class="op">=</span> W</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"ran out within </span><span class="sc">{</span>years<span class="sc">}</span><span class="ss"> years: </span><span class="sc">{</span>(paths[:, <span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> <span class="dv">0</span>)<span class="sc">.</span>mean()<span class="sc">:.1%}</span><span class="ss">"</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>plt.plot(paths[:<span class="dv">50</span>].T <span class="op">/</span> <span class="dv">1000</span>, lw<span class="op">=</span><span class="fl">0.7</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"year"</span>)<span class="op">;</span> plt.ylabel(<span class="st">"balance ($ thousands)"</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"50 of the 10,000 simulated futures"</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ran out within 30 years: 36.5%</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="moneymath-how-long_files/figure-html/cell-4-output-2.png" width="604" height="450" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The average return (3%) is <em>higher</em> than before, yet about a third of the futures still run dry. Bad years early on hurt the most, because they shrink the pile right when it has the most growing left to do.</p>
+<div class="fork-next">
+<p>Next: <a href="#box-diffeq" class="fork-go">What if the money grew every second?</a> · <a href="#crossroads" class="fork-go">↩︎ Back to the crossroads</a> · <a href="#using-ai" class="fork-go">Couldn’t I just ask a chatbot?</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="box-diffeq" class="lvl3 callout callout-style-default callout-note callout-titled" title="Differential equations · where the formula comes from">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Differential equations · where the formula comes from
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Treat time as continuous. The balance changes at the rate <em>interest in minus spending out</em>:</p>
+<p><span class="math display">\[
+\frac{dW}{dt} = rW - c, \qquad W(0) = W_0 .
+\]</span></p>
+<p>That’s a differential equation.</p>
+<p>If <span class="math inline">\(f(x)\)</span> is a function, then <span class="math inline">\(f'(x)\)</span> or <span class="math inline">\(df/dx\)</span> is its derivative. We can make equations involving them. In these equations, we <em>solve for <span class="math inline">\(f(x)\)</span></em> using integration. We can also plug in functions by taking their derivatives to see whether they satisfy a differential equation.</p>
+<p>For instance, we can look at the equation <span class="math inline">\(f' = k f\)</span>, and then we can try <span class="math inline">\(f=\cos(x)\)</span>. Then <span class="math inline">\(f'(x)=-\sin(x)\)</span>, so when we plug in we get <span class="math inline">\(\cos(x)=-k\sin(x)\)</span>. <em>These are unequal</em> so <span class="math inline">\(f=\cos(x)\)</span> does not solve the equation. Next we can try <span class="math inline">\(f=e^{kx}\)</span> so that <span class="math inline">\(f'=k e^{kx}\)</span>. Plugging in we get <span class="math inline">\(ke^{kx}=k e^{kx}\)</span> so that <span class="math inline">\(f=e^{kx}\)</span> does solve the equation.</p>
+<p>Our money equation is almost <span class="math inline">\(f' = kf\)</span>, just with the <span class="math inline">\(-c\)</span> tacked on. So try an exponential plus a constant, and plug in. It works:</p>
+<p><span class="math display">\[
+W(t) = \frac{c}{r} + \left(W_0 - \frac{c}{r}\right)e^{rt}.
+\]</span></p>
+<p>Set <span class="math inline">\(W(T) = 0\)</span> and solve for <span class="math inline">\(T\)</span> to get the logarithm formula. The quantity <span class="math inline">\(c/r\)</span> is the balance whose interest exactly pays for the spending: start above it and you grow forever, start below it and you hit zero.</p>
+<p><strong>Your spreadsheet was solving this equation all along.</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/261102.moneymath.euler-portrait.jpg" class="img-fluid figure-img" style="width:35.0%"></p>
+<figcaption>Leonhard Euler in 1753, pastel by Jakob Emanuel Handmann. He had already lost the sight of his right eye in the late 1730s, and went on to publish more mathematics than almost anyone in history. (Public domain, via Wikimedia Commons.)</figcaption>
+</figure>
+</div>
+<p>A differential equation <span class="math inline">\(y'(x)=f(x,y)\)</span> specifies the slope of a solution curve <span class="math inline">\(y(x)\)</span> at any point <span class="math inline">\((x,y)\)</span> in the plane. Suppose we want to estimate the solution <span class="math inline">\(y(x)\)</span> with a given initial value <span class="math inline">\(y(x_0)=y_0\)</span>. This can be done more simply by realizing that the slope is the “rise-over-run”, so the <span class="math inline">\(\Delta y = f(x,y)\Delta x\)</span> is how much the <span class="math inline">\(y\)</span> increases when we take a step <span class="math inline">\(\Delta x\)</span>.</p>
+<p>For us <span class="math inline">\(f = rW - c\)</span> and the step is one year, so <span class="math inline">\(\Delta W = rW - c\)</span>: interest minus spending, which is exactly one row of the spreadsheet. The 29-row table is Euler’s method with <span class="math inline">\(\Delta t = 1\)</span>. That’s why it lands close to, but not exactly on, the continuous answer of 28.8 years.</p>
+<p>The random version, where returns are noisy and your lifetime is uncertain too, is Milevsky’s seventh equation, named for Andrey Kolmogorov. It gives the probability of outliving your money.</p>
+<div class="fork-next">
+<p><a href="#crossroads" class="fork-go">↩︎ Back to the crossroads</a> · <a href="#using-ai" class="fork-go">Couldn’t I just ask a chatbot?</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="box-adds" class="lvl3 callout callout-style-default callout-note callout-titled" title="Interpretability · watching a model add">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Interpretability · watching a model add
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Can we look inside a model and see <em>how</em> it does a sum? A new field called <strong>interpretability</strong> tries to do exactly that. Researchers trace which parts of the model light up, and what each part contributes, as it works.</p>
+<p>In 2025, researchers at Anthropic traced one of their models adding <span class="math inline">\(36 + 59\)</span>. It didn’t carry the one. It ran two paths side by side:</p>
+<ul>
+<li>one path made a <strong>rough estimate</strong> of the size, something like “a bit over 90”;</li>
+<li>another worked out <strong>only the last digit</strong> exactly: 6 + 9 ends in 5.</li>
+</ul>
+<p>Put together, “a bit over 90” and “ends in 5” give <strong>95</strong>. That’s a strange way to add, but it works, and nobody taught it that. It found the method on its own while learning to predict text.</p>
+<p>Here’s the part worth remembering. When they then asked the model <em>how</em> it got 95, it described the school method: add the ones, carry the one, add the tens. Its explanation was a sensible story, but it wasn’t what it had actually done.</p>
+<p>So checking a chatbot means checking two things: its <strong>answer</strong> (against your spreadsheet) and its <strong>explanation</strong> (which may be a plausible story rather than a report).</p>
+<div class="fork-next">
+<p><a href="#crossroads" class="fork-go">↩︎ Back to the crossroads</a> · <a href="#using-ai" class="fork-go">Couldn’t I just ask a chatbot?</a></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="using-ai" class="level2">
+<h2 class="anchored" data-anchor-id="using-ai">Using AI</h2>
+<p>Ask an AI assistant: <em>“I have $500,000, spend $20,000 a year and earn 1%. How many years will it last?”</em></p>
+<p>Then <strong>check</strong> its answer against your spreadsheet. AI chatbots are often shaky at arithmetic, even when they sound very sure of themselves. If it’s wrong, can you work out what it did? Now ask it to <em>write a spreadsheet formula or Python code</em> for the problem instead of answering directly, and check that. Which way worked better?</p>
+<section id="what-the-chatbot-sees" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-chatbot-sees">What the chatbot sees</h3>
+<p>When you type <em>“I have $500,000”</em>, the chatbot never sees the number the way you do. Before anything else happens, your text is chopped into <strong>tokens</strong>: short chunks that the model has a numbered list of, a bit like a dictionary where every entry has a page number. The model only ever sees the page numbers.</p>
+<p>Long numbers usually get chopped too. Many chatbots cut digits into chunks of up to three, so 500,000 might arrive as <code>500</code> · <code>,</code> · <code>000</code>: three tokens, and nothing in them says “this <code>500</code> means five hundred <em>thousand</em>”. You learned place value in second grade. The model has to work it out from patterns in everything it read.</p>
+<p>That’s one reason a chatbot can explain compound interest beautifully and still get the arithmetic wrong. Explaining is about patterns in words, which is what it’s built for. Arithmetic is about place value, which it never sees directly.</p>
+</section>
+</section>
+<section id="open-question" class="level2">
+<h2 class="anchored" data-anchor-id="open-question">Open question</h2>
+<p>The simulation stops at 30 years. But how long will <em>you</em> live? That’s a probability question too, and it has its own equation (and its own slightly morbid spreadsheet). Next chapter.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/nealcnotes\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p><a href="../archive/">Archive</a></p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>videojs(video_shortcode_videojs_video1);</script>
+
+
+
+
+</body></html>
