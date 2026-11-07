@@ -57,7 +57,7 @@ python3 square.py
 a line. `left(90)` turns 90 degrees to the left. `turtle.done()` keeps
 the window open until you close it. Ctrl+C stops it from the terminal.
 
-Was the prediction right? Where did the turtle end up?
+Was your guess right? Where did the turtle end up?
 
 To check your understanding: what would the picture look like if the
 loop ran 3 times instead of 4? Decide before you read on.
@@ -167,8 +167,8 @@ while name != "":
 turtle.done()
 ```
 
-What's your prediction for a pentagon: what turn does Claude
-give, and how many sides will the program draw? The line
+Guess, for a pentagon, what turn Claude
+gives and how many sides the program draws. The line
 `round(360 / angle)` works out the sides from the angle.
 
 Type `pentagon`, then `hexagon`, then press Enter on an empty line.
@@ -219,8 +219,8 @@ while song != "":
 print(f"playlist total: {total} minutes")
 ```
 
-What do you think the first song's line prints, and what is the total
-after two songs? Then type a real song you know, and a title that
+Guess what the first song's line prints, and the total
+after two songs. Then type a real song you know, and a title that
 doesn't exist.
 
 Watch what comes back. It can be a number, a sentence, or a request
@@ -228,7 +228,7 @@ to look through your files. Claude is an agent: it can look things up
 in your folders as well as answer from memory. The program only sees
 text, so it cannot tell which one happened. When it crashes, read the
 error, and ask Claude in the right pane: *"Did you search my files to
-answer that?"* What do you expect it to say?
+answer that?"* Guess its answer first.
 
 ::: {.callout-warning}
 ## Say no when it asks
@@ -247,8 +247,8 @@ reply = subprocess.run(
     capture_output=True, text=True)
 ```
 
-Run it again with the made-up title. What do you think Claude sends
-back now, a number or a sentence? `--tools ""` turns every tool off, so the
+Run it again with the made-up title. Guess first: does Claude send
+back a number or a sentence now? `--tools ""` turns every tool off, so the
 call can only answer from memory. Claude may still be wrong, so the
 check below still matters.
 
@@ -324,12 +324,12 @@ result = subprocess.run(
 secret = int(result.stdout.strip())
 ```
 
-What's your prediction: will two runs of the game pick the same secret?
+Guess: will two runs of the game pick the same secret?
 
 Each call to Claude remembers nothing about the last one. The secret
 survives only because it is stored in `secret`, a variable in your
-program. What do you think happens if you move the `subprocess` lines
-inside the `while` loop? Guess, then run it.
+program. Guess what happens if you move the `subprocess` lines
+inside the `while` loop, then run it.
 
 ::: {.callout-warning}
 ## Bug hunt waiting in this one
