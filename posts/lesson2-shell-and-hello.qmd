@@ -33,8 +33,8 @@ Left pane, you work. Right pane, Claude is your tutor.
 
 Lesson 2 is about loops, so the first drawing is a loop you can see.
 
-Open `~/course/square.py` in nvim and type this. Predict where the
-turtle ends up, and which way it faces, before you run it:
+Open `~/course/square.py` in nvim and type this. Before you run it, where do you think the
+turtle ends up, and which way will it face?
 
 ```python
 import turtle
@@ -69,8 +69,8 @@ there are four of them.
 ::: {.callout-note}
 ## Try it yourself
 Change the loop so it draws a square with sides of 50. Then draw a row
-of three squares side by side. Predict where each one starts before
-you run it. The change is in the lines inside the loop.
+of three squares side by side. Where do you think each one starts?
+Guess before you run it. The change is in the lines inside the loop.
 :::
 
 ## Colour and a row of squares
@@ -81,18 +81,18 @@ Add a colour before the loop:
 t.color("blue")
 ```
 
-Predict: does the colour change the shape, or only the line? Run it
-and check.
+Your guess: does the colour change the shape, or only the line? Run it
+and see.
 
 Now draw the same square three times, with a `for` loop around the
 whole thing, and move the turtle between squares with `t.penup()`,
-`t.forward(150)` and `t.pendown()`. Predict where the third square
-ends up before you run it.
+`t.forward(150)` and `t.pendown()`. Where will the third square
+end up? Guess, then run it.
 
 ## Ask Claude for the angle
 
 A nonagon has nine sides, and the turn at each corner is 360 divided by
-nine. Predict that number before you ask. Then add these lines to
+nine. What number do you expect? Then add these lines to
 `square.py`, after the square's loop and before `turtle.done()`. They
 use the pen `t` that the square already made. Running them on their
 own, as a new file, fails with `NameError: name 't' is not defined`:
@@ -167,7 +167,7 @@ while name != "":
 turtle.done()
 ```
 
-Before you run it, predict: for a pentagon, what turn does Claude
+What's your prediction for a pentagon: what turn does Claude
 give, and how many sides will the program draw? The line
 `round(360 / angle)` works out the sides from the angle.
 
@@ -219,7 +219,7 @@ while song != "":
 print(f"playlist total: {total} minutes")
 ```
 
-Predict: what does the first song's line print, and what is the total
+What do you think the first song's line prints, and what is the total
 after two songs? Then type a real song you know, and a title that
 doesn't exist.
 
@@ -228,7 +228,7 @@ to look through your files. Claude is an agent: it can look things up
 in your folders as well as answer from memory. The program only sees
 text, so it cannot tell which one happened. When it crashes, read the
 error, and ask Claude in the right pane: *"Did you search my files to
-answer that?"* Predict the answer before you ask.
+answer that?"* What do you expect it to say?
 
 ::: {.callout-warning}
 ## Say no when it asks
@@ -247,8 +247,8 @@ reply = subprocess.run(
     capture_output=True, text=True)
 ```
 
-Run it again with the made-up title. Predict: now what does Claude send
-back, a number or a sentence? `--tools ""` turns every tool off, so the
+Run it again with the made-up title. What do you think Claude sends
+back now, a number or a sentence? `--tools ""` turns every tool off, so the
 call can only answer from memory. Claude may still be wrong, so the
 check below still matters.
 
@@ -304,8 +304,8 @@ Claude remembers nothing between calls, so your program must send the
 whole history every turn. That is the agent part: the program decides
 the next step, and the model only answers.
 
-Before you run it, predict how many turns Claude needs if the secret is
-50, and whether it guesses 25 first.
+Before you run it, make a guess: how many turns does Claude need if the
+secret is 50, and does it guess 25 first?
 
 Each run uses a few calls from the weekly budget, so run it once or
 twice, not ten times.
@@ -324,12 +324,12 @@ result = subprocess.run(
 secret = int(result.stdout.strip())
 ```
 
-Predict: will two runs of the game pick the same secret?
+What's your prediction: will two runs of the game pick the same secret?
 
 Each call to Claude remembers nothing about the last one. The secret
 survives only because it is stored in `secret`, a variable in your
-program. Predict what happens if you move the `subprocess` lines inside
-the `while` loop, and then run it.
+program. What do you think happens if you move the `subprocess` lines
+inside the `while` loop? Guess, then run it.
 
 ::: {.callout-warning}
 ## Bug hunt waiting in this one

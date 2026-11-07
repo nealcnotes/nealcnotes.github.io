@@ -26,12 +26,20 @@ another, and a function that wraps a call to Claude.
 
 # Name it, then call it (15 min session) {#name-it-then-call-it}
 
+Left pane, you work. Right pane, Claude is your tutor.
+
 ## A function is a name for a computation
 
 A function is a name for a computation: a recipe, a process, a rule you
 want to use again without writing it out again. Naming it well is the
 most important habit in this lesson. A good name says what the step is
 for, so the reader does not have to work out how it was made.
+
+Lesson 1's recipe took one input, `n`, and gave back a word. A recipe
+usually needs more than one input: the amount, the servings it was
+written for, and the servings you want. The three names in the
+parentheses after `def` are **parameters**: the boxes the function
+fills when you call it.
 
 Type this into `~/course/scale.py`. You will keep using this file:
 
@@ -40,11 +48,11 @@ def scaled(amount, base_servings, servings):
     return amount * servings / base_servings
 
 print(f"Flour: {250 * 6 / 2} g")
-print(f"Flour: {scaled(amount=250, base_servings=2, servings=6)} g")
+print(f"Flour: {scaled(250, 2, 6)} g")
 ```
 
-Both lines print `750.0 g`. Predict which line a reader understands
-faster, and why. The first only says how the number was made. The
+Both lines print `750.0 g`. Which line do you think a reader understands
+faster, and why? The first only says how the number was made. The
 second says what it means.
 
 Now try a bad name and a good one. Rename `scaled` to `f`, then back
@@ -53,7 +61,7 @@ to `scaled`. Read each name aloud. Which one tells you what to expect?
 To check your understanding, ask Claude in the right pane: *"Suggest
 three names for a function that turns a recipe's base amount into the
 amount for any number of servings. Which name is best, and why?"*
-Predict its top pick before you send it.
+What's your guess for its top pick?
 
 ## Names or positions for the inputs
 
@@ -69,53 +77,44 @@ Here the program does not stop when you swap two numbers. It prints
 `83.33333333333333` instead of `750.0`, and nothing tells you it is
 wrong. The names make that mistake hard to make.
 
-Use positions when the order is obvious and the call is short. `ask("...")`
-has one input, so there is no order to get wrong. `perimeter(40, 50)`
-is also clear if the reader knows that width comes first.
+Use positions when the order is obvious and the call is short.
+`parity(7)` from lesson 1 has one input, so there is no order to get
+wrong.
 
 Rule of thumb: if the reader would need to look up the function to know
 which value is which, name the inputs.
 
-Predict for each call, names or positions: `scaled(...)` with three
-numbers, `ask("...")` with one string, `perimeter(40, 50)`. Then check
-your answers against the rule above.
+Which would you use, names or positions, for `scaled` with its three
+numbers, and for `parity` with its one? Then check your answers
+against the rule above.
 
 ---
 
 # A recipe that scales (20 min session) {#a-recipe-that-scales}
 
-Left pane, you work. Right pane, Claude is your tutor.
-
-Lesson 1's recipe took one input, `n`, and gave back a word. A recipe
-usually needs more than one input: the amount, the servings it was
-written for, and the servings you want. The three names in the
-parentheses after `def` are **parameters**: the boxes the function
-fills when you call it.
-
-Keep `scale.py` from the start of the lesson, and add these lines to it:
+Now name the inputs in every call. Keep `scale.py` from the start of the lesson, and add these lines to it:
 
 ```python
 print(f"{scaled(amount=250, base_servings=2, servings=4)} g flour")
 print(f"{scaled(amount=250, base_servings=2, servings=1)} g flour")
 ```
 
-Predict: what does the first line print? Note that `/` always gives a
+What do you think the first line prints? Note that `/` always gives a
 decimal (lesson 1), so check the second line too.
 
-To check your understanding, ask Claude in the right pane: *"What does
+To check your understanding: what does
 `scaled(amount=250, base_servings=4, servings=2)` print, and why is
-that different from the first line?"* Predict its answer before you
-send it. Then run both lines to check.
+it different from the first line? Decide before you read on.
 
-The answer is 125.0 g. The values differ: the base recipe is for 4
-servings, not 2, so the amount halves. The order of the names does not
-matter, but the numbers do.
+It prints `125.0`. The recipe is now written for 4 servings, and you
+want 2, so the amount halves. Moving the names around changes nothing;
+changing the numbers does. Run it, or ask Claude in the right pane why.
 
 ::: {.callout-note}
 ## Try it yourself
 Write a second function, `flour_for`, that calls `scaled` with 250
 grams for 2 servings and a number of servings you choose as its one
-input. It should return the amount of flour. Predict its output
+input. It should return the amount of flour. Guess its output
 before you run it.
 :::
 
@@ -131,9 +130,10 @@ print(f"Flour: {scaled(amount=250, base_servings=2, servings=servings)} g")
 print(f"Sugar: {scaled(amount=100, base_servings=2, servings=servings)} g")
 ```
 
-Predict: if you type `6`, what are the two lines? Run it and check.
-Then type `1`. The rule was written once, in `scaled`, and it is used
-on two ingredients at two different times, with the input in between.
+If you type `6`, what do you expect the two lines to say? Run it and
+check. Then type `1`. You wrote the rule once, in `scaled`, and it
+worked for two ingredients, with a number the program didn't know
+until you typed it.
 
 ## Bug hunt: a recipe that prints instead
 
@@ -175,11 +175,11 @@ def frame_cost(width, height, price_per_cm):
 print(f"Frame: {frame_cost(width=40, height=50, price_per_cm=3)} euros")
 ```
 
-Predict: what is `perimeter(40, 50)` on its own? Then what does the
+What's your prediction for `perimeter(40, 50)` on its own? Then what does the
 last line print? Run it and check.
 
 To check your understanding, ask Claude in the right pane: *"Where does
-`frame_cost` get the perimeter from, and why is that useful?"* Predict
+`frame_cost` get the perimeter from, and why is that useful?"* Guess
 the gist of its answer first.
 
 The answer: it comes from `perimeter`. If the rule for a perimeter
@@ -189,16 +189,16 @@ changes, you change it in one place, and `frame_cost` still works.
 ## Order matters
 Python runs a function body only when the function is called, but the
 functions must be defined above the line that calls them.
-Try moving `print(...)` above `def perimeter`. Predict the error,
-then run it.
+Try moving `print(...)` above `def perimeter`. What error do
+you expect? Then run it.
 :::
 
 ## AI thread: wrap the call in a function
 
 Each time your program talks to Claude, the same lines repeat. Put them
 in one function, so the rest of the program only asks a question and
-gets a reply. Add this to `frame.py`, above the prints, and predict
-what the last line prints before you run it:
+gets a reply. Add this to `frame.py`, above the prints. Before you run it,
+what do you think the last line prints?
 
 ```python
 import subprocess
@@ -234,13 +234,13 @@ sides = round(360 / angle_for("pentagon"))
 print(f"Sides: {sides}")
 ```
 
-Predict: what does the first line print, and what does `sides` come
-to? The first call to `angle_for` has the whole chain behind it:
+What's your prediction: what does the first line print, and what does
+`sides` come to? The first call to `angle_for` has the whole chain behind it:
 `angle_for` calls `ask`, and `ask` calls Claude.
 
 To check your understanding, ask Claude in the right pane: *"Why does
 `angle_for` call `ask` instead of calling `subprocess` itself?"*
-Predict the gist of its answer first.
+What do you expect it to say?
 
 If Claude's reply is a sentence, `float` fails inside `angle_for`, and
 the error points at `float`, not at the question. A function that
@@ -266,7 +266,7 @@ Simple ideas to start from, pick one:
 - a function that asks Claude for a short name for any number you
   give it, and returns the name.
 
-Before you run it, predict the output for two different sets of
+Before you run it, guess the output for two different sets of
 inputs. Name the inputs in any call where a wrong order would still
 run.
 
