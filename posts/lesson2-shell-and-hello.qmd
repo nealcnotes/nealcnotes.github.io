@@ -1,0 +1,341 @@
+---
+title: "Lesson 2: loops, drawn and waiting"
+subtitle: "Predict, run, and fix: turtle, input, and Claude's numbers"
+date: 2026-11-06
+categories: [lessons, python, ai]
+# depth 1: the sessions are the map; sections would bury them
+toc-depth: 1
+toc-title: Sessions
+# body: a left TOC folds away on phones with no button to open it (Quarto 1.10)
+toc-location: body
+image: media/261107.lesson2-runway.jpg
+---
+
+::: {style="max-width: 360px; margin: 0 auto;"}
+{{< video media/261107.lesson2-runway.mp4 >}}
+
+*My drawing, made to talk with Runway Act-Two. Later in the course: how.*
+:::
+
+Lesson 1 is the base: fish, nvim, `cp`, `for`,
+`if`, `def`, `python3`. None of that is explained again here; it is
+used. What is new: turtle drawing (`import turtle`), `while`,
+`input()`, `int()` and `float()`, f-strings, asking Claude from a
+program (`subprocess`), the shell's Ctrl+C, and `mv` and `rm`.
+
+If `import turtle` fails on your machine, run
+`sudo apt install -y python3-tk` (the Tk window library turtle uses).
+It worked here already, so you may not need it.
+
+# Draw a square with a loop (20 min session) {#draw-a-square-with-a-loop}
+
+Left pane, you work. Right pane, Claude is your tutor.
+
+Lesson 2 is about loops, so the first drawing is a loop you can see.
+
+Open `~/course/square.py` in nvim and type this. Predict where the
+turtle ends up, and which way it faces, before you run it:
+
+```python
+import turtle
+
+t = turtle.Turtle()
+for side in range(4):
+    t.forward(100)
+    t.left(90)
+
+turtle.done()
+```
+
+Run it from fish:
+
+```fish
+python3 square.py
+```
+
+`turtle.Turtle()` makes a pen. `forward(100)` walks 100 steps and draws
+a line. `left(90)` turns 90 degrees to the left. `turtle.done()` keeps
+the window open until you close it. Ctrl+C stops it from the terminal.
+
+Was the prediction right? Where did the turtle end up?
+
+To check your understanding: what would the picture look like if the
+loop ran 3 times instead of 4? Decide before you read on.
+
+It draws three sides, a U shape, and the turtle stops one side short
+of where it started. The turns of 90 degrees only close the shape when
+there are four of them.
+
+::: {.callout-note}
+## Try it yourself
+Change the loop so it draws a square with sides of 50. Then draw a row
+of three squares side by side. Predict where each one starts before
+you run it. The change is in the lines inside the loop.
+:::
+
+## Colour and a row of squares
+
+Add a colour before the loop:
+
+```python
+t.color("blue")
+```
+
+Predict: does the colour change the shape, or only the line? Run it
+and check.
+
+Now draw the same square three times, with a `for` loop around the
+whole thing, and move the turtle between squares with `t.penup()`,
+`t.forward(150)` and `t.pendown()`. Predict where the third square
+ends up before you run it.
+
+## Ask Claude for the angle
+
+A nonagon has nine sides, and the turn at each corner is 360 divided by
+nine. Predict that number before you ask. Then add these lines to
+`square.py`, after the square's loop and before `turtle.done()`. They
+use the pen `t` that the square already made. Running them on their
+own, as a new file, fails with `NameError: name 't' is not defined`:
+
+```python
+import subprocess
+
+reply = subprocess.run(
+    ["claude", "-p", "How many degrees does a turtle turn at each corner of a nonagon? Reply with only the number.", "--no-session-persistence"],
+    capture_output=True, text=True)
+angle = float(reply.stdout.strip())
+for side in range(9):
+    t.forward(60)
+    t.left(angle)
+```
+
+Was Claude's number the one you predicted? The program does not know
+the answer; it trusts the reply and uses it. Your job is to check.
+
+## Aside: `mv` and `rm`
+
+You have `cp` from lesson 1. Two more file commands finish the set.
+In `~/course`, make a copy and move it:
+
+```fish
+cp square.py square2.py
+mv square2.py shape.py
+ls
+```
+
+Before `ls`, predict its output. Then remove the file:
+
+```fish
+rm shape.py
+ls
+```
+
+::: {.callout-warning}
+## `rm` is permanent
+`mv` replaces a file that already has the new name, without asking.
+`rm` removes a file with no trash and no `u`. Read the name twice
+before you press Enter.
+:::
+
+---
+
+# Name a shape, and Claude gives its angle (25 min session) {#name-a-shape-and-claude-gives-its-angle}
+
+Now `input()` drives the drawing. You type a shape's name, Claude works
+out the turn at each corner, and the turtle draws it.
+
+The question to Claude is an f-string: `f"... {name} ..."` puts the
+value of `name` into the text. You will use this form from now on. It
+replaces the `+` and `str()` joining you may have seen elsewhere.
+
+```python
+import subprocess
+import turtle
+
+t = turtle.Turtle()
+name = input("Name a shape (blank to stop): ")
+while name != "":
+    reply = subprocess.run(
+        ["claude", "-p", f"How many degrees does a turtle turn at each corner of a {name}? Reply with only the number.", "--no-session-persistence"],
+        capture_output=True, text=True)
+    angle = float(reply.stdout.strip())
+    t.clear()
+    for side in range(round(360 / angle)):
+        t.forward(60)
+        t.left(angle)
+    name = input("Name a shape (blank to stop): ")
+turtle.done()
+```
+
+Before you run it, predict: for a pentagon, what turn does Claude
+give, and how many sides will the program draw? The line
+`round(360 / angle)` works out the sides from the angle.
+
+Type `pentagon`, then `hexagon`, then press Enter on an empty line.
+
+## Bug hunt: a reply that is a sentence
+
+Claude wrote this version, and it has one bug. Run it and find it.
+Claude will not say where it is.
+
+```python
+import subprocess
+
+reply = subprocess.run(
+    ["claude", "-p", "How many degrees does a turtle turn at each corner of a nonagon? Reply with a sentence.", "--no-session-persistence"],
+    capture_output=True, text=True)
+angle = float(reply.stdout.strip())
+print(angle)
+```
+
+For the bug:
+
+1. Write down the error message.
+2. Read what Claude sent back. Is it a number?
+3. Fix the program so it still works when Claude sends a sentence,
+   or change what you ask. Decide which, and say why.
+
+---
+
+# A playlist that asks Claude for lengths (25 min session) {#a-playlist-that-asks-claude-for-lengths}
+
+Type song names. Claude gives each song's length, and the program adds
+it to the running total. Run it first exactly as written, with no
+changes:
+
+```python
+import subprocess
+
+total = 0.0
+song = input("Song name (blank to stop): ")
+while song != "":
+    reply = subprocess.run(
+        ["claude", "-p", f"How many minutes long is the song {song}? Reply with only the number, like 3.5.", "--no-session-persistence"],
+        capture_output=True, text=True)
+    minutes = float(reply.stdout.strip())
+    total = total + minutes
+    print(f"{song}: {minutes} min, so far {total} min")
+    song = input("Song name (blank to stop): ")
+print(f"playlist total: {total} minutes")
+```
+
+Predict: what does the first song's line print, and what is the total
+after two songs? Then type a real song you know, and a title that
+doesn't exist.
+
+Watch what comes back. It can be a number, a sentence, or a request
+to look through your files. Claude is an agent: it can look things up
+in your folders as well as answer from memory. The program only sees
+text, so it cannot tell which one happened. When it crashes, read the
+error, and ask Claude in the right pane: *"Did you search my files to
+answer that?"* Predict the answer before you ask.
+
+::: {.callout-warning}
+## Say no when it asks
+If Claude asks permission to read a folder, say no unless you know why
+it needs that folder.
+:::
+
+## The correction: answers from memory only
+
+The lookup needs only what Claude already knows, so turn the tools off.
+Add two items to the call, `"--tools", ""`, like this:
+
+```python
+reply = subprocess.run(
+    ["claude", "-p", f"How many minutes long is the song {song}? Reply with only the number, like 3.5.", "--tools", "", "--no-session-persistence"],
+    capture_output=True, text=True)
+```
+
+Run it again with the made-up title. Predict: now what does Claude send
+back, a number or a sentence? `--tools ""` turns every tool off, so the
+call can only answer from memory. Claude may still be wrong, so the
+check below still matters.
+
+Claude is only guessing at song lengths, so check one of them on a
+phone or a streaming app. Did Claude get it right?
+
+## Bug hunt: a playlist that stops at 3.5
+
+Claude wrote this version, and it has one bug. Run it with a song that
+is 3.5 minutes long, and find the bug. Claude will not say where it is.
+
+```python
+import subprocess
+
+total = 0
+song = input("Song name (blank to stop): ")
+while song != "":
+    reply = subprocess.run(
+        ["claude", "-p", f"How many minutes long is the song {song}? Reply with only the number, like 3.5.", "--no-session-persistence"],
+        capture_output=True, text=True)
+    minutes = int(reply.stdout.strip())
+    total = total + minutes
+    print(f"{song}: {minutes} min, so far {total} min")
+    song = input("Song name (blank to stop): ")
+print(f"playlist total: {total} minutes")
+```
+
+For the bug:
+
+1. Write down the error message, and what Claude sent back.
+2. Guess why `int` fails on a decimal, in one sentence.
+3. Fix it, run it, and check the total by hand.
+
+---
+
+# Write an agent (25 min session) {#write-an-agent}
+
+This time Claude is in the game. Write a guessing game where Claude
+is the guesser and your program is the referee. Claude writes none of
+the code; it only guesses.
+
+Your program:
+
+- picks the secret, a number you choose in the code. Claude never sees it;
+- each turn, sends Claude the guesses and hints so far, and asks for its
+  next guess with `claude -p`, with `"--tools", ""` as in the playlist session;
+- checks Claude's reply: is it a number? is it right? is it too high or
+  too low? (`if`, `elif`, `else`, and `int()`);
+- stops when Claude is right, or after 5 turns, with a `while` loop;
+- prints one `*` per turn left with a `for` loop, and the result at the end.
+
+Claude remembers nothing between calls, so your program must send the
+whole history every turn. That is the agent part: the program decides
+the next step, and the model only answers.
+
+Before you run it, predict how many turns Claude needs if the secret is
+50, and whether it guesses 25 first.
+
+Each run uses a few calls from the weekly budget, so run it once or
+twice, not ten times.
+
+## AI thread: let Claude pick the secret
+
+Claude can pick the secret for you. Add this to the top of the guessing
+game, in a copy, and replace your secret line with it:
+
+```python
+import subprocess
+
+result = subprocess.run(
+    ["claude", "-p", "Pick a secret whole number from 1 to 50. Reply with only the digits.", "--tools", "", "--no-session-persistence"],
+    capture_output=True, text=True)
+secret = int(result.stdout.strip())
+```
+
+Predict: will two runs of the game pick the same secret?
+
+Each call to Claude remembers nothing about the last one. The secret
+survives only because it is stored in `secret`, a variable in your
+program. Predict what happens if you move the `subprocess` lines inside
+the `while` loop, and then run it.
+
+::: {.callout-warning}
+## Bug hunt waiting in this one
+Claude's reply is text, not always just digits. If it answers
+`Sure! 27`, the `int(...)` line fails. Run the game several times until
+it does, read the error, and decide where a program should check what a
+model sent back.
+:::
+

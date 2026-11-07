@@ -3,9 +3,9 @@ title: "12 sessions: talking to the computer in words"
 subtitle: "Set up, add, and prove"
 date: 2026-10-31
 categories: [lessons, python, lean]
-# depth 1: the days are the map; sections would bury them
+# depth 1: the sessions are the map; sections would bury them
 toc-depth: 1
-toc-title: Days
+toc-title: Sessions
 # body: a left TOC folds away on phones with no button to open it (Quarto 1.10)
 toc-location: body
 image: media/261101.laura-leader.jpg
@@ -43,12 +43,12 @@ guess why, in your own words, check with Claude, and ask your teacher for help.
 
 ::: {.callout-tip}
 ## How to use this page
-This lesson is twelve short days,
+This lesson is twelve short sessions,
 each one sitting of 15 to 30 minutes:
-setting up (days 1–3), Python (4–7),
-adding up 1 to 100 (8–10) and Lean (11–12).
-Do one day, stop whenever you like, and come back:
-the list of days at the top of the page
+setting up (the first three), Python (the next four),
+adding up 1 to 100 (three more) and Lean (the last two).
+Do one session, stop whenever you like, and come back:
+the list of sessions at the top of the page
 shows where you are and takes you back there.
 
 Each grey box has a copy button in its top right corner.
@@ -56,7 +56,7 @@ Paste into the terminal with Ctrl+Shift+V and press Enter.
 Read the sentence above each box *before* you run it.
 :::
 
-# Day 1: Turn on Linux (~20 min) {#day-1}
+# Turn on Linux (20 min session) {#turn-on-linux}
 
 ## Turn on Linux (WSL)
 
@@ -124,7 +124,9 @@ echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/$USER
 sudo chmod 0440 /etc/sudoers.d/$USER
 ```
 
-# Day 2: Get a tutor (~20 min) {#day-2}
+---
+
+# Get a tutor (20 min session) {#get-a-tutor}
 
 ## Your tutor: Claude Code
 
@@ -206,7 +208,9 @@ Errors are normal. Read each one yourself first and guess,
 then paste it with your guess. Fixing it is your job.
 :::
 
-# Day 3: A shell and an editor (~25 min) {#day-3}
+---
+
+# A shell and an editor (25 min session) {#a-shell-and-an-editor}
 
 ## A friendlier shell: fish
 
@@ -305,7 +309,9 @@ So the `x` after it is just a letter, on a new line.
 Stuck in nvim? Press `Esc` a few times, then `:q!`.
 (More nvim: type `:Tutor` inside it.)
 
-# Day 4: Talk to Python (~15 min) {#day-4}
+---
+
+# Talk to Python (15 min session) {#talk-to-python}
 
 ## Python
 
@@ -358,7 +364,9 @@ Mixing them up is one of the most common mistakes in programming.
 
 Leave Python with Ctrl+D.
 
-# Day 5: Decisions (~20 min) {#day-5}
+---
+
+# Decisions (20 min session) {#decisions}
 
 ## Decisions: if
 
@@ -396,7 +404,7 @@ It doesn't. `n` is 7, so line 3 never runs,
 and Python only notices a mistake when it gets there.
 Now make the same typo on line 5 and run it again:
 `NameError: name 'pirnt' is not defined`, with the line number.
-Fix both with the keys from Day 3: `:3`, `:5`, `x` and `i`.
+Fix both with the keys from [A shell and an editor](#a-shell-and-an-editor): `:3`, `:5`, `x` and `i`.
 A program that ran once can still hide a mistake
 on a line it didn't reach.
 
@@ -410,7 +418,9 @@ but it can't know **when a block ends**.
 That's you, pressing Backspace,
 and it's a reasoning question: does this line belong inside?
 
-# Day 6: Copy, then write a recipe (~25 min) {#day-6}
+---
+
+# Copy, then write a recipe (25 min session) {#copy-then-write-a-recipe}
 
 ## Copy before you change: cp
 
@@ -506,7 +516,9 @@ The file only *defines* the recipe, and nothing uses it.
 A recipe on paper cooks nothing.
 Put the two lines back.
 
-# Day 7: Repeats (~20 min) {#day-7}
+---
+
+# Repeats (20 min session) {#repeats}
 
 ## Repeats: for
 
@@ -563,7 +575,9 @@ to print only the **even** numbers from 1 to 20.
 You'll need an `if` inside the `for`, and `parity` can answer it.
 :::
 
-# Day 8: Add 1 to 100 (~20 min) {#day-8}
+---
+
+# Add 1 to 100 (20 min session) {#add-1-to-100}
 
 ## The story
 
@@ -620,7 +634,9 @@ An AI makes exactly this kind of mistake,
 and you just learned to catch it.
 :::
 
-# Day 9: Gauss's trick, checked (~25 min) {#day-9}
+---
+
+# Gauss's trick, checked (25 min session) {#gauss-trick-checked}
 
 ## Gauss's trick
 
@@ -694,7 +710,9 @@ change `total + k` to `total + k + 1`.
 At which `k` will the `assert` stop it?
 Then change it back.
 
-# Day 10: A thousand checks, then a proof (~25 min) {#day-10}
+---
+
+# A thousand checks, then a proof (25 min session) {#a-thousand-checks-then-a-proof}
 
 ## Check lots of cases
 
@@ -771,7 +789,7 @@ The first round is the first domino,
 and each round knocks over the next.
 
 **Write this proof on paper, in your own words.**
-You'll need it on Day 12.
+You'll need it in the last session.
 
 ::: {.callout-note}
 ## Try it yourself
@@ -783,7 +801,9 @@ You'll need it on Day 12.
    Find the bug by reasoning first, then prove it with a check.
 :::
 
-# Day 11: The same loop in Lean (~20 min) {#day-11}
+---
+
+# The same loop in Lean (20 min session) {#the-same-loop-in-lean}
 
 ## Why AI and Lean belong together
 
@@ -861,7 +881,9 @@ def sumFormula (n : Nat) : Nat := n * (n + 1) / 2
 `/` on natural numbers rounds down: `7 / 2` is `3`.
 (Why doesn't that rounding ever change the answer here?)
 
-# Day 12: Checking isn't proving (~20 min) {#day-12}
+---
+
+# Checking isn't proving (20 min session) {#checking-isnt-proving}
 
 ## Checking isn't proving
 
@@ -897,7 +919,7 @@ Today Claude only *translates* your proof,
 and you watch what Lean says.
 
 Open Claude in Chrome on the Lean page,
-type in your paper proof from Day 10, and ask:
+type in your paper proof from [A thousand checks, then a proof](#a-thousand-checks-then-a-proof), and ask:
 
 > Please prove `agree` in Lean by translating my proof,
 > and see whether Lean accepts it.
