@@ -55,9 +55,16 @@ def test_a_dated_filename_agrees_with_its_header():
             assert str(header(p)["date"]) == m.group(1), p.name
 
 
-def test_lesson_1_is_the_newest_post():
-    newest = max(POSTS, key=lambda p: header(p)["date"])
-    assert newest.name == "lesson1-setup-gauss.qmd"
+def test_lessons_are_dated_in_course_order():
+    """The home page lists newest first, so lesson N's date must be
+    after lesson N-1's: the latest lesson on top, the course read
+    downward in reverse."""
+    lessons = sorted((int(m.group(1)), header(p)["date"], p.name)
+                     for p in POSTS
+                     if (m := re.match(r"lesson(\d+)-", p.name)))
+    assert len(lessons) >= 3, lessons
+    for (_, d1, a), (_, d2, b) in zip(lessons, lessons[1:]):
+        assert d1 < d2, f"{b} ({d2}) should be dated after {a} ({d1})"
 
 
 def test_categories_are_a_list_and_tags_are_folded_in():

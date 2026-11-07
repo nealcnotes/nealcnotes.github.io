@@ -1,0 +1,277 @@
+---
+title: "Lesson 3: functions that take more than one thing"
+subtitle: "Three short sessions, building on lesson 1's parity recipe"
+date: 2026-11-07
+categories: [lessons, python, ai]
+# depth 1: the sessions are the map; sections would bury them
+toc-depth: 1
+toc-title: Sessions
+# body: a left TOC folds away on phones with no button to open it (Quarto 1.10)
+toc-location: body
+image: media/261107.lesson3-runway.jpg
+---
+
+::: {style="max-width: 360px; margin: 0 auto;"}
+{{< video media/261107.lesson3-runway.mp4 >}}
+
+*My drawing, made to talk with Runway Act-Two. Later in the course: how.*
+:::
+
+Lesson 1 gave you `def` and `return` with one input
+(`parity`). Lesson 2 gave you `while`, `input()` and f-strings. This
+lesson uses all of them. What is new: a function's name, several
+inputs, how to pass those inputs (by position or by name), the
+difference between `return` and `print`, one function that calls
+another, and a function that wraps a call to Claude.
+
+# Name it, then call it (15 min session) {#name-it-then-call-it}
+
+## A function is a name for a computation
+
+A function is a name for a computation: a recipe, a process, a rule you
+want to use again without writing it out again. Naming it well is the
+most important habit in this lesson. A good name says what the step is
+for, so the reader does not have to work out how it was made.
+
+Type this into `~/course/scale.py`. You will keep using this file:
+
+```python
+def scaled(amount, base_servings, servings):
+    return amount * servings / base_servings
+
+print(f"Flour: {250 * 6 / 2} g")
+print(f"Flour: {scaled(amount=250, base_servings=2, servings=6)} g")
+```
+
+Both lines print `750.0 g`. Predict which line a reader understands
+faster, and why. The first only says how the number was made. The
+second says what it means.
+
+Now try a bad name and a good one. Rename `scaled` to `f`, then back
+to `scaled`. Read each name aloud. Which one tells you what to expect?
+
+To check your understanding, ask Claude in the right pane: *"Suggest
+three names for a function that turns a recipe's base amount into the
+amount for any number of servings. Which name is best, and why?"*
+Predict its top pick before you send it.
+
+## Names or positions for the inputs
+
+A call can pass its inputs in two ways:
+
+- **by position**: `scaled(250, 2, 6)`. Each value goes to the next
+  parameter, in order.
+- **by name**: `scaled(amount=250, base_servings=2, servings=6)`. Each
+  value goes to the parameter with that name, in any order.
+
+Use names when a wrong order would still run and still give an answer.
+Here the program does not stop when you swap two numbers. It prints
+`83.33333333333333` instead of `750.0`, and nothing tells you it is
+wrong. The names make that mistake hard to make.
+
+Use positions when the order is obvious and the call is short. `ask("...")`
+has one input, so there is no order to get wrong. `perimeter(40, 50)`
+is also clear if the reader knows that width comes first.
+
+Rule of thumb: if the reader would need to look up the function to know
+which value is which, name the inputs.
+
+Predict for each call, names or positions: `scaled(...)` with three
+numbers, `ask("...")` with one string, `perimeter(40, 50)`. Then check
+your answers against the rule above.
+
+---
+
+# A recipe that scales (20 min session) {#a-recipe-that-scales}
+
+Left pane, you work. Right pane, Claude is your tutor.
+
+Lesson 1's recipe took one input, `n`, and gave back a word. A recipe
+usually needs more than one input: the amount, the servings it was
+written for, and the servings you want. The three names in the
+parentheses after `def` are **parameters**: the boxes the function
+fills when you call it.
+
+Keep `scale.py` from the start of the lesson, and add these lines to it:
+
+```python
+print(f"{scaled(amount=250, base_servings=2, servings=4)} g flour")
+print(f"{scaled(amount=250, base_servings=2, servings=1)} g flour")
+```
+
+Predict: what does the first line print? Note that `/` always gives a
+decimal (lesson 1), so check the second line too.
+
+To check your understanding, ask Claude in the right pane: *"What does
+`scaled(amount=250, base_servings=4, servings=2)` print, and why is
+that different from the first line?"* Predict its answer before you
+send it. Then run both lines to check.
+
+The answer is 125.0 g. The values differ: the base recipe is for 4
+servings, not 2, so the amount halves. The order of the names does not
+matter, but the numbers do.
+
+::: {.callout-note}
+## Try it yourself
+Write a second function, `flour_for`, that calls `scaled` with 250
+grams for 2 servings and a number of servings you choose as its one
+input. It should return the amount of flour. Predict its output
+before you run it.
+:::
+
+## Reuse with input in the middle
+
+One function can serve many ingredients, and the number can come from
+the user while the program is running. Add these lines to `scale.py`,
+below `scaled`:
+
+```python
+servings = int(input("How many servings? "))
+print(f"Flour: {scaled(amount=250, base_servings=2, servings=servings)} g")
+print(f"Sugar: {scaled(amount=100, base_servings=2, servings=servings)} g")
+```
+
+Predict: if you type `6`, what are the two lines? Run it and check.
+Then type `1`. The rule was written once, in `scaled`, and it is used
+on two ingredients at two different times, with the input in between.
+
+## Bug hunt: a recipe that prints instead
+
+Claude wrote this version. It has one bug. Type it in
+`scale_bug.py`, run it, and find the bug. Claude will not say where
+it is.
+
+```python
+def scaled(amount, base_servings, servings):
+    print(amount * servings / base_servings)
+
+total = scaled(amount=250, base_servings=2, servings=4) + 100
+print(f"total: {total}")
+```
+
+For the bug:
+
+1. Write down the error message.
+2. Guess what is wrong, in one sentence.
+3. Fix it, run it, and check the output by hand.
+
+Then tell Claude, in the right pane, what you found, and ask only
+why the error happens.
+
+---
+
+# Functions that call functions (25 min session) {#functions-that-call-functions}
+
+A function can call another function, the same way your program calls
+`input` and `print`. Open `~/course/frame.py` and type this:
+
+```python
+def perimeter(width, height):
+    return 2 * width + 2 * height
+
+def frame_cost(width, height, price_per_cm):
+    return perimeter(width, height) * price_per_cm
+
+print(f"Frame: {frame_cost(width=40, height=50, price_per_cm=3)} euros")
+```
+
+Predict: what is `perimeter(40, 50)` on its own? Then what does the
+last line print? Run it and check.
+
+To check your understanding, ask Claude in the right pane: *"Where does
+`frame_cost` get the perimeter from, and why is that useful?"* Predict
+the gist of its answer first.
+
+The answer: it comes from `perimeter`. If the rule for a perimeter
+changes, you change it in one place, and `frame_cost` still works.
+
+::: {.callout-warning}
+## Order matters
+Python runs a function body only when the function is called, but the
+functions must be defined above the line that calls them.
+Try moving `print(...)` above `def perimeter`. Predict the error,
+then run it.
+:::
+
+## AI thread: wrap the call in a function
+
+Each time your program talks to Claude, the same lines repeat. Put them
+in one function, so the rest of the program only asks a question and
+gets a reply. Add this to `frame.py`, above the prints, and predict
+what the last line prints before you run it:
+
+```python
+import subprocess
+
+def ask(question):
+    reply = subprocess.run(
+        ["claude", "-p", question, "--tools", "",
+         "--no-session-persistence"],
+        capture_output=True, text=True)
+    return reply.stdout.strip()
+
+print(ask("Reply with only the word hello."))
+```
+
+`ask` is the one place the program talks to Claude. If the call needs
+to change, for example a new flag, you change it here and nowhere else.
+`ask` returns the reply and does not print it: the caller decides what
+to do with it.
+
+## A function that calls `ask`
+
+Lesson 2's shape program asked Claude for a turn angle, then turned that
+text into a number. Put that step in a function, and it can be reused
+by any program that needs an angle:
+
+```python
+def angle_for(shape):
+    reply = ask(f"How many degrees does a turtle turn at each corner of a {shape}? Reply with only the number.")
+    return float(reply)
+
+print(f"Pentagon turn: {angle_for('pentagon')} degrees")
+sides = round(360 / angle_for("pentagon"))
+print(f"Sides: {sides}")
+```
+
+Predict: what does the first line print, and what does `sides` come
+to? The first call to `angle_for` has the whole chain behind it:
+`angle_for` calls `ask`, and `ask` calls Claude.
+
+To check your understanding, ask Claude in the right pane: *"Why does
+`angle_for` call `ask` instead of calling `subprocess` itself?"*
+Predict the gist of its answer first.
+
+If Claude's reply is a sentence, `float` fails inside `angle_for`, and
+the error points at `float`, not at the question. A function that
+hides a step also hides where it went wrong, so read the traceback to
+the bottom to see which function failed.
+
+## Write your own program
+
+Write a program of your own with at least two functions, one of which
+calls the other. Claude writes none of it.
+
+Pick a theme from cooking, art, music, or fashion, and build something
+that takes at least two inputs, returns a value, and prints a line at
+the end in your theme's words. One of your functions must ask Claude
+for a reply and return it, using `ask` from the AI thread above.
+
+Simple ideas to start from, pick one:
+
+- a function that prices a frame from its width and height, and a
+  second one that adds tax;
+- a function that scales a dough or a paint mix for any number of
+  batches;
+- a function that asks Claude for a short name for any number you
+  give it, and returns the name.
+
+Before you run it, predict the output for two different sets of
+inputs. Name the inputs in any call where a wrong order would still
+run.
+
+When it works, walk Claude through it, line by line. Claude will ask
+why each function takes the inputs it takes, and where it could fail,
+for example with a zero or a negative number. Claude will not fix
+anything.
+
