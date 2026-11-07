@@ -51,17 +51,13 @@ print(f"Flour: {250 * 6 / 2} g")
 print(f"Flour: {scaled(250, 2, 6)} g")
 ```
 
-Both lines print `750.0 g`. Which line do you think a reader understands
-faster, and why? The first only says how the number was made. The
-second says what it means.
-
-Now try a bad name and a good one. Rename `scaled` to `f`, then back
-to `scaled`. Read each name aloud. Which one tells you what to expect?
+Both lines print `750.0 g`. The first only says how the number was
+made; the second says what it means.
 
 To check your understanding, ask Claude in the right pane: *"Suggest
 three names for a function that turns a recipe's base amount into the
 amount for any number of servings. Which name is best, and why?"*
-What's your guess for its top pick?
+Guess its top pick first.
 
 ## Names or positions for the inputs
 
@@ -99,7 +95,7 @@ print(f"{scaled(amount=250, base_servings=2, servings=4)} g flour")
 print(f"{scaled(amount=250, base_servings=2, servings=1)} g flour")
 ```
 
-What do you think the first line prints? Note that `/` always gives a
+Guess what the first line prints. Note that `/` always gives a
 decimal (lesson 1), so check the second line too.
 
 To check your understanding: what does
@@ -130,7 +126,7 @@ print(f"Flour: {scaled(amount=250, base_servings=2, servings=servings)} g")
 print(f"Sugar: {scaled(amount=100, base_servings=2, servings=servings)} g")
 ```
 
-If you type `6`, what do you expect the two lines to say? Run it and
+Guess the two lines for `6`, then run it and
 check. Then type `1`. You wrote the rule once, in `scaled`, and it
 worked for two ingredients, with a number the program didn't know
 until you typed it.
@@ -175,8 +171,8 @@ def frame_cost(width, height, price_per_cm):
 print(f"Frame: {frame_cost(width=40, height=50, price_per_cm=3)} euros")
 ```
 
-What's your prediction for `perimeter(40, 50)` on its own? Then what does the
-last line print? Run it and check.
+Guess `perimeter(40, 50)` on its own, then what the
+last line prints. Run it and check.
 
 To check your understanding, ask Claude in the right pane: *"Where does
 `frame_cost` get the perimeter from, and why is that useful?"* Guess
@@ -197,8 +193,8 @@ you expect? Then run it.
 
 Each time your program talks to Claude, the same lines repeat. Put them
 in one function, so the rest of the program only asks a question and
-gets a reply. Add this to `frame.py`, above the prints. Before you run it,
-what do you think the last line prints?
+gets a reply. Add this to `frame.py`, above the prints. Guess what the last
+line prints, then run it.
 
 ```python
 import subprocess
@@ -234,13 +230,13 @@ sides = round(360 / angle_for("pentagon"))
 print(f"Sides: {sides}")
 ```
 
-What's your prediction: what does the first line print, and what does
-`sides` come to? The first call to `angle_for` has the whole chain behind it:
+Guess what the first line prints, and what
+`sides` comes to. The first call to `angle_for` has the whole chain behind it:
 `angle_for` calls `ask`, and `ask` calls Claude.
 
 To check your understanding, ask Claude in the right pane: *"Why does
 `angle_for` call `ask` instead of calling `subprocess` itself?"*
-What do you expect it to say?
+Guess the gist of its answer first.
 
 If Claude's reply is a sentence, `float` fails inside `angle_for`, and
 the error points at `float`, not at the question. A function that
