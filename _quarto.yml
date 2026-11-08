@@ -17,6 +17,11 @@ project:
   # _drafts/ and the old unpublished _archive/ never reach the site.
   # Preview one draft with: quarto preview _drafts/<file>.qmd
 
+# Run ```{python} cells once and commit _freeze/: the publishing
+# machine has no Jupyter (tests/test_site.py).
+execute:
+  freeze: auto
+
 website:
   title: "nealcnotes"
   site-url: https://nealcnotes.com
