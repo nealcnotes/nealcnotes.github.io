@@ -10,7 +10,1114 @@
 <atom:link href="https://nealcnotes.com/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.10.19</generator>
-<lastBuildDate>Sat, 31 Oct 2026 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 07 Nov 2026 08:00:00 GMT</lastBuildDate>
+<item>
+  <title>Lesson 3: functions that take more than one thing</title>
+  <link>https://nealcnotes.com/posts/lesson3-functions.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div style="max-width: 360px; margin: 0 auto;">
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-big-play-centered vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="media/261107.lesson3-runway.mp4"></video></div>
+<p><em>My drawing, made to talk with Runway Act-Two. Later in the course: how.</em></p>
+</div>
+<p>Lesson 1 gave you <code>def</code> and <code>return</code> with one input (<code>parity</code>). Lesson 2 gave you <code>while</code>, <code>input()</code> and f-strings. This lesson uses all of them. What is new: a function’s name, several inputs, how to pass those inputs (by position or by name), the difference between <code>return</code> and <code>print</code>, one function that calls another, and a function that wraps a call to Claude.</p>
+<section id="name-it-then-call-it" class="level1">
+<h1>Name it, then call it (15 min session)</h1>
+<p>Left pane, you work. Right pane, Claude is your tutor.</p>
+<section id="a-function-is-a-name-for-a-computation" class="level2">
+<h2 class="anchored" data-anchor-id="a-function-is-a-name-for-a-computation">A function is a name for a computation</h2>
+<p>A function is a name for a computation: a recipe, a process, a rule you want to use again without writing it out again. Naming it well is the most important habit in this lesson. A good name says what the step is for, so the reader does not have to work out how it was made.</p>
+<p>Lesson 1’s recipe took one input, <code>n</code>, and gave back a word. A recipe usually needs more than one input: the amount, the servings it was written for, and the servings you want. The three names in the parentheses after <code>def</code> are <strong>parameters</strong>: the boxes the function fills when you call it.</p>
+<p>Type this into <code>~/course/scale.py</code>. You will keep using this file:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> scaled(amount, base_servings, servings):</span>
+<span id="cb1-2">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> amount <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> servings <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> base_servings</span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Flour: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">250</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> g"</span>)</span>
+<span id="cb1-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Flour: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>scaled(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">250</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> g"</span>)</span></code></pre></div></div>
+<p>Both lines print <code>750.0 g</code>. The first only says how the number was made; the second says what it means.</p>
+<p>To check your understanding, ask Claude in the right pane: <em>“Suggest three names for a function that turns a recipe’s base amount into the amount for any number of servings. Which name is best, and why?”</em> Guess its top pick first.</p>
+</section>
+<section id="names-or-positions-for-the-inputs" class="level2">
+<h2 class="anchored" data-anchor-id="names-or-positions-for-the-inputs">Names or positions for the inputs</h2>
+<p>A call can pass its inputs in two ways:</p>
+<ul>
+<li><strong>by position</strong>: <code>scaled(250, 2, 6)</code>. Each value goes to the next parameter, in order.</li>
+<li><strong>by name</strong>: <code>scaled(amount=250, base_servings=2, servings=6)</code>. Each value goes to the parameter with that name, in any order.</li>
+</ul>
+<p>Use names when a wrong order would still run and still give an answer. Here the program does not stop when you swap two numbers. It prints <code>83.33333333333333</code> instead of <code>750.0</code>, and nothing tells you it is wrong. The names make that mistake hard to make.</p>
+<p>Use positions when the order is obvious and the call is short. <code>parity(7)</code> from lesson 1 has one input, so there is no order to get wrong.</p>
+<p>Rule of thumb: if the reader would need to look up the function to know which value is which, name the inputs.</p>
+<p>Which would you use, names or positions, for <code>scaled</code> with its three numbers, and for <code>parity</code> with its one? Then check your answers against the rule above.</p>
+<hr>
+</section>
+</section>
+<section id="a-recipe-that-scales" class="level1">
+<h1>A recipe that scales (20 min session)</h1>
+<p>Now name the inputs in every call. Keep <code>scale.py</code> from the start of the lesson, and add these lines to it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>scaled(amount<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">250</span>, base_servings<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, servings<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> g flour"</span>)</span>
+<span id="cb2-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>scaled(amount<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">250</span>, base_servings<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, servings<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> g flour"</span>)</span></code></pre></div></div>
+<p>Guess what the first line prints. Note that <code>/</code> always gives a decimal (lesson 1), so check the second line too.</p>
+<p>To check your understanding: what does <code>scaled(amount=250, base_servings=4, servings=2)</code> print, and why is it different from the first line? Decide before you read on.</p>
+<p>It prints <code>125.0</code>. The recipe is now written for 4 servings, and you want 2, so the amount halves. Moving the names around changes nothing; changing the numbers does. Run it, or ask Claude in the right pane why.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Try it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Write a second function, <code>flour_for</code>, that calls <code>scaled</code> with 250 grams for 2 servings and a number of servings you choose as its one input. It should return the amount of flour. Guess its output before you run it.</p>
+</div>
+</div>
+<section id="reuse-with-input-in-the-middle" class="level2">
+<h2 class="anchored" data-anchor-id="reuse-with-input-in-the-middle">Reuse with input in the middle</h2>
+<p>One function can serve many ingredients, and the number can come from the user while the program is running. Add these lines to <code>scale.py</code>, below <code>scaled</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">servings <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">input</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"How many servings? "</span>))</span>
+<span id="cb3-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Flour: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>scaled(amount<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">250</span>, base_servings<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, servings<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>servings)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> g"</span>)</span>
+<span id="cb3-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Sugar: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>scaled(amount<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, base_servings<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, servings<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>servings)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> g"</span>)</span></code></pre></div></div>
+<p>Guess the two lines for <code>6</code>, then run it and check. Then type <code>1</code>. You wrote the rule once, in <code>scaled</code>, and it worked for two ingredients, with a number the program didn’t know until you typed it.</p>
+</section>
+<section id="bug-hunt-a-recipe-that-prints-instead" class="level2">
+<h2 class="anchored" data-anchor-id="bug-hunt-a-recipe-that-prints-instead">Bug hunt: a recipe that prints instead</h2>
+<p>Claude wrote this version. It has one bug. Type it in <code>scale_bug.py</code>, run it, and find the bug. Claude will not say where it is.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> scaled(amount, base_servings, servings):</span>
+<span id="cb4-2">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(amount <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> servings <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> base_servings)</span>
+<span id="cb4-3"></span>
+<span id="cb4-4">total <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> scaled(amount<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">250</span>, base_servings<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, servings<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span></span>
+<span id="cb4-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"total: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>total<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<p>For the bug:</p>
+<ol type="1">
+<li>Write down the error message.</li>
+<li>Guess what is wrong, in one sentence.</li>
+<li>Fix it, run it, and check the output by hand.</li>
+</ol>
+<p>Then tell Claude, in the right pane, what you found, and ask only why the error happens.</p>
+<hr>
+</section>
+</section>
+<section id="functions-that-call-functions" class="level1">
+<h1>Functions that call functions (25 min session)</h1>
+<p>A function can call another function, the same way your program calls <code>input</code> and <code>print</code>. Open <code>~/course/frame.py</code> and type this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> perimeter(width, height):</span>
+<span id="cb5-2">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> width <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> height</span>
+<span id="cb5-3"></span>
+<span id="cb5-4"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> frame_cost(width, height, price_per_cm):</span>
+<span id="cb5-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> perimeter(width, height) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> price_per_cm</span>
+<span id="cb5-6"></span>
+<span id="cb5-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Frame: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>frame_cost(width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, height<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>, price_per_cm<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> euros"</span>)</span></code></pre></div></div>
+<p>Guess <code>perimeter(40, 50)</code> on its own, then what the last line prints. Run it and check.</p>
+<p>To check your understanding, ask Claude in the right pane: <em>“Where does <code>frame_cost</code> get the perimeter from, and why is that useful?”</em> Guess the gist of its answer first.</p>
+<p>The answer: it comes from <code>perimeter</code>. If the rule for a perimeter changes, you change it in one place, and <code>frame_cost</code> still works.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Order matters
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Python runs a function body only when the function is called, but the functions must be defined above the line that calls them. Try moving <code>print(...)</code> above <code>def perimeter</code>. What error do you expect? Then run it.</p>
+</div>
+</div>
+<section id="ai-thread-wrap-the-call-in-a-function" class="level2">
+<h2 class="anchored" data-anchor-id="ai-thread-wrap-the-call-in-a-function">AI thread: wrap the call in a function</h2>
+<p>Each time your program talks to Claude, the same lines repeat. Put them in one function, so the rest of the program only asks a question and gets a reply. Add this to <code>frame.py</code>, above the prints. Guess what the last line prints, then run it.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> subprocess</span>
+<span id="cb6-2"></span>
+<span id="cb6-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> ask(question):</span>
+<span id="cb6-4">    reply <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> subprocess.run(</span>
+<span id="cb6-5">        [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"claude"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-p"</span>, question, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--tools"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>,</span>
+<span id="cb6-6">         <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--no-session-persistence"</span>],</span>
+<span id="cb6-7">        capture_output<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, text<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb6-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> reply.stdout.strip()</span>
+<span id="cb6-9"></span>
+<span id="cb6-10"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(ask(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Reply with only the word hello."</span>))</span></code></pre></div></div>
+<p><code>ask</code> is the one place the program talks to Claude. If the call needs to change, for example a new flag, you change it here and nowhere else. <code>ask</code> returns the reply and does not print it: the caller decides what to do with it.</p>
+</section>
+<section id="a-function-that-calls-ask" class="level2">
+<h2 class="anchored" data-anchor-id="a-function-that-calls-ask">A function that calls <code>ask</code></h2>
+<p>Lesson 2’s shape program asked Claude for a turn angle, then turned that text into a number. Put that step in a function, and it can be reused by any program that needs an angle:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> angle_for(shape):</span>
+<span id="cb7-2">    reply <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ask(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"How many degrees does a turtle turn at each corner of a </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>shape<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">? Reply with only the number."</span>)</span>
+<span id="cb7-3">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>(reply)</span>
+<span id="cb7-4"></span>
+<span id="cb7-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Pentagon turn: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>angle_for(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'pentagon'</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> degrees"</span>)</span>
+<span id="cb7-6">sides <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">round</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">360</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> angle_for(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pentagon"</span>))</span>
+<span id="cb7-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Sides: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>sides<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<p>Guess what the first line prints, and what <code>sides</code> comes to. The first call to <code>angle_for</code> has the whole chain behind it: <code>angle_for</code> calls <code>ask</code>, and <code>ask</code> calls Claude.</p>
+<p>To check your understanding, ask Claude in the right pane: <em>“Why does <code>angle_for</code> call <code>ask</code> instead of calling <code>subprocess</code> itself?”</em> Guess the gist of its answer first.</p>
+<p>If Claude’s reply is a sentence, <code>float</code> fails inside <code>angle_for</code>, and the error points at <code>float</code>, not at the question. A function that hides a step also hides where it went wrong, so read the traceback to the bottom to see which function failed.</p>
+</section>
+<section id="write-your-own-program" class="level2">
+<h2 class="anchored" data-anchor-id="write-your-own-program">Write your own program</h2>
+<p>Write a program of your own with at least two functions, one of which calls the other. Claude writes none of it.</p>
+<p>Pick a theme from cooking, art, music, or fashion, and build something that takes at least two inputs, returns a value, and prints a line at the end in your theme’s words. One of your functions must ask Claude for a reply and return it, using <code>ask</code> from the AI thread above.</p>
+<p>Simple ideas to start from, pick one:</p>
+<ul>
+<li>a function that prices a frame from its width and height, and a second one that adds tax;</li>
+<li>a function that scales a dough or a paint mix for any number of batches;</li>
+<li>a function that asks Claude for a short name for any number you give it, and returns the name.</li>
+</ul>
+<p>Before you run it, guess the output for two different sets of inputs. Name the inputs in any call where a wrong order would still run.</p>
+<p>When it works, walk Claude through it, line by line. Claude will ask why each function takes the inputs it takes, and where it could fail, for example with a zero or a negative number. Claude will not fix anything.</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>lessons</category>
+  <category>python</category>
+  <category>ai</category>
+  <guid>https://nealcnotes.com/posts/lesson3-functions.html</guid>
+  <pubDate>Sat, 07 Nov 2026 08:00:00 GMT</pubDate>
+  <media:content url="https://nealcnotes.com/posts/media/261107.lesson3-runway.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>Lesson 2: loops, drawn and waiting</title>
+  <link>https://nealcnotes.com/posts/lesson2-shell-and-hello.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div style="max-width: 360px; margin: 0 auto;">
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-big-play-centered vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="media/261107.lesson2-runway.mp4"></video></div>
+<p><em>My drawing, made to talk with Runway Act-Two. Later in the course: how.</em></p>
+</div>
+<p>Lesson 1 is the base: fish, nvim, <code>cp</code>, <code>for</code>, <code>if</code>, <code>def</code>, <code>python3</code>. None of that is explained again here; it is used. What is new: turtle drawing (<code>import turtle</code>), <code>while</code>, <code>input()</code>, <code>int()</code> and <code>float()</code>, f-strings, asking Claude from a program (<code>subprocess</code>), the shell’s Ctrl+C, and <code>mv</code> and <code>rm</code>.</p>
+<p>If <code>import turtle</code> fails on your machine, run <code>sudo apt install -y python3-tk</code> (the Tk window library turtle uses). It worked here already, so you may not need it.</p>
+<section id="draw-a-square-with-a-loop" class="level1">
+<h1>Draw a square with a loop (20 min session)</h1>
+<p>Left pane, you work. Right pane, Claude is your tutor.</p>
+<p>Lesson 2 is about loops, so the first drawing is a loop you can see.</p>
+<p>Open <code>~/course/square.py</code> in nvim and type this. Before you run it, where do you think the turtle ends up, and which way will it face?</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> turtle</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> turtle.Turtle()</span>
+<span id="cb1-4"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> side <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>):</span>
+<span id="cb1-5">    t.forward(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>)</span>
+<span id="cb1-6">    t.left(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">90</span>)</span>
+<span id="cb1-7"></span>
+<span id="cb1-8">turtle.done()</span></code></pre></div></div>
+<p>Run it from fish:</p>
+<pre class="fish"><code>python3 square.py</code></pre>
+<p><code>turtle.Turtle()</code> makes a pen. <code>forward(100)</code> walks 100 steps and draws a line. <code>left(90)</code> turns 90 degrees to the left. <code>turtle.done()</code> keeps the window open until you close it. Ctrl+C stops it from the terminal.</p>
+<p>Was your guess right? Where did the turtle end up?</p>
+<p>To check your understanding: what would the picture look like if the loop ran 3 times instead of 4? Decide before you read on.</p>
+<p>It draws three sides, a U shape, and the turtle stops one side short of where it started. The turns of 90 degrees only close the shape when there are four of them.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Try it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Change the loop so it draws a square with sides of 50. Then draw a row of three squares side by side. Where do you think each one starts? Guess before you run it. The change is in the lines inside the loop.</p>
+</div>
+</div>
+<section id="colour-and-a-row-of-squares" class="level2">
+<h2 class="anchored" data-anchor-id="colour-and-a-row-of-squares">Colour and a row of squares</h2>
+<p>Add a colour before the loop:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">t.color(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"blue"</span>)</span></code></pre></div></div>
+<p>Your guess: does the colour change the shape, or only the line? Run it and see.</p>
+<p>Now draw the same square three times, with a <code>for</code> loop around the whole thing, and move the turtle between squares with <code>t.penup()</code>, <code>t.forward(150)</code> and <code>t.pendown()</code>. Where will the third square end up? Guess, then run it.</p>
+</section>
+<section id="ask-claude-for-the-angle" class="level2">
+<h2 class="anchored" data-anchor-id="ask-claude-for-the-angle">Ask Claude for the angle</h2>
+<p>A nonagon has nine sides, and the turn at each corner is 360 divided by nine. What number do you expect? Then add these lines to <code>square.py</code>, after the square’s loop and before <code>turtle.done()</code>. They use the pen <code>t</code> that the square already made. Running them on their own, as a new file, fails with <code>NameError: name 't' is not defined</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> subprocess</span>
+<span id="cb4-2"></span>
+<span id="cb4-3">reply <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> subprocess.run(</span>
+<span id="cb4-4">    [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"claude"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-p"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"How many degrees does a turtle turn at each corner of a nonagon? Reply with only the number."</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--no-session-persistence"</span>],</span>
+<span id="cb4-5">    capture_output<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, text<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb4-6">angle <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>(reply.stdout.strip())</span>
+<span id="cb4-7"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> side <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>):</span>
+<span id="cb4-8">    t.forward(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60</span>)</span>
+<span id="cb4-9">    t.left(angle)</span></code></pre></div></div>
+<p>Was Claude’s number the one you predicted? The program does not know the answer; it trusts the reply and uses it. Your job is to check.</p>
+</section>
+<section id="aside-mv-and-rm" class="level2">
+<h2 class="anchored" data-anchor-id="aside-mv-and-rm">Aside: <code>mv</code> and <code>rm</code></h2>
+<p>You have <code>cp</code> from lesson 1. Two more file commands finish the set. In <code>~/course</code>, make a copy and move it:</p>
+<pre class="fish"><code>cp square.py square2.py
+mv square2.py shape.py
+ls</code></pre>
+<p>Before <code>ls</code>, predict its output. Then remove the file:</p>
+<pre class="fish"><code>rm shape.py
+ls</code></pre>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span><code>rm</code> is permanent
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>mv</code> replaces a file that already has the new name, without asking. <code>rm</code> removes a file with no trash and no <code>u</code>. Read the name twice before you press Enter.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="name-a-shape-and-claude-gives-its-angle" class="level1">
+<h1>Name a shape, and Claude gives its angle (25 min session)</h1>
+<p>Now <code>input()</code> drives the drawing. You type a shape’s name, Claude works out the turn at each corner, and the turtle draws it.</p>
+<p>The question to Claude is an f-string: <code>f"... {name} ..."</code> puts the value of <code>name</code> into the text. You will use this form from now on. It replaces the <code>+</code> and <code>str()</code> joining you may have seen elsewhere.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> subprocess</span>
+<span id="cb7-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> turtle</span>
+<span id="cb7-3"></span>
+<span id="cb7-4">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> turtle.Turtle()</span>
+<span id="cb7-5">name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">input</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Name a shape (blank to stop): "</span>)</span>
+<span id="cb7-6"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">while</span> name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>:</span>
+<span id="cb7-7">    reply <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> subprocess.run(</span>
+<span id="cb7-8">        [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"claude"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-p"</span>, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"How many degrees does a turtle turn at each corner of a </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>name<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">? Reply with only the number."</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--no-session-persistence"</span>],</span>
+<span id="cb7-9">        capture_output<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, text<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb7-10">    angle <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>(reply.stdout.strip())</span>
+<span id="cb7-11">    t.clear()</span>
+<span id="cb7-12">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> side <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">round</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">360</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> angle)):</span>
+<span id="cb7-13">        t.forward(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60</span>)</span>
+<span id="cb7-14">        t.left(angle)</span>
+<span id="cb7-15">    name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">input</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Name a shape (blank to stop): "</span>)</span>
+<span id="cb7-16">turtle.done()</span></code></pre></div></div>
+<p>Guess, for a pentagon, what turn Claude gives and how many sides the program draws. The line <code>round(360 / angle)</code> works out the sides from the angle.</p>
+<p>Type <code>pentagon</code>, then <code>hexagon</code>, then press Enter on an empty line.</p>
+<section id="bug-hunt-a-reply-that-is-a-sentence" class="level2">
+<h2 class="anchored" data-anchor-id="bug-hunt-a-reply-that-is-a-sentence">Bug hunt: a reply that is a sentence</h2>
+<p>Claude wrote this version, and it has one bug. Run it and find it. Claude will not say where it is.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> subprocess</span>
+<span id="cb8-2"></span>
+<span id="cb8-3">reply <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> subprocess.run(</span>
+<span id="cb8-4">    [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"claude"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-p"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"How many degrees does a turtle turn at each corner of a nonagon? Reply with a sentence."</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--no-session-persistence"</span>],</span>
+<span id="cb8-5">    capture_output<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, text<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb8-6">angle <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>(reply.stdout.strip())</span>
+<span id="cb8-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(angle)</span></code></pre></div></div>
+<p>For the bug:</p>
+<ol type="1">
+<li>Write down the error message.</li>
+<li>Read what Claude sent back. Is it a number?</li>
+<li>Fix the program so it still works when Claude sends a sentence, or change what you ask. Decide which, and say why.</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="a-playlist-that-asks-claude-for-lengths" class="level1">
+<h1>A playlist that asks Claude for lengths (25 min session)</h1>
+<p>Type song names. Claude gives each song’s length, and the program adds it to the running total. Run it first exactly as written, with no changes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> subprocess</span>
+<span id="cb9-2"></span>
+<span id="cb9-3">total <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span></span>
+<span id="cb9-4">song <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">input</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Song name (blank to stop): "</span>)</span>
+<span id="cb9-5"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">while</span> song <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>:</span>
+<span id="cb9-6">    reply <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> subprocess.run(</span>
+<span id="cb9-7">        [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"claude"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-p"</span>, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"How many minutes long is the song </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>song<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">? Reply with only the number, like 3.5."</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--no-session-persistence"</span>],</span>
+<span id="cb9-8">        capture_output<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, text<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb9-9">    minutes <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>(reply.stdout.strip())</span>
+<span id="cb9-10">    total <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> total <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> minutes</span>
+<span id="cb9-11">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>song<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>minutes<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> min, so far </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>total<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> min"</span>)</span>
+<span id="cb9-12">    song <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">input</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Song name (blank to stop): "</span>)</span>
+<span id="cb9-13"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"playlist total: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>total<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> minutes"</span>)</span></code></pre></div></div>
+<p>Guess what the first song’s line prints, and the total after two songs. Then type a real song you know, and a title that doesn’t exist.</p>
+<p>Watch what comes back. It can be a number, a sentence, or a request to look through your files. Claude is an agent: it can look things up in your folders as well as answer from memory. The program only sees text, so it cannot tell which one happened. When it crashes, read the error, and ask Claude in the right pane: <em>“Did you search my files to answer that?”</em> Guess its answer first.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Say no when it asks
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If Claude asks permission to read a folder, say no unless you know why it needs that folder.</p>
+</div>
+</div>
+<section id="the-correction-answers-from-memory-only" class="level2">
+<h2 class="anchored" data-anchor-id="the-correction-answers-from-memory-only">The correction: answers from memory only</h2>
+<p>The lookup needs only what Claude already knows, so turn the tools off. Add two items to the call, <code>"--tools", ""</code>, like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">reply <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> subprocess.run(</span>
+<span id="cb10-2">    [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"claude"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-p"</span>, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"How many minutes long is the song </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>song<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">? Reply with only the number, like 3.5."</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--tools"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--no-session-persistence"</span>],</span>
+<span id="cb10-3">    capture_output<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, text<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span></code></pre></div></div>
+<p>Run it again with the made-up title. Guess first: does Claude send back a number or a sentence now? <code>--tools ""</code> turns every tool off, so the call can only answer from memory. Claude may still be wrong, so the check below still matters.</p>
+<p>Claude is only guessing at song lengths, so check one of them on a phone or a streaming app. Did Claude get it right?</p>
+</section>
+<section id="bug-hunt-a-playlist-that-stops-at-3.5" class="level2">
+<h2 class="anchored" data-anchor-id="bug-hunt-a-playlist-that-stops-at-3.5">Bug hunt: a playlist that stops at 3.5</h2>
+<p>Claude wrote this version, and it has one bug. Run it with a song that is 3.5 minutes long, and find the bug. Claude will not say where it is.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> subprocess</span>
+<span id="cb11-2"></span>
+<span id="cb11-3">total <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb11-4">song <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">input</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Song name (blank to stop): "</span>)</span>
+<span id="cb11-5"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">while</span> song <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>:</span>
+<span id="cb11-6">    reply <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> subprocess.run(</span>
+<span id="cb11-7">        [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"claude"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-p"</span>, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"How many minutes long is the song </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>song<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">? Reply with only the number, like 3.5."</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--no-session-persistence"</span>],</span>
+<span id="cb11-8">        capture_output<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, text<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb11-9">    minutes <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>(reply.stdout.strip())</span>
+<span id="cb11-10">    total <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> total <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> minutes</span>
+<span id="cb11-11">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>song<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>minutes<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> min, so far </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>total<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> min"</span>)</span>
+<span id="cb11-12">    song <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">input</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Song name (blank to stop): "</span>)</span>
+<span id="cb11-13"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"playlist total: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>total<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> minutes"</span>)</span></code></pre></div></div>
+<p>For the bug:</p>
+<ol type="1">
+<li>Write down the error message, and what Claude sent back.</li>
+<li>Guess why <code>int</code> fails on a decimal, in one sentence.</li>
+<li>Fix it, run it, and check the total by hand.</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="write-an-agent" class="level1">
+<h1>Write an agent (25 min session)</h1>
+<p>This time Claude is in the game. Write a guessing game where Claude is the guesser and your program is the referee. Claude writes none of the code; it only guesses.</p>
+<p>Your program:</p>
+<ul>
+<li>picks the secret, a number you choose in the code. Claude never sees it;</li>
+<li>each turn, sends Claude the guesses and hints so far, and asks for its next guess with <code>claude -p</code>, with <code>"--tools", ""</code> as in the playlist session;</li>
+<li>checks Claude’s reply: is it a number? is it right? is it too high or too low? (<code>if</code>, <code>elif</code>, <code>else</code>, and <code>int()</code>);</li>
+<li>stops when Claude is right, or after 5 turns, with a <code>while</code> loop;</li>
+<li>prints one <code>*</code> per turn left with a <code>for</code> loop, and the result at the end.</li>
+</ul>
+<p>Claude remembers nothing between calls, so your program must send the whole history every turn. That is the agent part: the program decides the next step, and the model only answers.</p>
+<p>Before you run it, make a guess: how many turns does Claude need if the secret is 50, and does it guess 25 first?</p>
+<p>Each run uses a few calls from the weekly budget, so run it once or twice, not ten times.</p>
+<section id="ai-thread-let-claude-pick-the-secret" class="level2">
+<h2 class="anchored" data-anchor-id="ai-thread-let-claude-pick-the-secret">AI thread: let Claude pick the secret</h2>
+<p>Claude can pick the secret for you. Add this to the top of the guessing game, in a copy, and replace your secret line with it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> subprocess</span>
+<span id="cb12-2"></span>
+<span id="cb12-3">result <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> subprocess.run(</span>
+<span id="cb12-4">    [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"claude"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-p"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Pick a secret whole number from 1 to 50. Reply with only the digits."</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--tools"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--no-session-persistence"</span>],</span>
+<span id="cb12-5">    capture_output<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, text<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb12-6">secret <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>(result.stdout.strip())</span></code></pre></div></div>
+<p>Guess: will two runs of the game pick the same secret?</p>
+<p>Each call to Claude remembers nothing about the last one. The secret survives only because it is stored in <code>secret</code>, a variable in your program. Guess what happens if you move the <code>subprocess</code> lines inside the <code>while</code> loop, then run it.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Bug hunt waiting in this one
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Claude’s reply is text, not always just digits. If it answers <code>Sure! 27</code>, the <code>int(...)</code> line fails. Run the game several times until it does, read the error, and decide where a program should check what a model sent back.</p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>lessons</category>
+  <category>python</category>
+  <category>ai</category>
+  <guid>https://nealcnotes.com/posts/lesson2-shell-and-hello.html</guid>
+  <pubDate>Fri, 06 Nov 2026 08:00:00 GMT</pubDate>
+  <media:content url="https://nealcnotes.com/posts/media/261107.lesson2-runway.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>12 sessions: talking to the computer in words</title>
   <link>https://nealcnotes.com/posts/lesson1-setup-gauss.html</link>
@@ -39,13 +1146,13 @@
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This lesson is twelve short days, each one sitting of 15 to 30 minutes: setting up (days 1–3), Python (4–7), adding up 1 to 100 (8–10) and Lean (11–12). Do one day, stop whenever you like, and come back: the list of days at the top of the page shows where you are and takes you back there.</p>
+<p>This lesson is twelve short sessions, each one sitting of 15 to 30 minutes: setting up (the first three), Python (the next four), adding up 1 to 100 (three more) and Lean (the last two). Do one session, stop whenever you like, and come back: the list of sessions at the top of the page shows where you are and takes you back there.</p>
 <p>Each grey box has a copy button in its top right corner. Paste into the terminal with Ctrl+Shift+V and press Enter. Read the sentence above each box <em>before</em> you run it.</p>
 </div>
 </div>
 </section>
-<section id="day-1" class="level1">
-<h1>Day 1: Turn on Linux (~20 min)</h1>
+<section id="turn-on-linux" class="level1">
+<h1>Turn on Linux (20 min session)</h1>
 <section id="turn-on-linux-wsl" class="level2">
 <h2 class="anchored" data-anchor-id="turn-on-linux-wsl">Turn on Linux (WSL)</h2>
 <p>Underneath the windows and buttons, a computer works with text. A <strong>terminal</strong> is a window where you talk to it in words. We’ll use <strong>Linux</strong>, running inside Windows (that’s <strong>WSL</strong>, Windows Subsystem for Linux).</p>
@@ -115,10 +1222,11 @@ background-color: null;
 font-style: inherit;">sudo</span> chmod 0440 /etc/sudoers.d/<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">$USER</span></span></code></pre></div></div>
+<hr>
 </section>
 </section>
-<section id="day-2" class="level1">
-<h1>Day 2: Get a tutor (~20 min)</h1>
+<section id="get-a-tutor" class="level1">
+<h1>Get a tutor (20 min session)</h1>
 <section id="your-tutor-claude-code" class="level2">
 <h2 class="anchored" data-anchor-id="your-tutor-claude-code">Your tutor: Claude Code</h2>
 <p><strong>Claude</strong> is an AI, a <strong>language model</strong>: it learned from a huge amount of text to predict what words come next. That turns out to be enough to explain things and write code. It also makes Claude <em>very good at sounding right</em>. Usually it is right. Sometimes it isn’t, and it can’t always tell. That’s why you check.</p>
@@ -224,10 +1332,11 @@ font-style: inherit;">claude</span></span></code></pre></div></div>
 <p>Claude only knows what you tell it. A good question says <strong>what you did</strong>, <strong>what happened</strong>, and <strong>what you think</strong>: <em>“I ran <code>python3 gauss.py</code> and got this error: (paste). I think line 3 is wrong. Am I right?”</em> Errors are normal. Read each one yourself first and guess, then paste it with your guess. Fixing it is your job.</p>
 </div>
 </div>
+<hr>
 </section>
 </section>
-<section id="day-3" class="level1">
-<h1>Day 3: A shell and an editor (~25 min)</h1>
+<section id="a-shell-and-an-editor" class="level1">
+<h1>A shell and an editor (25 min session)</h1>
 <section id="a-friendlier-shell-fish" class="level2">
 <h2 class="anchored" data-anchor-id="a-friendlier-shell-fish">A friendlier shell: fish</h2>
 <p>The program that reads what you type is the <strong>shell</strong>. Ubuntu’s is <code>bash</code>. We’ll use <strong>fish</strong>, which helps you type less. Ask Claude what <code>chsh</code> does, and <strong>predict</strong> what will change, and when:</p>
@@ -325,10 +1434,11 @@ nvim hello.txt</code></pre>
 <p>Try it: <code>nvim hello.txt</code>, press <code>x</code>. Which letter goes? Then <code>u</code> to bring it back. Still in normal mode, type <code>ox</code>. Does <code>x</code> delete a letter again? Decide before you read on.</p>
 <p><code>o</code> is a command too: open a new line below and switch to insert mode. So the <code>x</code> after it is just a letter, on a new line. <code>Esc</code>, then <code>u</code> until it’s <code>hello</code> again, and <code>:wq</code>.</p>
 <p>Stuck in nvim? Press <code>Esc</code> a few times, then <code>:q!</code>. (More nvim: type <code>:Tutor</code> inside it.)</p>
+<hr>
 </section>
 </section>
-<section id="day-4" class="level1">
-<h1>Day 4: Talk to Python (~15 min)</h1>
+<section id="talk-to-python" class="level1">
+<h1>Talk to Python (15 min session)</h1>
 <section id="python" class="level2">
 <h2 class="anchored" data-anchor-id="python">Python</h2>
 <pre class="fish"><code>python3</code></pre>
@@ -400,10 +1510,11 @@ font-style: inherit;">7</span></span></code></pre></div></div>
 <p>In maths, <code>x = x + 1</code> is nonsense. In Python, <code>=</code> means <strong>“work out the right side, then put it in the box on the left”</strong>.</p>
 <p><code>==</code> <em>asks</em> whether two things are equal, and the answer is <code>True</code> or <code>False</code>. One <code>=</code> stores, two <code>==</code> ask. Mixing them up is one of the most common mistakes in programming.</p>
 <p>Leave Python with Ctrl+D.</p>
+<hr>
 </section>
 </section>
-<section id="day-5" class="level1">
-<h1>Day 5: Decisions (~20 min)</h1>
+<section id="decisions" class="level1">
+<h1>Decisions (20 min session)</h1>
 <section id="decisions-if" class="level2">
 <h2 class="anchored" data-anchor-id="decisions-if">Decisions: if</h2>
 <pre class="fish"><code>cd ~/course
@@ -446,15 +1557,16 @@ font-style: inherit;">"is odd"</span>)</span></code></pre></div></div>
 <section id="typos-python-cant-see" class="level2">
 <h2 class="anchored" data-anchor-id="typos-python-cant-see">Typos Python can’t see</h2>
 <p>Make a typo on purpose: in <code>decide.py</code>, change <code>print</code> on line 3 to <code>pirnt</code>, save and run it. Will Python complain? Decide before you read on.</p>
-<p>It doesn’t. <code>n</code> is 7, so line 3 never runs, and Python only notices a mistake when it gets there. Now make the same typo on line 5 and run it again: <code>NameError: name 'pirnt' is not defined</code>, with the line number. Fix both with the keys from Day 3: <code>:3</code>, <code>:5</code>, <code>x</code> and <code>i</code>. A program that ran once can still hide a mistake on a line it didn’t reach.</p>
+<p>It doesn’t. <code>n</code> is 7, so line 3 never runs, and Python only notices a mistake when it gets there. Now make the same typo on line 5 and run it again: <code>NameError: name 'pirnt' is not defined</code>, with the line number. Fix both with the keys from A shell and an editor: <code>:3</code>, <code>:5</code>, <code>x</code> and <code>i</code>. A program that ran once can still hide a mistake on a line it didn’t reach.</p>
 </section>
 <section id="indentation-whats-inside-what" class="level2">
 <h2 class="anchored" data-anchor-id="indentation-whats-inside-what">Indentation: what’s inside what</h2>
 <p>A line ending in <code>:</code> starts a <strong>block</strong>: the lines under it, indented 4 spaces further. The block ends at the first line that steps back out. nvim indents for you after a <code>:</code>, but it can’t know <strong>when a block ends</strong>. That’s you, pressing Backspace, and it’s a reasoning question: does this line belong inside?</p>
+<hr>
 </section>
 </section>
-<section id="day-6" class="level1">
-<h1>Day 6: Copy, then write a recipe (~25 min)</h1>
+<section id="copy-then-write-a-recipe" class="level1">
+<h1>Copy, then write a recipe (25 min session)</h1>
 <section id="copy-before-you-change-cp" class="level2">
 <h2 class="anchored" data-anchor-id="copy-before-you-change-cp">Copy before you change: cp</h2>
 <p>Your next program grows out of <code>decide.py</code>. Don’t change <code>decide.py</code> itself; copy it:</p>
@@ -565,10 +1677,11 @@ font-style: inherit;">10</span>))</span></code></pre></div></div>
 <pre class="fish"><code>python3 parity.py</code></pre>
 <p>To check your understanding, delete the two <code>print</code> lines and run it again. Why does nothing appear? Decide before you read on.</p>
 <p>The file only <em>defines</em> the recipe, and nothing uses it. A recipe on paper cooks nothing. Put the two lines back.</p>
+<hr>
 </section>
 </section>
-<section id="day-7" class="level1">
-<h1>Day 7: Repeats (~20 min)</h1>
+<section id="repeats" class="level1">
+<h1>Repeats (20 min session)</h1>
 <section id="repeats-for" class="level2">
 <h2 class="anchored" data-anchor-id="repeats-for">Repeats: for</h2>
 <pre class="fish"><code>cp parity.py loop.py
@@ -694,10 +1807,11 @@ font-style: inherit;">"done"</span>)</span></code></pre></div></div>
 <p>Copy <code>loop.py</code> to <code>evens.py</code> and change it to print only the <strong>even</strong> numbers from 1 to 20. You’ll need an <code>if</code> inside the <code>for</code>, and <code>parity</code> can answer it.</p>
 </div>
 </div>
+<hr>
 </section>
 </section>
-<section id="day-8" class="level1">
-<h1>Day 8: Add 1 to 100 (~20 min)</h1>
+<section id="add-1-to-100" class="level1">
+<h1>Add 1 to 100 (20 min session)</h1>
 <section id="the-story" class="level2">
 <h2 class="anchored" data-anchor-id="the-story">The story</h2>
 <p>Around 1785, the story goes, a teacher told his class to add up every number from 1 to 100. A ten-year-old, Carl Friedrich Gauss, wrote the answer almost at once: <strong>5050</strong>.</p>
@@ -767,10 +1881,11 @@ font-style: inherit;">100</span>))</span></code></pre></div></div>
 <p>Change <code>range(1, n + 1)</code> to <code>range(1, n)</code>. What will the last line be? Run it. An AI makes exactly this kind of mistake, and you just learned to catch it.</p>
 </div>
 </div>
+<hr>
 </section>
 </section>
-<section id="day-9" class="level1">
-<h1>Day 9: Gauss’s trick, checked (~25 min)</h1>
+<section id="gauss-trick-checked" class="level1">
+<h1>Gauss’s trick, checked (25 min session)</h1>
 <section id="gausss-trick" class="level2">
 <h2 class="anchored" data-anchor-id="gausss-trick">Gauss’s trick</h2>
 <p>Write the sum forwards and backwards:</p>
@@ -876,10 +1991,11 @@ font-style: inherit;">100</span>))</span></code></pre></div></div>
 <pre class="fish"><code>python3 invariant.py</code></pre>
 <p>It prints <code>5050</code>: no step failed.</p>
 <p>Now break the loop on purpose: change <code>total + k</code> to <code>total + k + 1</code>. At which <code>k</code> will the <code>assert</code> stop it? Then change it back.</p>
+<hr>
 </section>
 </section>
-<section id="day-10" class="level1">
-<h1>Day 10: A thousand checks, then a proof (~25 min)</h1>
+<section id="a-thousand-checks-then-a-proof" class="level1">
+<h1>A thousand checks, then a proof (25 min session)</h1>
 <section id="check-lots-of-cases" class="level2">
 <h2 class="anchored" data-anchor-id="check-lots-of-cases">Check lots of cases</h2>
 <p><code>invariant.py</code> only checks up to 100. <code>sum_to</code> is a recipe, so it can run for any <code>n</code>. Copy <code>invariant.py</code> once more:</p>
@@ -982,7 +2098,7 @@ font-style: inherit;">"all 1000 agree"</span>)</span></code></pre></div></div>
 <p><img src="https://latex.codecogs.com/png.latex?(k-1)k%20+%202k%20=%20k(k+1)"></p>
 <p>which is exactly what the <code>assert</code> checks. It passes in the first round, and each passing round makes the next one pass, so it can never fail, however far the loop runs.</p>
 <p>That’s no longer a check. It’s a proof for every <img src="https://latex.codecogs.com/png.latex?n">, and it’s the method from maths class: <strong>induction</strong>. The first round is the first domino, and each round knocks over the next.</p>
-<p><strong>Write this proof on paper, in your own words.</strong> You’ll need it on Day 12.</p>
+<p><strong>Write this proof on paper, in your own words.</strong> You’ll need it in the last session.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -999,10 +2115,11 @@ font-style: inherit;">"all 1000 agree"</span>)</span></code></pre></div></div>
 </ol>
 </div>
 </div>
+<hr>
 </section>
 </section>
-<section id="day-11" class="level1">
-<h1>Day 11: The same loop in Lean (~20 min)</h1>
+<section id="the-same-loop-in-lean" class="level1">
+<h1>The same loop in Lean (20 min session)</h1>
 <section id="why-ai-and-lean-belong-together" class="level2">
 <h2 class="anchored" data-anchor-id="why-ai-and-lean-belong-together">Why AI and Lean belong together</h2>
 <p>A proof that <em>sounds</em> right can still be wrong, and Claude is very good at sounding right. Lean doesn’t care how convincing a proof sounds: it checks every step, or it refuses. So the AI suggests, and Lean checks.</p>
@@ -1067,12 +2184,13 @@ font-style: inherit;">"all 1000 agree"</span>)</span></code></pre></div></div>
 
 #eval sumFormula 100</code></pre>
 <p><code>/</code> on natural numbers rounds down: <code>7 / 2</code> is <code>3</code>. (Why doesn’t that rounding ever change the answer here?)</p>
+<hr>
 </section>
 </section>
-<section id="day-12" class="level1">
-<h1>Day 12: Checking isn’t proving (~20 min)</h1>
-<section id="checking-isnt-proving" class="level2">
-<h2 class="anchored" data-anchor-id="checking-isnt-proving">Checking isn’t proving</h2>
+<section id="checking-isnt-proving" class="level1">
+<h1>Checking isn’t proving (20 min session)</h1>
+<section id="checking-isnt-proving-1" class="level2">
+<h2 class="anchored" data-anchor-id="checking-isnt-proving-1">Checking isn’t proving</h2>
 <p>Do the two programs agree? Add one check, for <img src="https://latex.codecogs.com/png.latex?n%20=%201000">:</p>
 <pre class="lean"><code>#eval sumLoop 1000 == sumFormula 1000</code></pre>
 <p>It shows <code>true</code>. Now add the claim for <em>every</em> <img src="https://latex.codecogs.com/png.latex?n">:</p>
@@ -1084,7 +2202,7 @@ font-style: inherit;">"all 1000 agree"</span>)</span></code></pre></div></div>
 <section id="ai-translates-lean-checks" class="level2">
 <h2 class="anchored" data-anchor-id="ai-translates-lean-checks">AI translates, Lean checks</h2>
 <p>Writing Lean proofs yourself comes later in the course. Today Claude only <em>translates</em> your proof, and you watch what Lean says.</p>
-<p>Open Claude in Chrome on the Lean page, type in your paper proof from Day 10, and ask:</p>
+<p>Open Claude in Chrome on the Lean page, type in your paper proof from A thousand checks, then a proof, and ask:</p>
 <blockquote class="blockquote">
 <p>Please prove <code>agree</code> in Lean by translating my proof, and see whether Lean accepts it. Don’t fix any mistakes in my proof, and don’t fix anything Lean complains about. Only translate my proof into Lean, and translate Lean’s answer back into English.</p>
 </blockquote>
@@ -1261,7 +2379,7 @@ font-style: inherit;">"all 1000 agree"</span>)</span></code></pre></div></div>
 <p>where <img src="https://latex.codecogs.com/png.latex?W"> is the nest egg, <img src="https://latex.codecogs.com/png.latex?c"> is yearly spending and <img src="https://latex.codecogs.com/png.latex?r"> is the interest rate (as a decimal). With our numbers, <img src="https://latex.codecogs.com/png.latex?T%20=%20100%20%5Cln(20000/15000)%20%5Capprox%2028.8"> years.</p>
 <p>Notice what happens when <img src="https://latex.codecogs.com/png.latex?c%20=%20rW"> (spending equals interest): the bottom of the fraction is zero, and the formula says “forever”. That’s the pattern you found in the spreadsheet.</p>
 <p>Here’s the same thing in Python, checked against the year-by-year method:</p>
-<div id="b22a036f" class="cell" data-execution_count="1">
+<div id="cf59d30c" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> math <span class="im" style="color: #00769E;
@@ -1374,7 +2492,7 @@ formula:      T = 28.8 years</code></pre>
 <p><img src="https://latex.codecogs.com/png.latex?%0Ap_i%20=%20%5Cfrac%7Be%5E%7Bs_i%7D%7D%7B%5Csum_j%20e%5E%7Bs_j%7D%7D%0A"></p>
 <p>This is called <strong>softmax</strong>. The exponential makes every number positive, and dividing by the total makes them add up to 1. And just as compounding turns a small difference in interest rate into a big difference in money, the exponential turns a small lead in score into a big lead in probability: a score 1 higher means <img src="https://latex.codecogs.com/png.latex?e%20%5Capprox%202.7"> times as likely.</p>
 <p>Here the model has just written <em>“The money will last 28.”</em> and is choosing the next token:</p>
-<div id="7febd5d3" class="cell" data-execution_count="2">
+<div id="c0eb366b" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> math <span class="im" style="color: #00769E;
@@ -1555,7 +2673,7 @@ p('8') / p('9') = 2.7183  vs  e = 2.7183</code></pre>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Real investments don’t pay a steady 1%. Some years are great, some are terrible. Let’s say returns average 3% but swing a lot, then simulate 10,000 possible futures and count how many run out within 30 years:</p>
-<div id="ae58285d" class="cell" data-execution_count="3">
+<div id="24b5f0f6" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;

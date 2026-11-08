@@ -2,6 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/lesson3-functions.html",
+      "/posts/lesson2-shell-and-hello.html",
       "/posts/lesson1-setup-gauss.html",
       "/posts/moneymath-how-long.html"
     ]
