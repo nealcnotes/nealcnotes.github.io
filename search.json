@@ -77,11 +77,67 @@
     "text": "Open question\nThe simulation stops at 30 years. But how long will you live? That’s a probability question too, and it has its own equation (and its own slightly morbid spreadsheet). Next chapter."
   },
   {
+    "objectID": "posts/lesson2-shell-and-hello.html",
+    "href": "posts/lesson2-shell-and-hello.html",
+    "title": "Lesson 2: loops, drawn and waiting",
+    "section": "",
+    "text": "My drawing, made to talk with Runway Act-Two. Later in the course: how.\nLesson 1 is the base: fish, nvim, cp, for, if, def, python3. None of that is explained again here; it is used. What is new: turtle drawing (import turtle), while, input(), int() and float(), f-strings, asking Claude from a program (subprocess), the shell’s Ctrl+C, and mv and rm.\nIf import turtle fails on your machine, run sudo apt install -y python3-tk (the Tk window library turtle uses). It worked here already, so you may not need it."
+  },
+  {
+    "objectID": "posts/lesson2-shell-and-hello.html#colour-and-a-row-of-squares",
+    "href": "posts/lesson2-shell-and-hello.html#colour-and-a-row-of-squares",
+    "title": "Lesson 2: loops, drawn and waiting",
+    "section": "Colour and a row of squares",
+    "text": "Colour and a row of squares\nAdd a colour before the loop:\nt.color(\"blue\")\nYour guess: does the colour change the shape, or only the line? Run it and see.\nNow draw the same square three times, with a for loop around the whole thing, and move the turtle between squares with t.penup(), t.forward(150) and t.pendown(). Where will the third square end up? Guess, then run it."
+  },
+  {
+    "objectID": "posts/lesson2-shell-and-hello.html#ask-claude-for-the-angle",
+    "href": "posts/lesson2-shell-and-hello.html#ask-claude-for-the-angle",
+    "title": "Lesson 2: loops, drawn and waiting",
+    "section": "Ask Claude for the angle",
+    "text": "Ask Claude for the angle\nA nonagon has nine sides, and the turn at each corner is 360 divided by nine. What number do you expect? Then add these lines to square.py, after the square’s loop and before turtle.done(). They use the pen t that the square already made. Running them on their own, as a new file, fails with NameError: name 't' is not defined:\nimport subprocess\n\nreply = subprocess.run(\n    [\"claude\", \"-p\", \"How many degrees does a turtle turn at each corner of a nonagon? Reply with only the number.\", \"--no-session-persistence\"],\n    capture_output=True, text=True)\nangle = float(reply.stdout.strip())\nfor side in range(9):\n    t.forward(60)\n    t.left(angle)\nWas Claude’s number the one you predicted? The program does not know the answer; it trusts the reply and uses it. Your job is to check."
+  },
+  {
+    "objectID": "posts/lesson2-shell-and-hello.html#aside-mv-and-rm",
+    "href": "posts/lesson2-shell-and-hello.html#aside-mv-and-rm",
+    "title": "Lesson 2: loops, drawn and waiting",
+    "section": "Aside: mv and rm",
+    "text": "Aside: mv and rm\nYou have cp from lesson 1. Two more file commands finish the set. In ~/course, make a copy and move it:\ncp square.py square2.py\nmv square2.py shape.py\nls\nBefore ls, predict its output. Then remove the file:\nrm shape.py\nls\n\n\n\n\n\n\nWarningrm is permanent\n\n\n\nmv replaces a file that already has the new name, without asking. rm removes a file with no trash and no u. Read the name twice before you press Enter."
+  },
+  {
+    "objectID": "posts/lesson2-shell-and-hello.html#bug-hunt-a-reply-that-is-a-sentence",
+    "href": "posts/lesson2-shell-and-hello.html#bug-hunt-a-reply-that-is-a-sentence",
+    "title": "Lesson 2: loops, drawn and waiting",
+    "section": "Bug hunt: a reply that is a sentence",
+    "text": "Bug hunt: a reply that is a sentence\nClaude wrote this version, and it has one bug. Run it and find it. Claude will not say where it is.\nimport subprocess\n\nreply = subprocess.run(\n    [\"claude\", \"-p\", \"How many degrees does a turtle turn at each corner of a nonagon? Reply with a sentence.\", \"--no-session-persistence\"],\n    capture_output=True, text=True)\nangle = float(reply.stdout.strip())\nprint(angle)\nFor the bug:\n\nWrite down the error message.\nRead what Claude sent back. Is it a number?\nFix the program so it still works when Claude sends a sentence, or change what you ask. Decide which, and say why."
+  },
+  {
+    "objectID": "posts/lesson2-shell-and-hello.html#the-correction-answers-from-memory-only",
+    "href": "posts/lesson2-shell-and-hello.html#the-correction-answers-from-memory-only",
+    "title": "Lesson 2: loops, drawn and waiting",
+    "section": "The correction: answers from memory only",
+    "text": "The correction: answers from memory only\nThe lookup needs only what Claude already knows, so turn the tools off. Add two items to the call, \"--tools\", \"\", like this:\nreply = subprocess.run(\n    [\"claude\", \"-p\", f\"How many minutes long is the song {song}? Reply with only the number, like 3.5.\", \"--tools\", \"\", \"--no-session-persistence\"],\n    capture_output=True, text=True)\nRun it again with the made-up title. Guess first: does Claude send back a number or a sentence now? --tools \"\" turns every tool off, so the call can only answer from memory. Claude may still be wrong, so the check below still matters.\nClaude is only guessing at song lengths, so check one of them on a phone or a streaming app. Did Claude get it right?"
+  },
+  {
+    "objectID": "posts/lesson2-shell-and-hello.html#bug-hunt-a-playlist-that-stops-at-3.5",
+    "href": "posts/lesson2-shell-and-hello.html#bug-hunt-a-playlist-that-stops-at-3.5",
+    "title": "Lesson 2: loops, drawn and waiting",
+    "section": "Bug hunt: a playlist that stops at 3.5",
+    "text": "Bug hunt: a playlist that stops at 3.5\nClaude wrote this version, and it has one bug. Run it with a song that is 3.5 minutes long, and find the bug. Claude will not say where it is.\nimport subprocess\n\ntotal = 0\nsong = input(\"Song name (blank to stop): \")\nwhile song != \"\":\n    reply = subprocess.run(\n        [\"claude\", \"-p\", f\"How many minutes long is the song {song}? Reply with only the number, like 3.5.\", \"--no-session-persistence\"],\n        capture_output=True, text=True)\n    minutes = int(reply.stdout.strip())\n    total = total + minutes\n    print(f\"{song}: {minutes} min, so far {total} min\")\n    song = input(\"Song name (blank to stop): \")\nprint(f\"playlist total: {total} minutes\")\nFor the bug:\n\nWrite down the error message, and what Claude sent back.\nGuess why int fails on a decimal, in one sentence.\nFix it, run it, and check the total by hand."
+  },
+  {
+    "objectID": "posts/lesson2-shell-and-hello.html#ai-thread-let-claude-pick-the-secret",
+    "href": "posts/lesson2-shell-and-hello.html#ai-thread-let-claude-pick-the-secret",
+    "title": "Lesson 2: loops, drawn and waiting",
+    "section": "AI thread: let Claude pick the secret",
+    "text": "AI thread: let Claude pick the secret\nClaude can pick the secret for you. Add this to the top of the guessing game, in a copy, and replace your secret line with it:\nimport subprocess\n\nresult = subprocess.run(\n    [\"claude\", \"-p\", \"Pick a secret whole number from 1 to 50. Reply with only the digits.\", \"--tools\", \"\", \"--no-session-persistence\"],\n    capture_output=True, text=True)\nsecret = int(result.stdout.strip())\nGuess: will two runs of the game pick the same secret?\nEach call to Claude remembers nothing about the last one. The secret survives only because it is stored in secret, a variable in your program. Guess what happens if you move the subprocess lines inside the while loop, then run it.\n\n\n\n\n\n\nWarningBug hunt waiting in this one\n\n\n\nClaude’s reply is text, not always just digits. If it answers Sure! 27, the int(...) line fails. Run the game several times until it does, read the error, and decide where a program should check what a model sent back."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "nealcnotes",
     "section": "",
-    "text": "Notes and lessons on math, programming, and checking what the machine hands you.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n12 sessions: talking to the computer in words\n\n\nSet up, add, and prove\n\n\n\nlessons\n\npython\n\nlean\n\n\n\n\n\n\n\n\n\nOct 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nLesson 1.5 (draft): How long will the money last?\n\n\n\n\n\n\nlessons\n\nmoney\n\nmath\n\n\n\n\n\n\n\n\n\nOct 30, 2026\n\n\n\n\n\nNo matching items"
+    "text": "Notes and lessons on math, programming, and checking what the machine hands you.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLesson 3: functions that take more than one thing\n\n\nThree short sessions, building on lesson 1’s parity recipe\n\n\n\nlessons\n\npython\n\nai\n\n\n\n\n\n\n\n\n\nNov 7, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nLesson 2: loops, drawn and waiting\n\n\nPredict, run, and fix: turtle, input, and Claude’s numbers\n\n\n\nlessons\n\npython\n\nai\n\n\n\n\n\n\n\n\n\nNov 6, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n12 sessions: talking to the computer in words\n\n\nSet up, add, and prove\n\n\n\nlessons\n\npython\n\nlean\n\n\n\n\n\n\n\n\n\nOct 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nLesson 1.5 (draft): How long will the money last?\n\n\n\n\n\n\nlessons\n\nmoney\n\nmath\n\n\n\n\n\n\n\n\n\nOct 30, 2026\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/lesson1-setup-gauss.html",
@@ -95,7 +151,7 @@
     "href": "posts/lesson1-setup-gauss.html#why-are-we-doing-this",
     "title": "12 sessions: talking to the computer in words",
     "section": "Why are we doing this?",
-    "text": "Why are we doing this?\nAn AI can install software, add up numbers and write proofs faster than either of us ever will. So why learn any of it?\nFor the same reason people learned pure math long before anyone needed it. Almost nobody uses calculus at work. What it built was the ability to understand: to follow an argument, see why it holds, and notice when it doesn’t.\nThat’s the point of this course: not to get the computer to do things, but to understand what it did, and why, well enough to catch it when it’s wrong.\nTo check your understanding as you go, guess what each command will do before you run it. When the computer surprises you, that’s the interesting part: guess why, in your own words, check with Claude, and ask your teacher for help.\n\n\n\n\n\n\nTipHow to use this page\n\n\n\nThis lesson is twelve short days, each one sitting of 15 to 30 minutes: setting up (days 1–3), Python (4–7), adding up 1 to 100 (8–10) and Lean (11–12). Do one day, stop whenever you like, and come back: the list of days at the top of the page shows where you are and takes you back there.\nEach grey box has a copy button in its top right corner. Paste into the terminal with Ctrl+Shift+V and press Enter. Read the sentence above each box before you run it."
+    "text": "Why are we doing this?\nAn AI can install software, add up numbers and write proofs faster than either of us ever will. So why learn any of it?\nFor the same reason people learned pure math long before anyone needed it. Almost nobody uses calculus at work. What it built was the ability to understand: to follow an argument, see why it holds, and notice when it doesn’t.\nThat’s the point of this course: not to get the computer to do things, but to understand what it did, and why, well enough to catch it when it’s wrong.\nTo check your understanding as you go, guess what each command will do before you run it. When the computer surprises you, that’s the interesting part: guess why, in your own words, check with Claude, and ask your teacher for help.\n\n\n\n\n\n\nTipHow to use this page\n\n\n\nThis lesson is twelve short sessions, each one sitting of 15 to 30 minutes: setting up (the first three), Python (the next four), adding up 1 to 100 (three more) and Lean (the last two). Do one session, stop whenever you like, and come back: the list of sessions at the top of the page shows where you are and takes you back there.\nEach grey box has a copy button in its top right corner. Paste into the terminal with Ctrl+Shift+V and press Enter. Read the sentence above each box before you run it."
   },
   {
     "objectID": "posts/lesson1-setup-gauss.html#turn-on-linux-wsl",
@@ -165,7 +221,7 @@
     "href": "posts/lesson1-setup-gauss.html#typos-python-cant-see",
     "title": "12 sessions: talking to the computer in words",
     "section": "Typos Python can’t see",
-    "text": "Typos Python can’t see\nMake a typo on purpose: in decide.py, change print on line 3 to pirnt, save and run it. Will Python complain? Decide before you read on.\nIt doesn’t. n is 7, so line 3 never runs, and Python only notices a mistake when it gets there. Now make the same typo on line 5 and run it again: NameError: name 'pirnt' is not defined, with the line number. Fix both with the keys from Day 3: :3, :5, x and i. A program that ran once can still hide a mistake on a line it didn’t reach."
+    "text": "Typos Python can’t see\nMake a typo on purpose: in decide.py, change print on line 3 to pirnt, save and run it. Will Python complain? Decide before you read on.\nIt doesn’t. n is 7, so line 3 never runs, and Python only notices a mistake when it gets there. Now make the same typo on line 5 and run it again: NameError: name 'pirnt' is not defined, with the line number. Fix both with the keys from A shell and an editor: :3, :5, x and i. A program that ran once can still hide a mistake on a line it didn’t reach."
   },
   {
     "objectID": "posts/lesson1-setup-gauss.html#indentation-whats-inside-what",
@@ -235,7 +291,7 @@
     "href": "posts/lesson1-setup-gauss.html#why-it-can-never-fail",
     "title": "12 sessions: talking to the computer in words",
     "section": "Why it can never fail",
-    "text": "Why it can never fail\nA claim that stays true after every round is a loop invariant, like the assert in invariant.py. Now the big question: if the assert passed in one round, why must it pass in the next? (What does one round add to total?) Decide before you read on.\nSay it passed in the round for \\(k - 1\\):\n\\[2 \\cdot \\text{total} = (k-1)k\\]\nThe next round, for \\(k\\), adds \\(k\\), so \\(2 \\cdot \\text{total}\\) grows by \\(2k\\):\n\\[(k-1)k + 2k = k(k+1)\\]\nwhich is exactly what the assert checks. It passes in the first round, and each passing round makes the next one pass, so it can never fail, however far the loop runs.\nThat’s no longer a check. It’s a proof for every \\(n\\), and it’s the method from maths class: induction. The first round is the first domino, and each round knocks over the next.\nWrite this proof on paper, in your own words. You’ll need it on Day 12.\n\n\n\n\n\n\nNoteTry it yourself\n\n\n\n\nAdd up the odd numbers 1 + 3 + 5 + … and print the running total for the first 10. What pattern do you see? Why would it hold? (Try drawing it with dots.)\nAsk Claude: “Write a short Python function that adds up 1 to n, with one hidden bug. Don’t tell me where.” Find the bug by reasoning first, then prove it with a check."
+    "text": "Why it can never fail\nA claim that stays true after every round is a loop invariant, like the assert in invariant.py. Now the big question: if the assert passed in one round, why must it pass in the next? (What does one round add to total?) Decide before you read on.\nSay it passed in the round for \\(k - 1\\):\n\\[2 \\cdot \\text{total} = (k-1)k\\]\nThe next round, for \\(k\\), adds \\(k\\), so \\(2 \\cdot \\text{total}\\) grows by \\(2k\\):\n\\[(k-1)k + 2k = k(k+1)\\]\nwhich is exactly what the assert checks. It passes in the first round, and each passing round makes the next one pass, so it can never fail, however far the loop runs.\nThat’s no longer a check. It’s a proof for every \\(n\\), and it’s the method from maths class: induction. The first round is the first domino, and each round knocks over the next.\nWrite this proof on paper, in your own words. You’ll need it in the last session.\n\n\n\n\n\n\nNoteTry it yourself\n\n\n\n\nAdd up the odd numbers 1 + 3 + 5 + … and print the running total for the first 10. What pattern do you see? Why would it hold? (Try drawing it with dots.)\nAsk Claude: “Write a short Python function that adds up 1 to n, with one hidden bug. Don’t tell me where.” Find the bug by reasoning first, then prove it with a check."
   },
   {
     "objectID": "posts/lesson1-setup-gauss.html#why-ai-and-lean-belong-together",
@@ -259,8 +315,8 @@
     "text": "Two programs, one answer\nGauss’s formula is a program too, a much faster one. Add it below:\ndef sumFormula (n : Nat) : Nat := n * (n + 1) / 2\n\n#eval sumFormula 100\n/ on natural numbers rounds down: 7 / 2 is 3. (Why doesn’t that rounding ever change the answer here?)"
   },
   {
-    "objectID": "posts/lesson1-setup-gauss.html#checking-isnt-proving",
-    "href": "posts/lesson1-setup-gauss.html#checking-isnt-proving",
+    "objectID": "posts/lesson1-setup-gauss.html#checking-isnt-proving-1",
+    "href": "posts/lesson1-setup-gauss.html#checking-isnt-proving-1",
     "title": "12 sessions: talking to the computer in words",
     "section": "Checking isn’t proving",
     "text": "Checking isn’t proving\nDo the two programs agree? Add one check, for \\(n = 1000\\):\n#eval sumLoop 1000 == sumFormula 1000\nIt shows true. Now add the claim for every \\(n\\):\ntheorem agree (n : Nat) : sumLoop n = sumFormula n := by\n  sorry\nRead it out loud: “a claim called agree: for any natural number \\(n\\), the loop and the formula give the same answer. Proof: sorry.” This is check.py again, for every \\(n\\) instead of a thousand.\nsorry means “I’ll prove this later”. Lean understands the claim but warns: declaration uses `sorry`. You still owe a proof, and checks like true don’t count. What Lean wants is an argument like your loop invariant."
@@ -270,7 +326,7 @@
     "href": "posts/lesson1-setup-gauss.html#ai-translates-lean-checks",
     "title": "12 sessions: talking to the computer in words",
     "section": "AI translates, Lean checks",
-    "text": "AI translates, Lean checks\nWriting Lean proofs yourself comes later in the course. Today Claude only translates your proof, and you watch what Lean says.\nOpen Claude in Chrome on the Lean page, type in your paper proof from Day 10, and ask:\n\nPlease prove agree in Lean by translating my proof, and see whether Lean accepts it. Don’t fix any mistakes in my proof, and don’t fix anything Lean complains about. Only translate my proof into Lean, and translate Lean’s answer back into English.\n\nIt may take a few minutes, and then Lean should accept it. Claude may add a smaller claim along the way (something like “one more round adds \\(n + 1\\)”). **Where is that step in your paper proof?\nNext, a claim of my own. Before you send it, predict: is it true? Try \\(n = 0\\), 1 and 2 on paper. Then ask:\n\nNow I want to check whether this also means that sum(n)^2 = n^3. Please convert that to Lean, have Lean check it, and translate only Lean’s answer back into English. Don’t fix the proof.\n\nWhat did Lean say? And did Claude do only what you asked, or did it quietly change the claim to one that works?"
+    "text": "AI translates, Lean checks\nWriting Lean proofs yourself comes later in the course. Today Claude only translates your proof, and you watch what Lean says.\nOpen Claude in Chrome on the Lean page, type in your paper proof from A thousand checks, then a proof, and ask:\n\nPlease prove agree in Lean by translating my proof, and see whether Lean accepts it. Don’t fix any mistakes in my proof, and don’t fix anything Lean complains about. Only translate my proof into Lean, and translate Lean’s answer back into English.\n\nIt may take a few minutes, and then Lean should accept it. Claude may add a smaller claim along the way (something like “one more round adds \\(n + 1\\)”). **Where is that step in your paper proof?\nNext, a claim of my own. Before you send it, predict: is it true? Try \\(n = 0\\), 1 and 2 on paper. Then ask:\n\nNow I want to check whether this also means that sum(n)^2 = n^3. Please convert that to Lean, have Lean check it, and translate only Lean’s answer back into English. Don’t fix the proof.\n\nWhat did Lean say? And did Claude do only what you asked, or did it quietly change the claim to one that works?"
   },
   {
     "objectID": "posts/lesson1-setup-gauss.html#what-we-did-today",
@@ -278,6 +334,62 @@
     "title": "12 sessions: talking to the computer in words",
     "section": "What we did today",
     "text": "What we did today\n\nSet up Linux with Claude as a tutor, plus fish, nvim and Python.\nAdded 1 to 100 with a loop and with Gauss’s trick.\nChecked a thousand cases, and saw why that isn’t a proof.\nPut a check inside the loop, and saw why it can never fail: induction.\nWrote the same loop in Lean, next to Gauss’s formula, and claimed the two programs always agree.\nHad Claude translate your proof for Lean to check.\n\nThe computer did the adding. You did the reasoning."
+  },
+  {
+    "objectID": "posts/lesson3-functions.html",
+    "href": "posts/lesson3-functions.html",
+    "title": "Lesson 3: functions that take more than one thing",
+    "section": "",
+    "text": "My drawing, made to talk with Runway Act-Two. Later in the course: how.\nLesson 1 gave you def and return with one input (parity). Lesson 2 gave you while, input() and f-strings. This lesson uses all of them. What is new: a function’s name, several inputs, how to pass those inputs (by position or by name), the difference between return and print, one function that calls another, and a function that wraps a call to Claude."
+  },
+  {
+    "objectID": "posts/lesson3-functions.html#a-function-is-a-name-for-a-computation",
+    "href": "posts/lesson3-functions.html#a-function-is-a-name-for-a-computation",
+    "title": "Lesson 3: functions that take more than one thing",
+    "section": "A function is a name for a computation",
+    "text": "A function is a name for a computation\nA function is a name for a computation: a recipe, a process, a rule you want to use again without writing it out again. Naming it well is the most important habit in this lesson. A good name says what the step is for, so the reader does not have to work out how it was made.\nLesson 1’s recipe took one input, n, and gave back a word. A recipe usually needs more than one input: the amount, the servings it was written for, and the servings you want. The three names in the parentheses after def are parameters: the boxes the function fills when you call it.\nType this into ~/course/scale.py. You will keep using this file:\ndef scaled(amount, base_servings, servings):\n    return amount * servings / base_servings\n\nprint(f\"Flour: {250 * 6 / 2} g\")\nprint(f\"Flour: {scaled(250, 2, 6)} g\")\nBoth lines print 750.0 g. The first only says how the number was made; the second says what it means.\nTo check your understanding, ask Claude in the right pane: “Suggest three names for a function that turns a recipe’s base amount into the amount for any number of servings. Which name is best, and why?” Guess its top pick first."
+  },
+  {
+    "objectID": "posts/lesson3-functions.html#names-or-positions-for-the-inputs",
+    "href": "posts/lesson3-functions.html#names-or-positions-for-the-inputs",
+    "title": "Lesson 3: functions that take more than one thing",
+    "section": "Names or positions for the inputs",
+    "text": "Names or positions for the inputs\nA call can pass its inputs in two ways:\n\nby position: scaled(250, 2, 6). Each value goes to the next parameter, in order.\nby name: scaled(amount=250, base_servings=2, servings=6). Each value goes to the parameter with that name, in any order.\n\nUse names when a wrong order would still run and still give an answer. Here the program does not stop when you swap two numbers. It prints 83.33333333333333 instead of 750.0, and nothing tells you it is wrong. The names make that mistake hard to make.\nUse positions when the order is obvious and the call is short. parity(7) from lesson 1 has one input, so there is no order to get wrong.\nRule of thumb: if the reader would need to look up the function to know which value is which, name the inputs.\nWhich would you use, names or positions, for scaled with its three numbers, and for parity with its one? Then check your answers against the rule above."
+  },
+  {
+    "objectID": "posts/lesson3-functions.html#reuse-with-input-in-the-middle",
+    "href": "posts/lesson3-functions.html#reuse-with-input-in-the-middle",
+    "title": "Lesson 3: functions that take more than one thing",
+    "section": "Reuse with input in the middle",
+    "text": "Reuse with input in the middle\nOne function can serve many ingredients, and the number can come from the user while the program is running. Add these lines to scale.py, below scaled:\nservings = int(input(\"How many servings? \"))\nprint(f\"Flour: {scaled(amount=250, base_servings=2, servings=servings)} g\")\nprint(f\"Sugar: {scaled(amount=100, base_servings=2, servings=servings)} g\")\nGuess the two lines for 6, then run it and check. Then type 1. You wrote the rule once, in scaled, and it worked for two ingredients, with a number the program didn’t know until you typed it."
+  },
+  {
+    "objectID": "posts/lesson3-functions.html#bug-hunt-a-recipe-that-prints-instead",
+    "href": "posts/lesson3-functions.html#bug-hunt-a-recipe-that-prints-instead",
+    "title": "Lesson 3: functions that take more than one thing",
+    "section": "Bug hunt: a recipe that prints instead",
+    "text": "Bug hunt: a recipe that prints instead\nClaude wrote this version. It has one bug. Type it in scale_bug.py, run it, and find the bug. Claude will not say where it is.\ndef scaled(amount, base_servings, servings):\n    print(amount * servings / base_servings)\n\ntotal = scaled(amount=250, base_servings=2, servings=4) + 100\nprint(f\"total: {total}\")\nFor the bug:\n\nWrite down the error message.\nGuess what is wrong, in one sentence.\nFix it, run it, and check the output by hand.\n\nThen tell Claude, in the right pane, what you found, and ask only why the error happens."
+  },
+  {
+    "objectID": "posts/lesson3-functions.html#ai-thread-wrap-the-call-in-a-function",
+    "href": "posts/lesson3-functions.html#ai-thread-wrap-the-call-in-a-function",
+    "title": "Lesson 3: functions that take more than one thing",
+    "section": "AI thread: wrap the call in a function",
+    "text": "AI thread: wrap the call in a function\nEach time your program talks to Claude, the same lines repeat. Put them in one function, so the rest of the program only asks a question and gets a reply. Add this to frame.py, above the prints. Guess what the last line prints, then run it.\nimport subprocess\n\ndef ask(question):\n    reply = subprocess.run(\n        [\"claude\", \"-p\", question, \"--tools\", \"\",\n         \"--no-session-persistence\"],\n        capture_output=True, text=True)\n    return reply.stdout.strip()\n\nprint(ask(\"Reply with only the word hello.\"))\nask is the one place the program talks to Claude. If the call needs to change, for example a new flag, you change it here and nowhere else. ask returns the reply and does not print it: the caller decides what to do with it."
+  },
+  {
+    "objectID": "posts/lesson3-functions.html#a-function-that-calls-ask",
+    "href": "posts/lesson3-functions.html#a-function-that-calls-ask",
+    "title": "Lesson 3: functions that take more than one thing",
+    "section": "A function that calls ask",
+    "text": "A function that calls ask\nLesson 2’s shape program asked Claude for a turn angle, then turned that text into a number. Put that step in a function, and it can be reused by any program that needs an angle:\ndef angle_for(shape):\n    reply = ask(f\"How many degrees does a turtle turn at each corner of a {shape}? Reply with only the number.\")\n    return float(reply)\n\nprint(f\"Pentagon turn: {angle_for('pentagon')} degrees\")\nsides = round(360 / angle_for(\"pentagon\"))\nprint(f\"Sides: {sides}\")\nGuess what the first line prints, and what sides comes to. The first call to angle_for has the whole chain behind it: angle_for calls ask, and ask calls Claude.\nTo check your understanding, ask Claude in the right pane: “Why does angle_for call ask instead of calling subprocess itself?” Guess the gist of its answer first.\nIf Claude’s reply is a sentence, float fails inside angle_for, and the error points at float, not at the question. A function that hides a step also hides where it went wrong, so read the traceback to the bottom to see which function failed."
+  },
+  {
+    "objectID": "posts/lesson3-functions.html#write-your-own-program",
+    "href": "posts/lesson3-functions.html#write-your-own-program",
+    "title": "Lesson 3: functions that take more than one thing",
+    "section": "Write your own program",
+    "text": "Write your own program\nWrite a program of your own with at least two functions, one of which calls the other. Claude writes none of it.\nPick a theme from cooking, art, music, or fashion, and build something that takes at least two inputs, returns a value, and prints a line at the end in your theme’s words. One of your functions must ask Claude for a reply and return it, using ask from the AI thread above.\nSimple ideas to start from, pick one:\n\na function that prices a frame from its width and height, and a second one that adds tax;\na function that scales a dough or a paint mix for any number of batches;\na function that asks Claude for a short name for any number you give it, and returns the name.\n\nBefore you run it, guess the output for two different sets of inputs. Name the inputs in any call where a wrong order would still run.\nWhen it works, walk Claude through it, line by line. Claude will ask why each function takes the inputs it takes, and where it could fail, for example with a zero or a negative number. Claude will not fix anything."
   },
   {
     "objectID": "archive/index.html",

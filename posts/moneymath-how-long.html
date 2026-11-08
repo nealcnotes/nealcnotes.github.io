@@ -372,7 +372,7 @@ T = \frac{1}{r}\,\ln\!\frac{c}{c - rW}
 <p>where <span class="math inline">\(W\)</span> is the nest egg, <span class="math inline">\(c\)</span> is yearly spending and <span class="math inline">\(r\)</span> is the interest rate (as a decimal). With our numbers, <span class="math inline">\(T = 100 \ln(20000/15000) \approx 28.8\)</span> years.</p>
 <p>Notice what happens when <span class="math inline">\(c = rW\)</span> (spending equals interest): the bottom of the fraction is zero, and the formula says “forever”. That’s the pattern you found in the spreadsheet.</p>
 <p>Here’s the same thing in Python, checked against the year-by-year method:</p>
-<div id="b22a036f" class="cell" data-execution_count="1">
+<div id="cf59d30c" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> log</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>W0, c, r <span class="op">=</span> <span class="dv">500_000</span>, <span class="dv">20_000</span>, <span class="fl">0.01</span></span>
@@ -416,7 +416,7 @@ p_i = \frac{e^{s_i}}{\sum_j e^{s_j}}
 \]</span></p>
 <p>This is called <strong>softmax</strong>. The exponential makes every number positive, and dividing by the total makes them add up to 1. And just as compounding turns a small difference in interest rate into a big difference in money, the exponential turns a small lead in score into a big lead in probability: a score 1 higher means <span class="math inline">\(e \approx 2.7\)</span> times as likely.</p>
 <p>Here the model has just written <em>“The money will last 28.”</em> and is choosing the next token:</p>
-<div id="7febd5d3" class="cell" data-execution_count="2">
+<div id="c0eb366b" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> exp</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>scores <span class="op">=</span> {<span class="st">"8"</span>: <span class="fl">3.0</span>, <span class="st">"9"</span>: <span class="fl">2.0</span>, <span class="st">"7"</span>: <span class="fl">1.0</span>, <span class="st">"5"</span>: <span class="op">-</span><span class="fl">1.0</span>}   <span class="co"># made-up scores</span></span>
@@ -493,7 +493,7 @@ n = \frac{\ln\big(c/(c - rW)\big)}{\ln(1+r)} = \frac{\ln(4/3)}{\ln 1.01} \approx
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Real investments don’t pay a steady 1%. Some years are great, some are terrible. Let’s say returns average 3% but swing a lot, then simulate 10,000 possible futures and count how many run out within 30 years:</p>
-<div id="ae58285d" class="cell" data-execution_count="3">
+<div id="24b5f0f6" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
