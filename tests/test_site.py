@@ -149,3 +149,20 @@ def test_every_local_video_a_post_embeds_exists():
             assert f.stat().st_size < 50_000_000, f"{src}: too big for the repo"
     assert seen, "no post embeds a local video yet"
 
+
+
+def test_why_posts_that_run_python_are_frozen():
+    """A ```{python} cell runs at render time, which needs Jupyter;
+    the publishing machine (x280) has none, and the first publish of
+    moneymath-how-long failed on it (2026-11-07). With `freeze: auto`
+    Quarto reuses the committed `_freeze/` output instead of rerunning
+    the cell, so the post must be rendered once (anywhere, e.g.
+    `uv run --with jupyter ... quarto render <post>`) and `_freeze/`
+    committed."""
+    config = yaml.safe_load((SITE / "_quarto.yml").read_text())
+    runs_code = [p for p in POSTS if re.search(r"^```\{python", p.read_text(), re.M)]
+    assert runs_code, "no post runs Python: drop this test and the freeze"
+    assert config.get("execute", {}).get("freeze") == "auto"
+    for p in runs_code:
+        frozen = SITE / "_freeze" / "posts" / p.stem / "execute-results" / "html.json"
+        assert frozen.exists(), f"{p.name}: not frozen ({frozen} missing)"
