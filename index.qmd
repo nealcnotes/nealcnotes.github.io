@@ -1,12 +1,15 @@
 ---
 title: "nealcnotes"
+# "Recently added": the newest five, and the RSS feed (index.xml)
+# for anyone subscribed. Courses are ordered by the sidebar
+# (_quarto.yml), not here (tests/test_site.py).
 listing:
   contents: posts
   sort: "date desc"
+  max-items: 5
   type: default
   # portrait thumbnails (lesson 1's Laura frame) fill the column otherwise
   image-height: 150px
-  categories: true
   feed: true
 page-layout: full
 title-block-banner: false
@@ -15,4 +18,19 @@ title-block-banner: false
 Notes and lessons on math, programming,
 and checking what the machine hands you.
 
+## Courses
+
+**[Programming](posts/lesson1-setup-gauss.qmd)**:
+talking to the computer in words,
+with the shell, Python and Lean, and an AI tutor beside you.
+
+**[Linear algebra](posts/linalg1-same-arrow.qmd)**:
+from change of basis to the singular value decomposition,
+in questions and answers.
+
+Each course's parts are in the menu on the left,
+with Previous and Next links at the foot of every page.
+
 <script async data-uid="af9941ff97" src="https://unique-creator-5551.ck.page/af9941ff97/index.js"></script>
+
+## Recently added

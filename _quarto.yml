@@ -29,10 +29,30 @@ website:
   navbar:
     left:
       - href: index.qmd
-        text: Posts
+        text: Courses
     right:
       - icon: rss
         href: index.xml
+  # Course notes, not a blog (Neal, 2026-11-20): each course is one
+  # section, its parts in course order. Previous / Next follow this
+  # order, and the home page links each course's first part
+  # (tests/test_site.py). A new course is one more section.
+  page-navigation: true
+  sidebar:
+    style: docked
+    contents:
+      - section: "Programming"
+        contents:
+          - posts/lesson1-setup-gauss.qmd
+          - posts/moneymath-how-long.qmd
+          - posts/lesson2-shell-and-hello.qmd
+          - posts/lesson3-functions.qmd
+      - section: "Linear algebra"
+        contents:
+          - posts/linalg1-same-arrow.qmd
+          - posts/linalg2-only-stretches.qmd
+          - posts/linalg3-coordinates-that-measure.qmd
+          - posts/linalg4-svd.qmd
   # The 2023-24 comics: off the home page, one link away (tests/test_site.py).
   page-footer:
     center: "[Archive](/archive/)"
