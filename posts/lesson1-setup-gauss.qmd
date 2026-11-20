@@ -3,6 +3,7 @@ title: "12 sessions: talking to the computer in words"
 subtitle: "Set up, add, and prove"
 date: 2026-10-31
 categories: [lessons, python, lean]
+aliases: ["/programming/index.html"]   # short link: nealcnotes.com/programming/
 # depth 1: the sessions are the map; sections would bury them
 toc-depth: 1
 toc-title: Sessions

@@ -89,6 +89,25 @@ def test_why_the_home_page_only_links_each_course():
             assert f"posts/{later})" not in index, later
 
 
+SHORT_LINK = re.compile(r"^/([a-z]+)/index\.html$")
+
+
+def test_why_each_course_has_a_short_link():
+    """So a course can be shared as nealcnotes.com/trig/ (Neal,
+    2026-11-20): its first part carries one Quarto `aliases:` entry,
+    `/<name>/index.html`, and the build writes a redirect page there.
+    Later parts carry none, so each short link means one course."""
+    names = []
+    for title, parts in courses():
+        aliases = header(SITE / "posts" / parts[0]).get("aliases", [])
+        assert len(aliases) == 1, (title, aliases)
+        assert SHORT_LINK.match(aliases[0]), (title, aliases[0])
+        names.append(aliases[0])
+        for later in parts[1:]:
+            assert "aliases" not in header(SITE / "posts" / later), later
+    assert len(names) == len(set(names)), names
+
+
 def test_why_recently_added_keeps_the_feed():
     """A short "Recently added" listing, newest first, keeps the RSS
     feed (index.xml) alive for anyone subscribed from the blog days."""

@@ -3,6 +3,7 @@ title: "Linear algebra 1: same arrow, new recipe"
 subtitle: "Change of basis, the first step toward SVD"
 date: 2026-11-20
 categories: [math, linear-algebra]
+aliases: ["/linalg/index.html"]   # short link: nealcnotes.com/linalg/
 ---
 
 Cover the right-hand column.

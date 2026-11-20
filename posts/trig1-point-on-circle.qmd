@@ -3,6 +3,7 @@ title: "Trigonometry 1: a point on a circle"
 subtitle: "Radians, sine and cosine, and the other three"
 date: 2026-11-20
 categories: [math, algebra, trigonometry]
+aliases: ["/trig/index.html"]   # short link: nealcnotes.com/trig/
 # Pandoc puts a <p> inside each answer's <summary>; keep "Answer" on
 # the line with its arrow.
 format:
@@ -126,11 +127,11 @@ If that won't stick, remember only "one over".
 
 Click Answer under an exercise to see it.
 
-1. Turn 90° into radians, and π/3 into degrees.
+1. Turn 270° into radians, and 2π/3 into degrees.
 
    <details><summary>Answer</summary>
 
-   π/2; 60°.
+   3π/2; 120°.
 
    </details>
 

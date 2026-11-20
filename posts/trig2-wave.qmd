@@ -53,7 +53,7 @@ viewof walk = Inputs.range([0, 2 * Math.PI],
   const x0 = cx + R + 40;              // where the wave starts
   // one radian is R px on both sides, so the flat walk is the arc's length
   const wx = t => x0 + R * t, wy = t => cy - R * Math.sin(t);
-  const W = x0 + 2 * Math.PI * R + 20, H = 2 * cy;
+  const W = x0 + 2 * Math.PI * R + 20;
   const px = cx + R * Math.cos(walk), py = wy(walk);
   const line = d3.line();
   const ts = (a, b) => d3.range(a, b, 0.02).concat([b]);
@@ -62,7 +62,7 @@ viewof walk = Inputs.range([0, 2 * Math.PI],
   const done = ts(0, walk).map(t => [wx(t), wy(t)]);
   const ticks = [[0, "0"], [Math.PI / 2, "π/2"], [Math.PI, "π"],
                  [3 * Math.PI / 2, "3π/2"], [2 * Math.PI, "2π"]];
-  return htl.svg`<svg viewBox="0 0 ${W} ${H + 20}"
+  return htl.svg`<svg viewBox="0 0 ${W} ${cy + R + 25}"
       style="width:100%;max-width:${W}px;font:13px sans-serif">
     <line x1=${cx - R - 10} y1=${cy} x2=${cx + R + 10} y2=${cy} stroke=${GREY}></line>
     <line x1=${cx} y1=${cy - R - 10} x2=${cx} y2=${cy + R + 10} stroke=${GREY}></line>
@@ -81,8 +81,11 @@ viewof walk = Inputs.range([0, 2 * Math.PI],
           stroke="#999" stroke-dasharray="4 3"></line>
     <circle cx=${px} cy=${py} r="5"></circle>
     <circle cx=${wx(walk)} cy=${py} r="5"></circle>
-    ${ticks.map(([t, s]) => htl.svg`<text x=${wx(t)} y=${H + 12}
-        text-anchor="middle" fill="#555">${s}</text>`)}
+    ${ticks.map(([t, s]) => htl.svg`<g>
+      <line x1=${wx(t)} y1=${cy - 4} x2=${wx(t)} y2=${cy + 4}
+            stroke="#555"></line>
+      <text x=${wx(t)} y=${cy + R + 18}
+            text-anchor="middle" fill="#555">${s}</text></g>`)}
   </svg>`;
 }
 ```
