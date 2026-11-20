@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-11-20">
+
+<title>Linear algebra 3: coordinates that measure – nealcnotes</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../posts/linalg4-svd.html" rel="next">
+<link href="../posts/linalg2-only-stretches.html" rel="prev">
+<link href="../favicon-32x32.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-fcc7a1606f154e4ee54e016228565702.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">nealcnotes</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Courses</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../posts/linalg1-same-arrow.html">Linear algebra</a></li><li class="breadcrumb-item"><a href="../posts/linalg3-coordinates-that-measure.html">Linear algebra 3: coordinates that measure</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Programming</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../posts/lesson1-setup-gauss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">12 sessions: talking to the computer in words</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../posts/moneymath-how-long.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lesson 1.5 (draft): How long will the money last?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../posts/lesson2-shell-and-hello.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lesson 2: loops, drawn and waiting</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../posts/lesson3-functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lesson 3: functions that take more than one thing</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear algebra</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../posts/linalg1-same-arrow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear algebra 1: same arrow, new recipe</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../posts/linalg2-only-stretches.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear algebra 2: the basis where it only stretches</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../posts/linalg3-coordinates-that-measure.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Linear algebra 3: coordinates that measure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../posts/linalg4-svd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear algebra 4: two orthogonal bases</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#a-coordinate-that-depends-on-its-neighbours" id="toc-a-coordinate-that-depends-on-its-neighbours" class="nav-link active" data-scroll-target="#a-coordinate-that-depends-on-its-neighbours">A coordinate that depends on its neighbours</a></li>
+  <li><a href="#shadows" id="toc-shadows" class="nav-link" data-scroll-target="#shadows">Shadows</a></li>
+  <li><a href="#lengths-come-out-right" id="toc-lengths-come-out-right" class="nav-link" data-scroll-target="#lengths-come-out-right">Lengths come out right</a></li>
+  <li><a href="#an-orthonormal-basis-is-a-turned-grid" id="toc-an-orthonormal-basis-is-a-turned-grid" class="nav-link" data-scroll-target="#an-orthonormal-basis-is-a-turned-grid">An orthonormal basis is a turned grid</a></li>
+  <li><a href="#why-as-eigenvectors-are-orthogonal" id="toc-why-as-eigenvectors-are-orthogonal" class="nav-link" data-scroll-target="#why-as-eigenvectors-are-orthogonal">Why A’s eigenvectors are orthogonal</a></li>
+  <li><a href="#keep-only-the-biggest-part" id="toc-keep-only-the-biggest-part" class="nav-link" data-scroll-target="#keep-only-the-biggest-part">Keep only the biggest part</a></li>
+  <li><a href="#in-lay" id="toc-in-lay" class="nav-link" data-scroll-target="#in-lay">In Lay</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../posts/linalg1-same-arrow.html">Linear algebra</a></li><li class="breadcrumb-item"><a href="../posts/linalg3-coordinates-that-measure.html">Linear algebra 3: coordinates that measure</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Linear algebra 3: coordinates that measure</h1>
+<p class="subtitle lead">Change of basis, part 3: A = PDPᵀ</p>
+  <div class="quarto-categories">
+    <div class="quarto-category">math</div>
+    <div class="quarto-category">linear-algebra</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 20, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Cover the right-hand column. Answer each question in your head, then look.</p>
+<p>Part 2 found A’s two eigenvectors:</p>
+<p><span class="math display">\[
+A = \begin{pmatrix} 2 &amp; 1 \\ 1 &amp; 2 \end{pmatrix}\qquad
+v_1 = (1, 1),\ \text{eigenvalue } 3\qquad
+v_2 = (-1, 1),\ \text{eigenvalue } 1
+\]</span></p>
+<p>It ended with a hint: they are perpendicular. This part is about why that matters. In a perpendicular basis, a coordinate stops being a bookkeeping number and becomes a measurement.</p>
+<section id="a-coordinate-that-depends-on-its-neighbours" class="level2">
+<h2 class="anchored" data-anchor-id="a-coordinate-that-depends-on-its-neighbours">A coordinate that depends on its neighbours</h2>
+<p><img src="media/basis3-puzzle.png" class="img-fluid"></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 54%">
+<col style="width: 45%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Both pictures have the same x = (6, 4) and the same b₁ = (4, 1). What changed?</td>
+<td style="text-align: left;">Only b₂: (−6, 1) on the left, (0, 1) on the right.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">How much b₁ is in x, on the left?</td>
+<td style="text-align: left;">3, part 1’s coordinates: x = 3b₁ + b₂.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">And on the right?</td>
+<td style="text-align: left;">1.5: 1.5·(4, 1) + 2.5·(0, 1) = (6, 4).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">b₁ didn’t move. Why did its coordinate change?</td>
+<td style="text-align: left;">Coordinates are found together, by solving a·b₁ + b·b₂ = x. Move b₂, and a must change to make up for it.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">So is “how much b₁ is in x” a question about x and b₁?</td>
+<td style="text-align: left;">No.&nbsp;It’s a question about the whole basis.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Can a coordinate depend only on x and its own direction?</td>
+<td style="text-align: left;">Yes, when the basis vectors are perpendicular.</td>
+</tr>
+</tbody>
+</table>
+<p>Solving like this is how Lay finds coordinates in 4.4, Example 4: b₁ = (2, 1), b₂ = (−1, 1), x = (4, 5); 2a − b = 4 and a + b = 5 give <span class="math inline">\([x]_B = (3, 2)\)</span>. Those b’s aren’t perpendicular, so solving was the only way.</p>
+</section>
+<section id="shadows" class="level2">
+<h2 class="anchored" data-anchor-id="shadows">Shadows</h2>
+<p><img src="media/basis3-shadows.png" class="img-fluid"></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 54%">
+<col style="width: 45%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Take x = (2, 0). Drop a line from x’s tip straight onto v₁’s line, at a right angle. Where does it land?</td>
+<td style="text-align: left;">At (1, 1). That is 1·v₁.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">And straight onto v₂’s line?</td>
+<td style="text-align: left;">At (1, −1). That is −1·v₂.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Are (1, −1) x’s coordinates in v’s?</td>
+<td style="text-align: left;">Yes: 1·(1, 1) − 1·(−1, 1) = (2, 0).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Why did dropping a line work?</td>
+<td style="text-align: left;">x is made of some v₁ and some v₂. The v₂ part is perpendicular to v₁’s line, so it adds nothing there.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">What is that landing point called?</td>
+<td style="text-align: left;">x’s <strong>shadow</strong> on the line.</td>
+</tr>
+</tbody>
+</table>
+<p>The shadow is a picture. Here are the official words, the ones Lay uses (6.1–6.2):</p>
+<ul>
+<li>the shadow is the <strong>orthogonal projection</strong> of x onto v₁’s line;</li>
+<li><strong>orthogonal</strong> is the mathematician’s word for perpendicular.</li>
+</ul>
+<p>From here on, we say projection and orthogonal.</p>
+<p>To find a projection without drawing, use the <strong>dot product</strong> (Lay also calls it the <strong>inner product</strong>): multiply matching numbers and add.</p>
+<p><span class="math display">\[
+x \cdot v = x_1 v_1 + x_2 v_2
+\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 54%">
+<col style="width: 45%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">What is x·v₁?</td>
+<td style="text-align: left;">(2, 0)·(1, 1) = 2·1 + 0·1 = 2.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">And v₁·v₁?</td>
+<td style="text-align: left;">1 + 1 = 2.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">How much v₁ is in x?</td>
+<td style="text-align: left;">x·v₁ divided by v₁·v₁: 2/2 = 1.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">And how much v₂?</td>
+<td style="text-align: left;">x·v₂ = −2, v₂·v₂ = 2, so −1.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">What does a dot product of 0 mean?</td>
+<td style="text-align: left;">Orthogonal: the projection lands at 0. Check v₁·v₂ = −1 + 1 = 0.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The Law of Measurement
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When the basis is orthogonal, each coordinate is a measurement of x along one direction: (x·v) / (v·v). It depends on x and v, and on nothing else.</p>
+</div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 54%">
+<col style="width: 45%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">So what is x’s coordinate along v₁ now?</td>
+<td style="text-align: left;">A measurement: how far x reaches along v₁. v₂ never comes into it.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Is it quicker, too?</td>
+<td style="text-align: left;">One dot product per coordinate, no equations. The speed comes from the independence.</td>
+</tr>
+</tbody>
+</table>
+<p>Now try it yourself. The faint path walks x’s coordinates: so much v₁, then so much v₂. The ring is x’s coordinate along v₁; the dot is its projection onto v₁. Drag the tip of x: while v₁ and v₂ are orthogonal, ring and dot stay together. Then tilt v₂: the ring slides away, and the dot stays put.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="101" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 100;"><span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>V1C <span class="op">=</span> <span class="st">"#7570b3"</span>   <span class="co">// v₁ and its projection (purple)</span></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>V2C <span class="op">=</span> <span class="st">"#d95f02"</span>   <span class="co">// v₂ and its projection (orange)</span></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>dot <span class="op">=</span> (a<span class="op">,</span> b) <span class="kw">=&gt;</span> a[<span class="dv">0</span>] <span class="op">*</span> b[<span class="dv">0</span>] <span class="op">+</span> a[<span class="dv">1</span>] <span class="op">*</span> b[<span class="dv">1</span>]</span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>viewof sh <span class="op">=</span> {</span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> X0 <span class="op">=</span> <span class="op">-</span><span class="dv">4</span><span class="op">,</span> X1 <span class="op">=</span> <span class="dv">5</span><span class="op">,</span> Y0 <span class="op">=</span> <span class="op">-</span><span class="dv">4</span><span class="op">,</span> Y1 <span class="op">=</span> <span class="dv">4</span><span class="op">,</span> S <span class="op">=</span> <span class="dv">44</span><span class="op">;</span>       <span class="co">// S px per unit</span></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> W <span class="op">=</span> (X1 <span class="op">-</span> X0) <span class="op">*</span> S<span class="op">,</span> H <span class="op">=</span> (Y1 <span class="op">-</span> Y0) <span class="op">*</span> S<span class="op">;</span></span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> px <span class="op">=</span> p <span class="kw">=&gt;</span> [(p[<span class="dv">0</span>] <span class="op">-</span> X0) <span class="op">*</span> S<span class="op">,</span> (Y1 <span class="op">-</span> p[<span class="dv">1</span>]) <span class="op">*</span> S]<span class="op">;</span></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> fromPx <span class="op">=</span> (u<span class="op">,</span> w) <span class="kw">=&gt;</span> [<span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(u <span class="op">/</span> S <span class="op">+</span> X0)<span class="op">,</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(Y1 <span class="op">-</span> w <span class="op">/</span> S)]<span class="op">;</span></span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> v1 <span class="op">=</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">;</span></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> state <span class="op">=</span> {<span class="dt">x</span><span class="op">:</span> [<span class="dv">2</span><span class="op">,</span> <span class="dv">0</span>]<span class="op">,</span> <span class="dt">v2</span><span class="op">:</span> [<span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">1</span>]}<span class="op">;</span></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> svg <span class="op">=</span> d3<span class="op">.</span><span class="fu">create</span>(<span class="st">"svg"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"viewBox"</span><span class="op">,</span> <span class="vs">`0 0 </span><span class="sc">${</span>W<span class="sc">}</span><span class="vs"> </span><span class="sc">${</span>H<span class="sc">}</span><span class="vs">`</span>)</span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"width"</span><span class="op">,</span> <span class="st">"100%"</span>)<span class="op">.</span><span class="fu">style</span>(<span class="st">"max-width"</span><span class="op">,</span> <span class="vs">`</span><span class="sc">${</span>W<span class="sc">}</span><span class="vs">px`</span>)</span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"touch-action"</span><span class="op">,</span> <span class="st">"none"</span>)<span class="op">;</span></span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> defs <span class="op">=</span> svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"defs"</span>)<span class="op">;</span></span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">const</span> [id<span class="op">,</span> color] <span class="kw">of</span> [[<span class="st">"s3a"</span><span class="op">,</span> V1C]<span class="op">,</span> [<span class="st">"s3b"</span><span class="op">,</span> V2C]<span class="op">,</span> [<span class="st">"s3x"</span><span class="op">,</span> <span class="st">"black"</span>]])</span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>    defs<span class="op">.</span><span class="fu">append</span>(<span class="st">"marker"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"id"</span><span class="op">,</span> id)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"viewBox"</span><span class="op">,</span> <span class="st">"0 0 10 10"</span>)</span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"refX"</span><span class="op">,</span> <span class="dv">9</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"refY"</span><span class="op">,</span> <span class="dv">5</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"markerWidth"</span><span class="op">,</span> <span class="dv">5</span>)</span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"markerHeight"</span><span class="op">,</span> <span class="dv">5</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"orient"</span><span class="op">,</span> <span class="st">"auto"</span>)</span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">append</span>(<span class="st">"path"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"d"</span><span class="op">,</span> <span class="st">"M0,0L10,5L0,10z"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> color)<span class="op">;</span></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> g <span class="op">=</span> svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"g"</span>)<span class="op">;</span></span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> node <span class="op">=</span> svg<span class="op">.</span><span class="fu">node</span>()<span class="op">;</span></span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> <span class="fu">seg</span>(p<span class="op">,</span> q<span class="op">,</span> color<span class="op">,</span> width<span class="op">,</span> opts <span class="op">=</span> {}) {</span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> [a<span class="op">,</span> b] <span class="op">=</span> [<span class="fu">px</span>(p)<span class="op">,</span> <span class="fu">px</span>(q)]<span class="op">;</span></span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> l <span class="op">=</span> g<span class="op">.</span><span class="fu">append</span>(<span class="st">"line"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"x1"</span><span class="op">,</span> a[<span class="dv">0</span>])<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y1"</span><span class="op">,</span> a[<span class="dv">1</span>])</span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x2"</span><span class="op">,</span> b[<span class="dv">0</span>])<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y2"</span><span class="op">,</span> b[<span class="dv">1</span>])<span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> color)</span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-width"</span><span class="op">,</span> width)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-opacity"</span><span class="op">,</span> opts<span class="op">.</span><span class="at">opacity</span> <span class="op">??</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (opts<span class="op">.</span><span class="at">tip</span>) l<span class="op">.</span><span class="fu">attr</span>(<span class="st">"marker-end"</span><span class="op">,</span> <span class="vs">`url(#</span><span class="sc">${</span>opts<span class="op">.</span><span class="at">tip</span><span class="sc">}</span><span class="vs">)`</span>)<span class="op">;</span></span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (opts<span class="op">.</span><span class="at">dash</span>) l<span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-dasharray"</span><span class="op">,</span> <span class="st">"5,4"</span>)<span class="op">;</span></span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> <span class="fu">dotAt</span>(p<span class="op">,</span> color<span class="op">,</span> r <span class="op">=</span> <span class="dv">6</span><span class="op">,</span> handle <span class="op">=</span> <span class="kw">false</span>) {</span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> [a<span class="op">,</span> b] <span class="op">=</span> <span class="fu">px</span>(p)<span class="op">;</span></span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>    g<span class="op">.</span><span class="fu">append</span>(<span class="st">"circle"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"cx"</span><span class="op">,</span> a)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"cy"</span><span class="op">,</span> b)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"r"</span><span class="op">,</span> r)</span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> color)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill-opacity"</span><span class="op">,</span> handle <span class="op">?</span> <span class="fl">0.3</span> <span class="op">:</span> <span class="dv">1</span>)</span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">style</span>(<span class="st">"cursor"</span><span class="op">,</span> handle <span class="op">?</span> <span class="st">"grab"</span> <span class="op">:</span> <span class="kw">null</span>)<span class="op">;</span></span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> <span class="fu">label</span>(p<span class="op">,</span> text<span class="op">,</span> color) {</span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> [a<span class="op">,</span> b] <span class="op">=</span> <span class="fu">px</span>(p)<span class="op">;</span></span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>    g<span class="op">.</span><span class="fu">append</span>(<span class="st">"text"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"x"</span><span class="op">,</span> a <span class="op">+</span> <span class="dv">9</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y"</span><span class="op">,</span> b <span class="op">-</span> <span class="dv">9</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> color)</span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"font-size"</span><span class="op">,</span> <span class="dv">17</span>)<span class="op">.</span><span class="fu">text</span>(text)<span class="op">;</span></span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> <span class="fu">draw</span>() {</span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>    g<span class="op">.</span><span class="fu">selectAll</span>(<span class="st">"*"</span>)<span class="op">.</span><span class="fu">remove</span>()<span class="op">;</span></span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">let</span> k <span class="op">=</span> X0<span class="op">;</span> k <span class="op">&lt;=</span> X1<span class="op">;</span> k<span class="op">++</span>) <span class="fu">seg</span>([k<span class="op">,</span> Y0]<span class="op">,</span> [k<span class="op">,</span> Y1]<span class="op">,</span> <span class="st">"#999"</span><span class="op">,</span> <span class="fl">0.7</span><span class="op">,</span> {<span class="dt">opacity</span><span class="op">:</span> <span class="fl">0.2</span>})<span class="op">;</span></span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">let</span> k <span class="op">=</span> Y0<span class="op">;</span> k <span class="op">&lt;=</span> Y1<span class="op">;</span> k<span class="op">++</span>) <span class="fu">seg</span>([X0<span class="op">,</span> k]<span class="op">,</span> [X1<span class="op">,</span> k]<span class="op">,</span> <span class="st">"#999"</span><span class="op">,</span> <span class="fl">0.7</span><span class="op">,</span> {<span class="dt">opacity</span><span class="op">:</span> <span class="fl">0.2</span>})<span class="op">;</span></span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> {x<span class="op">,</span> v2} <span class="op">=</span> state<span class="op">;</span></span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">const</span> [v<span class="op">,</span> c] <span class="kw">of</span> [[v1<span class="op">,</span> V1C]<span class="op">,</span> [v2<span class="op">,</span> V2C]])</span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a>      <span class="fu">seg</span>([<span class="op">-</span><span class="dv">20</span> <span class="op">*</span> v[<span class="dv">0</span>]<span class="op">,</span> <span class="op">-</span><span class="dv">20</span> <span class="op">*</span> v[<span class="dv">1</span>]]<span class="op">,</span> [<span class="dv">20</span> <span class="op">*</span> v[<span class="dv">0</span>]<span class="op">,</span> <span class="dv">20</span> <span class="op">*</span> v[<span class="dv">1</span>]]<span class="op">,</span> c<span class="op">,</span> <span class="fl">1.5</span><span class="op">,</span> {<span class="dt">opacity</span><span class="op">:</span> <span class="fl">0.35</span>})<span class="op">;</span></span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>    <span class="co">// the coordinate: walk a of v1, then b of v2, to x (as in part 1)</span></span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> det <span class="op">=</span> v1[<span class="dv">0</span>] <span class="op">*</span> v2[<span class="dv">1</span>] <span class="op">-</span> v2[<span class="dv">0</span>] <span class="op">*</span> v1[<span class="dv">1</span>]<span class="op">;</span></span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> a <span class="op">=</span> (x[<span class="dv">0</span>] <span class="op">*</span> v2[<span class="dv">1</span>] <span class="op">-</span> v2[<span class="dv">0</span>] <span class="op">*</span> x[<span class="dv">1</span>]) <span class="op">/</span> det<span class="op">;</span></span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> b <span class="op">=</span> (v1[<span class="dv">0</span>] <span class="op">*</span> x[<span class="dv">1</span>] <span class="op">-</span> x[<span class="dv">0</span>] <span class="op">*</span> v1[<span class="dv">1</span>]) <span class="op">/</span> det<span class="op">;</span></span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> mid <span class="op">=</span> [a <span class="op">*</span> v1[<span class="dv">0</span>]<span class="op">,</span> a <span class="op">*</span> v1[<span class="dv">1</span>]]<span class="op">;</span></span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a>    <span class="fu">seg</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span>]<span class="op">,</span> mid<span class="op">,</span> V1C<span class="op">,</span> <span class="dv">3</span><span class="op">,</span> {<span class="dt">opacity</span><span class="op">:</span> <span class="fl">0.5</span>})<span class="op">;</span></span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>    <span class="fu">seg</span>(mid<span class="op">,</span> x<span class="op">,</span> V2C<span class="op">,</span> <span class="dv">3</span><span class="op">,</span> {<span class="dt">opacity</span><span class="op">:</span> <span class="fl">0.5</span>})<span class="op">;</span></span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a>    <span class="co">// the projection: drop straight from x onto v1's line</span></span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> t <span class="op">=</span> <span class="fu">dot</span>(x<span class="op">,</span> v1) <span class="op">/</span> <span class="fu">dot</span>(v1<span class="op">,</span> v1)<span class="op">,</span> foot <span class="op">=</span> [t <span class="op">*</span> v1[<span class="dv">0</span>]<span class="op">,</span> t <span class="op">*</span> v1[<span class="dv">1</span>]]<span class="op">;</span></span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a>    <span class="fu">seg</span>(x<span class="op">,</span> foot<span class="op">,</span> <span class="st">"#666"</span><span class="op">,</span> <span class="fl">1.2</span><span class="op">,</span> {<span class="dt">dash</span><span class="op">:</span> <span class="kw">true</span>})<span class="op">;</span></span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dotAt</span>(foot<span class="op">,</span> V1C)<span class="op">;</span></span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> [ma<span class="op">,</span> mb] <span class="op">=</span> <span class="fu">px</span>(mid)<span class="op">;</span>                      <span class="co">// ring: the coordinate</span></span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>    g<span class="op">.</span><span class="fu">append</span>(<span class="st">"circle"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"cx"</span><span class="op">,</span> ma)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"cy"</span><span class="op">,</span> mb)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"r"</span><span class="op">,</span> <span class="dv">9</span>)</span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> <span class="st">"none"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> V1C)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-width"</span><span class="op">,</span> <span class="fl">2.5</span>)<span class="op">;</span></span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>    <span class="fu">seg</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span>]<span class="op">,</span> x<span class="op">,</span> <span class="st">"black"</span><span class="op">,</span> <span class="fl">3.5</span><span class="op">,</span> {<span class="dt">tip</span><span class="op">:</span> <span class="st">"s3x"</span>})<span class="op">;</span></span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a>    <span class="fu">seg</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span>]<span class="op">,</span> v1<span class="op">,</span> V1C<span class="op">,</span> <span class="fl">4.5</span><span class="op">,</span> {<span class="dt">tip</span><span class="op">:</span> <span class="st">"s3a"</span>})<span class="op">;</span></span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>    <span class="fu">seg</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span>]<span class="op">,</span> v2<span class="op">,</span> V2C<span class="op">,</span> <span class="fl">4.5</span><span class="op">,</span> {<span class="dt">tip</span><span class="op">:</span> <span class="st">"s3b"</span>})<span class="op">;</span></span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dotAt</span>(x<span class="op">,</span> <span class="st">"black"</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span> <span class="fu">dotAt</span>(v2<span class="op">,</span> V2C<span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span></span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a>    <span class="fu">label</span>(x<span class="op">,</span> <span class="st">"x"</span><span class="op">,</span> <span class="st">"black"</span>)<span class="op">;</span> <span class="fu">label</span>(v1<span class="op">,</span> <span class="st">"v₁"</span><span class="op">,</span> V1C)<span class="op">;</span> <span class="fu">label</span>(v2<span class="op">,</span> <span class="st">"v₂"</span><span class="op">,</span> V2C)<span class="op">;</span></span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a>    node<span class="op">.</span><span class="at">value</span> <span class="op">=</span> {<span class="dt">x</span><span class="op">:</span> [<span class="op">...</span>x]<span class="op">,</span> <span class="dt">v2</span><span class="op">:</span> [<span class="op">...</span>v2]}<span class="op">;</span></span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a>    node<span class="op">.</span><span class="fu">dispatchEvent</span>(<span class="kw">new</span> <span class="bu">Event</span>(<span class="st">"input"</span><span class="op">,</span> {<span class="dt">bubbles</span><span class="op">:</span> <span class="kw">true</span>}))<span class="op">;</span></span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> dragging <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> local <span class="op">=</span> e <span class="kw">=&gt;</span> {</span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> r <span class="op">=</span> node<span class="op">.</span><span class="fu">getBoundingClientRect</span>()<span class="op">;</span></span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [(e<span class="op">.</span><span class="at">clientX</span> <span class="op">-</span> r<span class="op">.</span><span class="at">left</span>) <span class="op">*</span> W <span class="op">/</span> r<span class="op">.</span><span class="at">width</span><span class="op">,</span> (e<span class="op">.</span><span class="at">clientY</span> <span class="op">-</span> r<span class="op">.</span><span class="at">top</span>) <span class="op">*</span> H <span class="op">/</span> r<span class="op">.</span><span class="at">height</span>]<span class="op">;</span></span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>  node<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">"pointerdown"</span><span class="op">,</span> e <span class="kw">=&gt;</span> {</span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> [u<span class="op">,</span> w] <span class="op">=</span> <span class="fu">local</span>(e)<span class="op">;</span></span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> dist <span class="op">=</span> k <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">hypot</span>(<span class="fu">px</span>(state[k])[<span class="dv">0</span>] <span class="op">-</span> u<span class="op">,</span> <span class="fu">px</span>(state[k])[<span class="dv">1</span>] <span class="op">-</span> w)<span class="op">;</span></span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> k <span class="op">=</span> <span class="fu">dist</span>(<span class="st">"x"</span>) <span class="op">&lt;</span> <span class="fu">dist</span>(<span class="st">"v2"</span>) <span class="op">?</span> <span class="st">"x"</span> <span class="op">:</span> <span class="st">"v2"</span><span class="op">;</span></span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">dist</span>(k) <span class="op">&lt;</span> <span class="dv">26</span>) { dragging <span class="op">=</span> k<span class="op">;</span> node<span class="op">.</span><span class="fu">setPointerCapture</span>(e<span class="op">.</span><span class="at">pointerId</span>)<span class="op">;</span> }</span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a>  node<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">"pointermove"</span><span class="op">,</span> e <span class="kw">=&gt;</span> {</span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span>dragging) <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> p <span class="op">=</span> <span class="fu">fromPx</span>(<span class="op">...</span><span class="fu">local</span>(e))<span class="op">;</span></span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (p[<span class="dv">0</span>] <span class="op">===</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> p[<span class="dv">1</span>] <span class="op">===</span> <span class="dv">0</span>) <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (dragging <span class="op">===</span> <span class="st">"v2"</span> <span class="op">&amp;&amp;</span> p[<span class="dv">0</span>] <span class="op">*</span> v1[<span class="dv">1</span>] <span class="op">-</span> p[<span class="dv">1</span>] <span class="op">*</span> v1[<span class="dv">0</span>] <span class="op">===</span> <span class="dv">0</span>) <span class="cf">return</span><span class="op">;</span> <span class="co">// not along v₁</span></span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (p[<span class="dv">0</span>] <span class="op">!==</span> state[dragging][<span class="dv">0</span>] <span class="op">||</span> p[<span class="dv">1</span>] <span class="op">!==</span> state[dragging][<span class="dv">1</span>]) {</span>
+<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a>      state[dragging] <span class="op">=</span> p<span class="op">;</span> <span class="fu">draw</span>()<span class="op">;</span></span>
+<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a>  node<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">"pointerup"</span><span class="op">,</span> () <span class="kw">=&gt;</span> { dragging <span class="op">=</span> <span class="kw">null</span><span class="op">;</span> })<span class="op">;</span></span>
+<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a>  <span class="fu">draw</span>()<span class="op">;</span></span>
+<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> node<span class="op">;</span></span>
+<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="198" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 197;"><span id="cb2-198"><a href="#cb2-198" aria-hidden="true" tabindex="-1"></a><span class="co">// x's coordinate along v1 (solved with v2) beside its projection</span></span>
+<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a><span class="co">// measurement (x.v1)/(v1.v1), which never looks at v2.</span></span>
+<span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> v1 <span class="op">=</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> {x<span class="op">,</span> v2} <span class="op">=</span> sh<span class="op">;</span></span>
+<span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> det <span class="op">=</span> v1[<span class="dv">0</span>] <span class="op">*</span> v2[<span class="dv">1</span>] <span class="op">-</span> v2[<span class="dv">0</span>] <span class="op">*</span> v1[<span class="dv">1</span>]<span class="op">;</span></span>
+<span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> a <span class="op">=</span> (x[<span class="dv">0</span>] <span class="op">*</span> v2[<span class="dv">1</span>] <span class="op">-</span> v2[<span class="dv">0</span>] <span class="op">*</span> x[<span class="dv">1</span>]) <span class="op">/</span> det<span class="op">;</span></span>
+<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> s1 <span class="op">=</span> <span class="fu">dot</span>(x<span class="op">,</span> v1) <span class="op">/</span> <span class="fu">dot</span>(v1<span class="op">,</span> v1)<span class="op">;</span></span>
+<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> f <span class="op">=</span> n <span class="kw">=&gt;</span> (<span class="bu">Number</span><span class="op">.</span><span class="fu">isInteger</span>(n) <span class="op">?</span> <span class="vs">`</span><span class="sc">${</span>n<span class="sc">}</span><span class="vs">`</span> <span class="op">:</span> n<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>))<span class="op">.</span><span class="fu">replace</span>(<span class="st">"-"</span><span class="op">,</span> <span class="st">"−"</span>)<span class="op">;</span></span>
+<span id="cb2-206"><a href="#cb2-206" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> perp <span class="op">=</span> <span class="fu">dot</span>(v1<span class="op">,</span> v2) <span class="op">===</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">html</span><span class="vs">`&lt;div style="font-size:1.15em; font-family:monospace"&gt;</span></span>
+<span id="cb2-208"><a href="#cb2-208" aria-hidden="true" tabindex="-1"></a><span class="vs">    v₁·v₂ = </span><span class="sc">${</span><span class="fu">f</span>(<span class="fu">dot</span>(v1<span class="op">,</span> v2))<span class="sc">}</span><span class="vs">&lt;br&gt;</span></span>
+<span id="cb2-209"><a href="#cb2-209" aria-hidden="true" tabindex="-1"></a><span class="vs">    coordinate along v₁, the ring (solved, uses v₂): &lt;span style="color:</span><span class="sc">${</span>V1C<span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span><span class="fu">f</span>(a)<span class="sc">}</span><span class="vs">&lt;/span&gt;&lt;br&gt;</span></span>
+<span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a><span class="vs">    projection onto v₁, the dot (x and v₁ only): &amp;nbsp;&lt;span style="color:</span><span class="sc">${</span>V1C<span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span><span class="fu">f</span>(s1)<span class="sc">}</span><span class="vs">&lt;/span&gt;&lt;/div&gt;</span></span>
+<span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;p&gt;</span><span class="sc">${</span>perp</span>
+<span id="cb2-212"><a href="#cb2-212" aria-hidden="true" tabindex="-1"></a>      <span class="op">?</span> <span class="fu">html</span><span class="vs">`&lt;b&gt;Orthogonal:&lt;/b&gt; the coordinate is the measurement.`</span></span>
+<span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a>      <span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(a <span class="op">-</span> s1) <span class="op">&lt;</span> <span class="fl">1e-9</span></span>
+<span id="cb2-214"><a href="#cb2-214" aria-hidden="true" tabindex="-1"></a>        <span class="op">?</span> <span class="st">"Not orthogonal, but this x happens to agree. Move x."</span></span>
+<span id="cb2-215"><a href="#cb2-215" aria-hidden="true" tabindex="-1"></a>        <span class="op">:</span> <span class="fu">html</span><span class="vs">`&lt;b&gt;Not orthogonal:&lt;/b&gt; the ring moved with v₂; the dot didn't.`</span><span class="sc">}</span><span class="vs">&lt;/p&gt;`</span><span class="op">;</span></span>
+<span id="cb2-216"><a href="#cb2-216" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<p>Lay writes the projection itself, the point where the dropped line lands, with a hat:</p>
+<p><span class="math display">\[
+\hat x = \frac{x\cdot v}{v\cdot v}\,v
+\]</span></p>
+<p>the coordinate times the vector. Try his 6.2, Example 3, with x = (7, 6) and v = (4, 2).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 54%">
+<col style="width: 45%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">What is x·v?</td>
+<td style="text-align: left;">7·4 + 6·2 = 40.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">And v·v?</td>
+<td style="text-align: left;">16 + 4 = 20. So the coordinate along v is 2.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">What is x̂?</td>
+<td style="text-align: left;">2v = (8, 4).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">How far is x from v’s line?</td>
+<td style="text-align: left;">x − x̂ = (−1, 2), of length √(1 + 4) = √5. That is his Example 4.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="lengths-come-out-right" class="level2">
+<h2 class="anchored" data-anchor-id="lengths-come-out-right">Lengths come out right</h2>
+<p>A measurement should also get lengths right. Does a coordinate?</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 54%">
+<col style="width: 45%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">In part 1’s basis, x = (6, 4) has coordinates (3, 1). What is 3² + 1²?</td>
+<td style="text-align: left;">10.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">What is x’s length squared, 6² + 4²?</td>
+<td style="text-align: left;">52. Those coordinates don’t know how long x is.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">In our v’s, x = (2, 0) has coordinates (1, −1). What is 1² + (−1)²?</td>
+<td style="text-align: left;">2. But x’s length squared is 4. Closer, still wrong.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Why?</td>
+<td style="text-align: left;">Each v has length √2, not 1. A coordinate counts v’s, and each v is longer than a unit.</td>
+</tr>
+</tbody>
+</table>
+<p>So make each basis vector length 1. Dividing each v by its <strong>length</strong>, which Lay writes ‖v‖ = √(v·v) (6.1), here √2, is called <strong>normalizing</strong>; the result is a <strong>unit vector</strong>. Call them u₁ and u₂. Orthogonal and of length 1, they are <strong>orthonormal</strong>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 54%">
+<col style="width: 45%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">What are x’s coordinates in u’s?</td>
+<td style="text-align: left;">Measure: x·u₁ = 2/√2 = √2, and x·u₂ = −2/√2 = −√2. No dividing by u·u, which is 1.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">What is (√2)² + (−√2)²?</td>
+<td style="text-align: left;">2 + 2 = 4. x’s length squared, at last.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Is that luck?</td>
+<td style="text-align: left;">No.&nbsp;It is Pythagoras: x is √2 of u₁ plus −√2 of u₂, at a right angle.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Do angles come out right too?</td>
+<td style="text-align: left;">Yes. Dot products of coordinates equal dot products of the arrows, and angles come from dot products.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The Law of Length
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In an orthonormal basis, ‖x‖² is the sum of the squares of x’s coordinates. Lengths and angles read off the coordinates are the true ones.</p>
+</div>
+</div>
+</section>
+<section id="an-orthonormal-basis-is-a-turned-grid" class="level2">
+<h2 class="anchored" data-anchor-id="an-orthonormal-basis-is-a-turned-grid">An orthonormal basis is a turned grid</h2>
+<p>Put u₁ and u₂ in a matrix as columns. Lay keeps the name P, as in part 2; the difference is that its columns now have length 1:</p>
+<p><span class="math display">\[
+P = \frac{1}{\sqrt2}\begin{pmatrix} {\color{#7570B3}1} &amp; {\color{#D95F02}-1} \\ {\color{#7570B3}1} &amp; {\color{#D95F02}1} \end{pmatrix}\qquad
+P^{\mathsf T} = \frac{1}{\sqrt2}\begin{pmatrix} {\color{#7570B3}1} &amp; {\color{#7570B3}1} \\ {\color{#D95F02}-1} &amp; {\color{#D95F02}1} \end{pmatrix}
+\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 54%">
+<col style="width: 45%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">What is Pᵀ?</td>
+<td style="text-align: left;">P’s columns laid down as rows. Say “P transpose”.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">What does Pᵀ do to x?</td>
+<td style="text-align: left;">Each row is a u, so each entry is a measurement x·u: x’s coordinates in u’s.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">So what undoes P?</td>
+<td style="text-align: left;">Pᵀ. In part 2, P⁻¹ had to be worked out; here it is P read sideways.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Look back at part 2’s P⁻¹, (½ ½; −½ ½). What was it?</td>
+<td style="text-align: left;">The v’s as rows, halved: the measurements, divided by v·v = 2.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">What does P do to the page?</td>
+<td style="text-align: left;">Turns it by 45°: it sends (1, 0) to u₁. Pᵀ turns it back.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">What does a turn keep?</td>
+<td style="text-align: left;">More than any other change of basis: eigenvalues and area, as every change of basis does (part 2), and lengths and angles too.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">What does Lay call such a P?</td>
+<td style="text-align: left;">An <strong>orthogonal matrix</strong>: square, orthonormal columns, P⁻¹ = Pᵀ. In 6.2 he names one U.</td>
+</tr>
+</tbody>
+</table>
+<p>Part 2’s three steps become turn back, stretch, turn:</p>
+<p><span class="math display">\[
+A = P\,D\,P^{\mathsf T}\qquad
+D = \begin{pmatrix} 3 &amp; 0 \\ 0 &amp; 1 \end{pmatrix}
+\]</span></p>
+<p><img src="media/basis3-turn-stretch-turn.png" class="img-fluid"></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 54%">
+<col style="width: 45%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">In the second picture, where are u₁ and u₂?</td>
+<td style="text-align: left;">Along the usual grid. Pᵀ turned them there.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">What does D do to the circle?</td>
+<td style="text-align: left;">Stretches it three times wider, along u₁.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">And the last step?</td>
+<td style="text-align: left;">P turns everything back. x lands at (4, 2), as in part 2.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The Law of the Turn
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An orthonormal basis is the usual grid, turned. A = P D Pᵀ: turn back, stretch, turn. A symmetric matrix is a pure stretch along perpendicular axes.</p>
+</div>
+</div>
+</section>
+<section id="why-as-eigenvectors-are-orthogonal" class="level2">
+<h2 class="anchored" data-anchor-id="why-as-eigenvectors-are-orthogonal">Why A’s eigenvectors are orthogonal</h2>
+<p>A is <strong>symmetric</strong>: flip it across its diagonal and it is unchanged. The 1 above the diagonal matches the 1 below it.</p>
+<p>We’ll work out one number, (Av₁)·v₂, in two ways.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 54%">
+<col style="width: 45%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">First way: A stretches v₁ by 3. So what is (Av₁)·v₂?</td>
+<td style="text-align: left;">3(v₁·v₂).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Second way: move A across the dot, onto v₂. Is (Av₁)·v₂ the same as v₁·(Av₂)?</td>
+<td style="text-align: left;">For symmetric A, yes. That’s the one fact we need; it’s checked below.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A stretches v₂ by 1. So what is v₁·(Av₂)?</td>
+<td style="text-align: left;">1(v₁·v₂).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Both ways give the same number. So 3(v₁·v₂) = v₁·v₂. Which number is three times itself?</td>
+<td style="text-align: left;">Only 0. So v₁·v₂ = 0: orthogonal.</td>
+</tr>
+</tbody>
+</table>
+<p>Why can A move across the dot? Write out both sides for any v and w:</p>
+<p><span class="math display">\[
+\begin{aligned}
+(Av)\cdot w &amp;= (2v_1 + {\color{#D95F02}1}v_2)\,w_1 + ({\color{#D95F02}1}v_1 + 2v_2)\,w_2\\
+v\cdot(Aw) &amp;= v_1\,(2w_1 + {\color{#D95F02}1}w_2) + v_2\,({\color{#D95F02}1}w_1 + 2w_2)
+\end{aligned}
+\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 54%">
+<col style="width: 45%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Multiply out. Which terms does each line have?</td>
+<td style="text-align: left;">Both have 2v₁w₁, 2v₂w₂, v₂w₁ and v₁w₂. Equal.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Which number did that rely on?</td>
+<td style="text-align: left;">The two orange 1s being the same: A’s symmetry.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">What if A were part 4’s matrix (3 0; 4 5)?</td>
+<td style="text-align: left;">Its corners differ (0 and 4), the two sides differ, and its eigenvectors aren’t orthogonal.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The Law of Symmetry
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A symmetric matrix can move across a dot product. So its eigenvectors, with different eigenvalues, are orthogonal.</p>
+</div>
+</div>
+<p>To check your understanding, here is Lay’s 7.1, Example 4:</p>
+<p><span class="math display">\[
+\begin{pmatrix} 7 &amp; 2 \\ 2 &amp; 4 \end{pmatrix}
+\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 54%">
+<col style="width: 45%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Is it symmetric?</td>
+<td style="text-align: left;">Yes: the 2 above the diagonal matches the 2 below it.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Where does it send (2, 1)? And (−1, 2)?</td>
+<td style="text-align: left;">To (16, 8) = 8·(2, 1), and to (−3, 6) = 3·(−1, 2). Eigenvectors, with eigenvalues 8 and 3.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Are they orthogonal?</td>
+<td style="text-align: left;">(2, 1)·(−1, 2) = −2 + 2 = 0. Yes, as the Law says.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="keep-only-the-biggest-part" class="level2">
+<h2 class="anchored" data-anchor-id="keep-only-the-biggest-part">Keep only the biggest part</h2>
+<p>A measurement lets us do one more thing: throw coordinates away. Back to part 1’s x = (6, 4), and keep only what lies along b₁ = (4, 1).</p>
+<p><img src="media/basis3-keep-one.png" class="img-fluid"></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 54%">
+<col style="width: 45%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">In part 1’s basis, x’s b₁ part is 3b₁. Where is it?</td>
+<td style="text-align: left;">(12, 3), about 6.1 from x. Far off.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Now take x’s projection onto b₁’s line instead. Where is it?</td>
+<td style="text-align: left;">(28/17)·(4, 1), about (6.6, 1.6): about 2.4 from x.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Is any point on that line closer to x?</td>
+<td style="text-align: left;">No.&nbsp;The dashed line meets it at a right angle, so the projection is the nearest point.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Which basis keeps exactly that point?</td>
+<td style="text-align: left;">An orthonormal one with u₁ along b₁. Its first coordinate is a measurement, so keeping it alone is as close as that direction can get.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The Law of the Nearest Point
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In an orthonormal basis, keep only some coordinates, and you get the nearest point those directions can reach: the projection.</p>
+</div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 54%">
+<col style="width: 45%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Do these three laws need A to be symmetric?</td>
+<td style="text-align: left;">No.&nbsp;Measuring, lengths and nearest points hold in any orthonormal basis. Symmetry only makes A’s eigenvectors one.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Most matrices aren’t symmetric. Is that the end?</td>
+<td style="text-align: left;">No.&nbsp;Part 4 gives every matrix an orthonormal basis going in and another coming out, then uses the nearest point to find the best line through data.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="in-lay" class="level2">
+<h2 class="anchored" data-anchor-id="in-lay">In Lay</h2>
+<p>Section and example numbers from <a href="../posts/linalg1-same-arrow.html#references">[Lay16]</a>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 54%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Here</th>
+<th style="text-align: left;">Lay</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">shadow</td>
+<td style="text-align: left;">orthogonal projection, x̂ (6.2; he writes ŷ)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">perpendicular</td>
+<td style="text-align: left;">orthogonal (6.1)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dot product</td>
+<td style="text-align: left;">inner product, u·v (6.1)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">a coordinate is a measurement, (x·v)/(v·v)</td>
+<td style="text-align: left;">the weights, 6.2 Theorem 5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">length, made 1</td>
+<td style="text-align: left;">‖v‖, normalizing, unit vector (6.1)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">orthogonal, length 1</td>
+<td style="text-align: left;">orthonormal (6.2)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">the Law of Length</td>
+<td style="text-align: left;">6.2 Theorem 7: ‖Ux‖ = ‖x‖, (Ux)·(Uy) = x·y</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P, with P⁻¹ = Pᵀ</td>
+<td style="text-align: left;">orthogonal matrix; U in 6.2 (6.2, 7.1)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A = P D Pᵀ</td>
+<td style="text-align: left;">orthogonally diagonalizable (7.1)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">the Law of Symmetry</td>
+<td style="text-align: left;">7.1 Theorem 1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">every symmetric matrix has one</td>
+<td style="text-align: left;">the Spectral Theorem (7.1)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">the Law of the Nearest Point</td>
+<td style="text-align: left;">the Best Approximation Theorem, 6.3 Theorem 9</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlYxQyA9IFwiIzc1NzBiM1wiICAgLy8gduKCgSBhbmQgaXRzIHByb2plY3Rpb24gKHB1cnBsZSlcblYyQyA9IFwiI2Q5NWYwMlwiICAgLy8gduKCgiBhbmQgaXRzIHByb2plY3Rpb24gKG9yYW5nZSlcbmRvdCA9IChhLCBiKSA9PiBhWzBdICogYlswXSArIGFbMV0gKiBiWzFdXG5cbnZpZXdvZiBzaCA9IHtcbiAgY29uc3QgWDAgPSAtNCwgWDEgPSA1LCBZMCA9IC00LCBZMSA9IDQsIFMgPSA0NDsgICAgICAgLy8gUyBweCBwZXIgdW5pdFxuICBjb25zdCBXID0gKFgxIC0gWDApICogUywgSCA9IChZMSAtIFkwKSAqIFM7XG4gIGNvbnN0IHB4ID0gcCA9PiBbKHBbMF0gLSBYMCkgKiBTLCAoWTEgLSBwWzFdKSAqIFNdO1xuICBjb25zdCBmcm9tUHggPSAodSwgdykgPT4gW01hdGgucm91bmQodSAvIFMgKyBYMCksIE1hdGgucm91bmQoWTEgLSB3IC8gUyldO1xuICBjb25zdCB2MSA9IFsxLCAxXTtcbiAgY29uc3Qgc3RhdGUgPSB7eDogWzIsIDBdLCB2MjogWy0xLCAxXX07XG4gIGNvbnN0IHN2ZyA9IGQzLmNyZWF0ZShcInN2Z1wiKS5hdHRyKFwidmlld0JveFwiLCBgMCAwICR7V30gJHtIfWApXG4gICAgLnN0eWxlKFwid2lkdGhcIiwgXCIxMDAlXCIpLnN0eWxlKFwibWF4LXdpZHRoXCIsIGAke1d9cHhgKVxuICAgIC5zdHlsZShcInRvdWNoLWFjdGlvblwiLCBcIm5vbmVcIik7XG4gIGNvbnN0IGRlZnMgPSBzdmcuYXBwZW5kKFwiZGVmc1wiKTtcbiAgZm9yIChjb25zdCBbaWQsIGNvbG9yXSBvZiBbW1wiczNhXCIsIFYxQ10sIFtcInMzYlwiLCBWMkNdLCBbXCJzM3hcIiwgXCJibGFja1wiXV0pXG4gICAgZGVmcy5hcHBlbmQoXCJtYXJrZXJcIikuYXR0cihcImlkXCIsIGlkKS5hdHRyKFwidmlld0JveFwiLCBcIjAgMCAxMCAxMFwiKVxuICAgICAgLmF0dHIoXCJyZWZYXCIsIDkpLmF0dHIoXCJyZWZZXCIsIDUpLmF0dHIoXCJtYXJrZXJXaWR0aFwiLCA1KVxuICAgICAgLmF0dHIoXCJtYXJrZXJIZWlnaHRcIiwgNSkuYXR0cihcIm9yaWVudFwiLCBcImF1dG9cIilcbiAgICAgIC5hcHBlbmQoXCJwYXRoXCIpLmF0dHIoXCJkXCIsIFwiTTAsMEwxMCw1TDAsMTB6XCIpLmF0dHIoXCJmaWxsXCIsIGNvbG9yKTtcbiAgY29uc3QgZyA9IHN2Zy5hcHBlbmQoXCJnXCIpO1xuICBjb25zdCBub2RlID0gc3ZnLm5vZGUoKTtcbiAgZnVuY3Rpb24gc2VnKHAsIHEsIGNvbG9yLCB3aWR0aCwgb3B0cyA9IHt9KSB7XG4gICAgY29uc3QgW2EsIGJdID0gW3B4KHApLCBweChxKV07XG4gICAgY29uc3QgbCA9IGcuYXBwZW5kKFwibGluZVwiKS5hdHRyKFwieDFcIiwgYVswXSkuYXR0cihcInkxXCIsIGFbMV0pXG4gICAgICAuYXR0cihcIngyXCIsIGJbMF0pLmF0dHIoXCJ5MlwiLCBiWzFdKS5hdHRyKFwic3Ryb2tlXCIsIGNvbG9yKVxuICAgICAgLmF0dHIoXCJzdHJva2Utd2lkdGhcIiwgd2lkdGgpLmF0dHIoXCJzdHJva2Utb3BhY2l0eVwiLCBvcHRzLm9wYWNpdHkgPz8gMSk7XG4gICAgaWYgKG9wdHMudGlwKSBsLmF0dHIoXCJtYXJrZXItZW5kXCIsIGB1cmwoIyR7b3B0cy50aXB9KWApO1xuICAgIGlmIChvcHRzLmRhc2gpIGwuYXR0cihcInN0cm9rZS1kYXNoYXJyYXlcIiwgXCI1LDRcIik7XG4gIH1cbiAgZnVuY3Rpb24gZG90QXQocCwgY29sb3IsIHIgPSA2LCBoYW5kbGUgPSBmYWxzZSkge1xuICAgIGNvbnN0IFthLCBiXSA9IHB4KHApO1xuICAgIGcuYXBwZW5kKFwiY2lyY2xlXCIpLmF0dHIoXCJjeFwiLCBhKS5hdHRyKFwiY3lcIiwgYikuYXR0cihcInJcIiwgcilcbiAgICAgIC5hdHRyKFwiZmlsbFwiLCBjb2xvcikuYXR0cihcImZpbGwtb3BhY2l0eVwiLCBoYW5kbGUgPyAwLjMgOiAxKVxuICAgICAgLnN0eWxlKFwiY3Vyc29yXCIsIGhhbmRsZSA/IFwiZ3JhYlwiIDogbnVsbCk7XG4gIH1cbiAgZnVuY3Rpb24gbGFiZWwocCwgdGV4dCwgY29sb3IpIHtcbiAgICBjb25zdCBbYSwgYl0gPSBweChwKTtcbiAgICBnLmFwcGVuZChcInRleHRcIikuYXR0cihcInhcIiwgYSArIDkpLmF0dHIoXCJ5XCIsIGIgLSA5KS5hdHRyKFwiZmlsbFwiLCBjb2xvcilcbiAgICAgIC5hdHRyKFwiZm9udC1zaXplXCIsIDE3KS50ZXh0KHRleHQpO1xuICB9XG4gIGZ1bmN0aW9uIGRyYXcoKSB7XG4gICAgZy5zZWxlY3RBbGwoXCIqXCIpLnJlbW92ZSgpO1xuICAgIGZvciAobGV0IGsgPSBYMDsgayA8PSBYMTsgaysrKSBzZWcoW2ssIFkwXSwgW2ssIFkxXSwgXCIjOTk5XCIsIDAuNywge29wYWNpdHk6IDAuMn0pO1xuICAgIGZvciAobGV0IGsgPSBZMDsgayA8PSBZMTsgaysrKSBzZWcoW1gwLCBrXSwgW1gxLCBrXSwgXCIjOTk5XCIsIDAuNywge29wYWNpdHk6IDAuMn0pO1xuICAgIGNvbnN0IHt4LCB2Mn0gPSBzdGF0ZTtcbiAgICBmb3IgKGNvbnN0IFt2LCBjXSBvZiBbW3YxLCBWMUNdLCBbdjIsIFYyQ11dKVxuICAgICAgc2VnKFstMjAgKiB2WzBdLCAtMjAgKiB2WzFdXSwgWzIwICogdlswXSwgMjAgKiB2WzFdXSwgYywgMS41LCB7b3BhY2l0eTogMC4zNX0pO1xuICAgIC8vIHRoZSBjb29yZGluYXRlOiB3YWxrIGEgb2YgdjEsIHRoZW4gYiBvZiB2MiwgdG8geCAoYXMgaW4gcGFydCAxKVxuICAgIGNvbnN0IGRldCA9IHYxWzBdICogdjJbMV0gLSB2MlswXSAqIHYxWzFdO1xuICAgIGNvbnN0IGEgPSAoeFswXSAqIHYyWzFdIC0gdjJbMF0gKiB4WzFdKSAvIGRldDtcbiAgICBjb25zdCBiID0gKHYxWzBdICogeFsxXSAtIHhbMF0gKiB2MVsxXSkgLyBkZXQ7XG4gICAgY29uc3QgbWlkID0gW2EgKiB2MVswXSwgYSAqIHYxWzFdXTtcbiAgICBzZWcoWzAsIDBdLCBtaWQsIFYxQywgMywge29wYWNpdHk6IDAuNX0pO1xuICAgIHNlZyhtaWQsIHgsIFYyQywgMywge29wYWNpdHk6IDAuNX0pO1xuICAgIC8vIHRoZSBwcm9qZWN0aW9uOiBkcm9wIHN0cmFpZ2h0IGZyb20geCBvbnRvIHYxJ3MgbGluZVxuICAgIGNvbnN0IHQgPSBkb3QoeCwgdjEpIC8gZG90KHYxLCB2MSksIGZvb3QgPSBbdCAqIHYxWzBdLCB0ICogdjFbMV1dO1xuICAgIHNlZyh4LCBmb290LCBcIiM2NjZcIiwgMS4yLCB7ZGFzaDogdHJ1ZX0pO1xuICAgIGRvdEF0KGZvb3QsIFYxQyk7XG4gICAgY29uc3QgW21hLCBtYl0gPSBweChtaWQpOyAgICAgICAgICAgICAgICAgICAgICAvLyByaW5nOiB0aGUgY29vcmRpbmF0ZVxuICAgIGcuYXBwZW5kKFwiY2lyY2xlXCIpLmF0dHIoXCJjeFwiLCBtYSkuYXR0cihcImN5XCIsIG1iKS5hdHRyKFwiclwiLCA5KVxuICAgICAgLmF0dHIoXCJmaWxsXCIsIFwibm9uZVwiKS5hdHRyKFwic3Ryb2tlXCIsIFYxQykuYXR0cihcInN0cm9rZS13aWR0aFwiLCAyLjUpO1xuICAgIHNlZyhbMCwgMF0sIHgsIFwiYmxhY2tcIiwgMy41LCB7dGlwOiBcInMzeFwifSk7XG4gICAgc2VnKFswLCAwXSwgdjEsIFYxQywgNC41LCB7dGlwOiBcInMzYVwifSk7XG4gICAgc2VnKFswLCAwXSwgdjIsIFYyQywgNC41LCB7dGlwOiBcInMzYlwifSk7XG4gICAgZG90QXQoeCwgXCJibGFja1wiLCAxMCwgdHJ1ZSk7IGRvdEF0KHYyLCBWMkMsIDEwLCB0cnVlKTtcbiAgICBsYWJlbCh4LCBcInhcIiwgXCJibGFja1wiKTsgbGFiZWwodjEsIFwiduKCgVwiLCBWMUMpOyBsYWJlbCh2MiwgXCJ24oKCXCIsIFYyQyk7XG4gICAgbm9kZS52YWx1ZSA9IHt4OiBbLi4ueF0sIHYyOiBbLi4udjJdfTtcbiAgICBub2RlLmRpc3BhdGNoRXZlbnQobmV3IEV2ZW50KFwiaW5wdXRcIiwge2J1YmJsZXM6IHRydWV9KSk7XG4gIH1cbiAgbGV0IGRyYWdnaW5nID0gbnVsbDtcbiAgY29uc3QgbG9jYWwgPSBlID0+IHtcbiAgICBjb25zdCByID0gbm9kZS5nZXRCb3VuZGluZ0NsaWVudFJlY3QoKTtcbiAgICByZXR1cm4gWyhlLmNsaWVudFggLSByLmxlZnQpICogVyAvIHIud2lkdGgsIChlLmNsaWVudFkgLSByLnRvcCkgKiBIIC8gci5oZWlnaHRdO1xuICB9O1xuICBub2RlLmFkZEV2ZW50TGlzdGVuZXIoXCJwb2ludGVyZG93blwiLCBlID0+IHtcbiAgICBjb25zdCBbdSwgd10gPSBsb2NhbChlKTtcbiAgICBjb25zdCBkaXN0ID0gayA9PiBNYXRoLmh5cG90KHB4KHN0YXRlW2tdKVswXSAtIHUsIHB4KHN0YXRlW2tdKVsxXSAtIHcpO1xuICAgIGNvbnN0IGsgPSBkaXN0KFwieFwiKSA8IGRpc3QoXCJ2MlwiKSA/IFwieFwiIDogXCJ2MlwiO1xuICAgIGlmIChkaXN0KGspIDwgMjYpIHsgZHJhZ2dpbmcgPSBrOyBub2RlLnNldFBvaW50ZXJDYXB0dXJlKGUucG9pbnRlcklkKTsgfVxuICB9KTtcbiAgbm9kZS5hZGRFdmVudExpc3RlbmVyKFwicG9pbnRlcm1vdmVcIiwgZSA9PiB7XG4gICAgaWYgKCFkcmFnZ2luZykgcmV0dXJuO1xuICAgIGNvbnN0IHAgPSBmcm9tUHgoLi4ubG9jYWwoZSkpO1xuICAgIGlmIChwWzBdID09PSAwICYmIHBbMV0gPT09IDApIHJldHVybjtcbiAgICBpZiAoZHJhZ2dpbmcgPT09IFwidjJcIiAmJiBwWzBdICogdjFbMV0gLSBwWzFdICogdjFbMF0gPT09IDApIHJldHVybjsgLy8gbm90IGFsb25nIHbigoFcbiAgICBpZiAocFswXSAhPT0gc3RhdGVbZHJhZ2dpbmddWzBdIHx8IHBbMV0gIT09IHN0YXRlW2RyYWdnaW5nXVsxXSkge1xuICAgICAgc3RhdGVbZHJhZ2dpbmddID0gcDsgZHJhdygpO1xuICAgIH1cbiAgfSk7XG4gIG5vZGUuYWRkRXZlbnRMaXN0ZW5lcihcInBvaW50ZXJ1cFwiLCAoKSA9PiB7IGRyYWdnaW5nID0gbnVsbDsgfSk7XG4gIGRyYXcoKTtcbiAgcmV0dXJuIG5vZGU7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiIvLyB4J3MgY29vcmRpbmF0ZSBhbG9uZyB2MSAoc29sdmVkIHdpdGggdjIpIGJlc2lkZSBpdHMgcHJvamVjdGlvblxuLy8gbWVhc3VyZW1lbnQgKHgudjEpLyh2MS52MSksIHdoaWNoIG5ldmVyIGxvb2tzIGF0IHYyLlxue1xuICBjb25zdCB2MSA9IFsxLCAxXSwge3gsIHYyfSA9IHNoO1xuICBjb25zdCBkZXQgPSB2MVswXSAqIHYyWzFdIC0gdjJbMF0gKiB2MVsxXTtcbiAgY29uc3QgYSA9ICh4WzBdICogdjJbMV0gLSB2MlswXSAqIHhbMV0pIC8gZGV0O1xuICBjb25zdCBzMSA9IGRvdCh4LCB2MSkgLyBkb3QodjEsIHYxKTtcbiAgY29uc3QgZiA9IG4gPT4gKE51bWJlci5pc0ludGVnZXIobikgPyBgJHtufWAgOiBuLnRvRml4ZWQoMikpLnJlcGxhY2UoXCItXCIsIFwi4oiSXCIpO1xuICBjb25zdCBwZXJwID0gZG90KHYxLCB2MikgPT09IDA7XG4gIHJldHVybiBodG1sYDxkaXYgc3R5bGU9XCJmb250LXNpemU6MS4xNWVtOyBmb250LWZhbWlseTptb25vc3BhY2VcIj5cbiAgICB24oKBwrd24oKCID0gJHtmKGRvdCh2MSwgdjIpKX08YnI+XG4gICAgY29vcmRpbmF0ZSBhbG9uZyB24oKBLCB0aGUgcmluZyAoc29sdmVkLCB1c2VzIHbigoIpOiA8c3BhbiBzdHlsZT1cImNvbG9yOiR7VjFDfVwiPiR7ZihhKX08L3NwYW4+PGJyPlxuICAgIHByb2plY3Rpb24gb250byB24oKBLCB0aGUgZG90ICh4IGFuZCB24oKBIG9ubHkpOiAmbmJzcDs8c3BhbiBzdHlsZT1cImNvbG9yOiR7VjFDfVwiPiR7ZihzMSl9PC9zcGFuPjwvZGl2PlxuICAgIDxwPiR7cGVycFxuICAgICAgPyBodG1sYDxiPk9ydGhvZ29uYWw6PC9iPiB0aGUgY29vcmRpbmF0ZSBpcyB0aGUgbWVhc3VyZW1lbnQuYFxuICAgICAgOiBNYXRoLmFicyhhIC0gczEpIDwgMWUtOVxuICAgICAgICA/IFwiTm90IG9ydGhvZ29uYWwsIGJ1dCB0aGlzIHggaGFwcGVucyB0byBhZ3JlZS4gTW92ZSB4LlwiXG4gICAgICAgIDogaHRtbGA8Yj5Ob3Qgb3J0aG9nb25hbDo8L2I+IHRoZSByaW5nIG1vdmVkIHdpdGggduKCgjsgdGhlIGRvdCBkaWRuJ3QuYH08L3A+YDtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnc2gnKSJ9XX0=
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../posts";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/nealcnotes\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../posts/linalg2-only-stretches.html" class="pagination-link" aria-label="Linear algebra 2: the basis where it only stretches">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Linear algebra 2: the basis where it only stretches</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../posts/linalg4-svd.html" class="pagination-link" aria-label="Linear algebra 4: two orthogonal bases">
+        <span class="nav-page-text">Linear algebra 4: two orthogonal bases</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p><a href="../archive/">Archive</a></p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
