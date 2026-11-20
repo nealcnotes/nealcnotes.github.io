@@ -91,8 +91,10 @@ It depends on x and v, and on nothing else.
 | Is it quicker, too? | One dot product per coordinate, no equations. The speed comes from the independence. |
 
 Now try it yourself.
-Drag the tip of x, and watch its projections.
-Then tilt v₂ off orthogonal, and watch which number moves.
+The faint path walks x's coordinates: so much v₁, then so much v₂.
+The ring is x's coordinate along v₁; the dot is its projection onto v₁.
+Drag the tip of x: while v₁ and v₂ are orthogonal, ring and dot stay together.
+Then tilt v₂: the ring slides away, and the dot stays put.
 
 ```{ojs}
 //| echo: false
@@ -142,12 +144,22 @@ viewof sh = {
     for (let k = X0; k <= X1; k++) seg([k, Y0], [k, Y1], "#999", 0.7, {opacity: 0.2});
     for (let k = Y0; k <= Y1; k++) seg([X0, k], [X1, k], "#999", 0.7, {opacity: 0.2});
     const {x, v2} = state;
-    for (const [v, c] of [[v1, V1C], [v2, V2C]]) {
+    for (const [v, c] of [[v1, V1C], [v2, V2C]])
       seg([-20 * v[0], -20 * v[1]], [20 * v[0], 20 * v[1]], c, 1.5, {opacity: 0.35});
-      const t = dot(x, v) / dot(v, v), foot = [t * v[0], t * v[1]];
-      seg(x, foot, "#666", 1.2, {dash: true});
-      dotAt(foot, c);
-    }
+    // the coordinate: walk a of v1, then b of v2, to x (as in part 1)
+    const det = v1[0] * v2[1] - v2[0] * v1[1];
+    const a = (x[0] * v2[1] - v2[0] * x[1]) / det;
+    const b = (v1[0] * x[1] - x[0] * v1[1]) / det;
+    const mid = [a * v1[0], a * v1[1]];
+    seg([0, 0], mid, V1C, 3, {opacity: 0.5});
+    seg(mid, x, V2C, 3, {opacity: 0.5});
+    // the projection: drop straight from x onto v1's line
+    const t = dot(x, v1) / dot(v1, v1), foot = [t * v1[0], t * v1[1]];
+    seg(x, foot, "#666", 1.2, {dash: true});
+    dotAt(foot, V1C);
+    const [ma, mb] = px(mid);                      // ring: the coordinate
+    g.append("circle").attr("cx", ma).attr("cy", mb).attr("r", 9)
+      .attr("fill", "none").attr("stroke", V1C).attr("stroke-width", 2.5);
     seg([0, 0], x, "black", 3.5, {tip: "s3x"});
     seg([0, 0], v1, V1C, 4.5, {tip: "s3a"});
     seg([0, 0], v2, V2C, 4.5, {tip: "s3b"});
@@ -195,13 +207,13 @@ viewof sh = {
   const perp = dot(v1, v2) === 0;
   return html`<div style="font-size:1.15em; font-family:monospace">
     v₁·v₂ = ${f(dot(v1, v2))}<br>
-    coordinate along v₁ (solved, uses v₂): <span style="color:${V1C}">${f(a)}</span><br>
-    projection onto v₁ (x and v₁ only): &nbsp;<span style="color:${V1C}">${f(s1)}</span></div>
+    coordinate along v₁, the ring (solved, uses v₂): <span style="color:${V1C}">${f(a)}</span><br>
+    projection onto v₁, the dot (x and v₁ only): &nbsp;<span style="color:${V1C}">${f(s1)}</span></div>
     <p>${perp
       ? html`<b>Orthogonal:</b> the coordinate is the measurement.`
       : Math.abs(a - s1) < 1e-9
         ? "Not orthogonal, but this x happens to agree. Move x."
-        : html`<b>Not orthogonal:</b> the coordinate moved with v₂; the projection didn't.`}</p>`;
+        : html`<b>Not orthogonal:</b> the ring moved with v₂; the dot didn't.`}</p>`;
 }
 ```
 
