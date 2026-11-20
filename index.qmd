@@ -28,6 +28,10 @@ with the shell, Python and Lean, and an AI tutor beside you.
 from change of basis to the singular value decomposition,
 in questions and answers.
 
+**[Algebra](posts/trig1-point-on-circle.qmd)**:
+trigonometry first: an angle as a walk round a circle,
+the waves it makes, and why sin² + cos² = 1.
+
 Each course's parts are in the menu on the left,
 with Previous and Next links at the foot of every page.
 

@@ -53,6 +53,11 @@ website:
           - posts/linalg2-only-stretches.qmd
           - posts/linalg3-coordinates-that-measure.qmd
           - posts/linalg4-svd.qmd
+      - section: "Algebra"
+        contents:
+          - posts/trig1-point-on-circle.qmd
+          - posts/trig2-wave.qmd
+          - posts/trig3-pythagoras.qmd
   # The 2023-24 comics: off the home page, one link away (tests/test_site.py).
   page-footer:
     center: "[Archive](/archive/)"
