@@ -24,3 +24,5 @@ __pycache__/
 .pytest_cache/
 .hypothesis/
 tests/*.log
+# AGENTS.md: symlink to the private CLAUDE.md, for other agents
+AGENTS.md
