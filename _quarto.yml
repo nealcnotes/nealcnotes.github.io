@@ -40,6 +40,9 @@ website:
   page-navigation: true
   sidebar:
     style: docked
+    # Courses start folded; Quarto opens the one holding the current
+    # page, so a reader sees only their course (Neal, 2026-11-20).
+    collapse-level: 1
     contents:
       - section: "Programming"
         contents:
