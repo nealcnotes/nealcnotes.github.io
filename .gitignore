@@ -10,6 +10,12 @@ _site/
 CLAUDE.md
 .claude/
 
+# Syncthing's partial copies mid-transfer: histsync's `add -A` once
+# committed nine of them (03f1c23, scrubbed from history 2026-11-21)
+.syncthing.*
+~syncthing~*
+.stversions/
+
 # photo-editor sidecars (from the old Jekyll site)
 *.xmp
 
